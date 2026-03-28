@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>算数・数学 つまずきチェッカー</title>
+  <title>邂玲焚繝ｻ謨ｰ蟄ｦ 縺､縺ｾ縺壹″繝√ぉ繝・き繝ｼ</title>
   <style>
     :root {
       --primary: #4f46e5;
@@ -121,7 +121,7 @@
       position: relative;
     }
     .select-wrapper::after {
-      content: '▾';
+      content: '笆ｾ';
       position: absolute;
       right: 14px;
       top: 50%;
@@ -411,45 +411,44 @@
 <div class="container">
 
   <header>
-    <div class="icon">📐</div>
-    <h1>算数・数学 つまずきチェッカー</h1>
-    <p>苦手な場面を選ぶと、ぴったりの練習問題をAIが作ります</p>
+    <div class="icon">盗</div>
+    <h1>邂玲焚繝ｻ謨ｰ蟄ｦ 縺､縺ｾ縺壹″繝√ぉ繝・き繝ｼ</h1>
+    <p>闍ｦ謇九↑蝣ｴ髱｢繧帝∈縺ｶ縺ｨ縲√・縺｣縺溘ｊ縺ｮ邱ｴ鄙貞撫鬘後ｒAI縺御ｽ懊ｊ縺ｾ縺・/p>
   </header>
 
   <!-- API Key -->
   <div class="card">
-    <div class="step-label">設定</div>
-    <div class="card-title">Anthropic APIキー</div>
+    <div class="step-label">險ｭ螳・/div>
+    <div class="card-title">Anthropic API繧ｭ繝ｼ</div>
     <div class="api-key-row">
       <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-..." autocomplete="off" oninput="onApiKeyInput()">
-      <button class="btn btn-secondary btn-sm" id="toggleKeyBtn" onclick="toggleKeyVisibility()">表示</button>
+      <button class="btn btn-secondary btn-sm" id="toggleKeyBtn" onclick="toggleKeyVisibility()">陦ｨ遉ｺ</button>
     </div>
     <div id="apiKeyStatus" class="api-key-hint">
-      環境変数 <code>ANTHROPIC_API_KEY</code> が設定されていれば自動入力されます。<br>
-      ブラウザで直接開く場合は手動で入力してください。
-    </div>
+      迺ｰ蠅・､画焚 <code>ANTHROPIC_API_KEY</code> 縺瑚ｨｭ螳壹＆繧後※縺・ｌ縺ｰ閾ｪ蜍募・蜉帙＆繧後∪縺吶・br>
+      繝悶Λ繧ｦ繧ｶ縺ｧ逶ｴ謗･髢九￥蝣ｴ蜷医・謇句虚縺ｧ蜈･蜉帙＠縺ｦ縺上□縺輔＞縲・    </div>
   </div>
 
   <!-- Step 1: Grade -->
   <div class="card">
-    <div class="step-label">ステップ 1</div>
-    <div class="card-title">学年を選んでください</div>
+    <div class="step-label">繧ｹ繝・ャ繝・1</div>
+    <div class="card-title">蟄ｦ蟷ｴ繧帝∈繧薙〒縺上□縺輔＞</div>
     <div class="select-wrapper">
       <select id="gradeSelect" onchange="onGradeChange()">
-        <option value="">-- 学年を選択してください --</option>
-        <option value="幼稚園">幼稚園</option>
-        <optgroup label="小学生（算数）">
-          <option value="小学1年">小学1年生</option>
-          <option value="小学2年">小学2年生</option>
-          <option value="小学3年">小学3年生</option>
-          <option value="小学4年">小学4年生</option>
-          <option value="小学5年">小学5年生</option>
-          <option value="小学6年">小学6年生</option>
+        <option value="">-- 蟄ｦ蟷ｴ繧帝∈謚槭＠縺ｦ縺上□縺輔＞ --</option>
+        <option value="蟷ｼ遞壼恍">蟷ｼ遞壼恍</option>
+        <optgroup label="蟆丞ｭｦ逕滂ｼ育ｮ玲焚・・>
+          <option value="蟆丞ｭｦ1蟷ｴ">蟆丞ｭｦ1蟷ｴ逕・/option>
+          <option value="蟆丞ｭｦ2蟷ｴ">蟆丞ｭｦ2蟷ｴ逕・/option>
+          <option value="蟆丞ｭｦ3蟷ｴ">蟆丞ｭｦ3蟷ｴ逕・/option>
+          <option value="蟆丞ｭｦ4蟷ｴ">蟆丞ｭｦ4蟷ｴ逕・/option>
+          <option value="蟆丞ｭｦ5蟷ｴ">蟆丞ｭｦ5蟷ｴ逕・/option>
+          <option value="蟆丞ｭｦ6蟷ｴ">蟆丞ｭｦ6蟷ｴ逕・/option>
         </optgroup>
-        <optgroup label="中学生（数学）">
-          <option value="中学1年">中学1年生</option>
-          <option value="中学2年">中学2年生</option>
-          <option value="中学3年">中学3年生</option>
+        <optgroup label="荳ｭ蟄ｦ逕滂ｼ域焚蟄ｦ・・>
+          <option value="荳ｭ蟄ｦ1蟷ｴ">荳ｭ蟄ｦ1蟷ｴ逕・/option>
+          <option value="荳ｭ蟄ｦ2蟷ｴ">荳ｭ蟄ｦ2蟷ｴ逕・/option>
+          <option value="荳ｭ蟄ｦ3蟷ｴ">荳ｭ蟄ｦ3蟷ｴ逕・/option>
         </optgroup>
       </select>
     </div>
@@ -458,8 +457,8 @@
 
   <!-- Step 2: Weaknesses -->
   <div class="card" id="weaknessCard" style="display:none">
-    <div class="step-label">ステップ 2</div>
-    <div class="card-title">苦手な場面を選んでください（複数選択可）</div>
+    <div class="step-label">繧ｹ繝・ャ繝・2</div>
+    <div class="card-title">闍ｦ謇九↑蝣ｴ髱｢繧帝∈繧薙〒縺上□縺輔＞・郁､・焚驕ｸ謚槫庄・・/div>
     <div class="checkbox-grid" id="checkboxGrid"></div>
   </div>
 
@@ -468,7 +467,7 @@
     <div class="generate-section">
       <div class="selected-count" id="selectedCount"></div>
       <button class="btn btn-primary btn-lg" id="generateBtn" onclick="generateAllProblems()">
-        ✨ 練習問題を生成する
+        笨ｨ 邱ｴ鄙貞撫鬘後ｒ逕滓・縺吶ｋ
       </button>
     </div>
   </div>
@@ -477,157 +476,157 @@
   <div id="resultsSection" style="margin-top: 20px;"></div>
 
   <footer>
-    Powered by Claude (Anthropic API) &nbsp;|&nbsp; 算数・数学 つまずきチェッカー
+    Powered by Claude (Anthropic API) &nbsp;|&nbsp; 邂玲焚繝ｻ謨ｰ蟄ｦ 縺､縺ｾ縺壹″繝√ぉ繝・き繝ｼ
   </footer>
 </div>
 
 <script>
 // ================================================================
-// Data: Grade → weaknesses mapping
+// Data: Grade 竊・weaknesses mapping
 // ================================================================
 const GRADE_DATA = {
-  '幼稚園': {
-    subject: '算数準備',
+  '蟷ｼ遞壼恍': {
+    subject: '邂玲焚貅門ｙ',
     badge: 'prep',
-    label: '幼稚園',
+    label: '蟷ｼ遞壼恍',
     weaknesses: [
-      '1〜10の数を数える',
-      '数の大きさくらべ（どちらが多い）',
-      '形の認識（丸・三角・四角）',
-      '仲間分け・分類する',
-      '順番（1番・2番…）',
+      '1縲・0縺ｮ謨ｰ繧呈焚縺医ｋ',
+      '謨ｰ縺ｮ螟ｧ縺阪＆縺上ｉ縺ｹ・医←縺｡繧峨′螟壹＞・・,
+      '蠖｢縺ｮ隱崎ｭ假ｼ井ｸｸ繝ｻ荳芽ｧ偵・蝗幄ｧ抵ｼ・,
+      '莉ｲ髢灘・縺代・蛻・｡槭☆繧・,
+      '鬆・分・・逡ｪ繝ｻ2逡ｪ窶ｦ・・,
     ]
   },
-  '小学1年': {
-    subject: '算数',
+  '蟆丞ｭｦ1蟷ｴ': {
+    subject: '邂玲焚',
     badge: 'sansuu',
-    label: '小学1年生',
+    label: '蟆丞ｭｦ1蟷ｴ逕・,
     weaknesses: [
-      'たし算の基本（繰り上がりなし）',
-      'ひき算の基本（繰り下がりなし）',
-      '繰り上がりのあるたし算（例：8+5）',
-      '繰り下がりのあるひき算（例：13−7）',
-      '数の順序・大小比べ',
-      '時計の読み方（〇時・〇時半）',
-      '長さ・かさ・重さの感覚',
+      '縺溘＠邂励・蝓ｺ譛ｬ・育ｹｰ繧贋ｸ翫′繧翫↑縺暦ｼ・,
+      '縺ｲ縺咲ｮ励・蝓ｺ譛ｬ・育ｹｰ繧贋ｸ九′繧翫↑縺暦ｼ・,
+      '郢ｰ繧贋ｸ翫′繧翫・縺ゅｋ縺溘＠邂暦ｼ井ｾ具ｼ・+5・・,
+      '郢ｰ繧贋ｸ九′繧翫・縺ゅｋ縺ｲ縺咲ｮ暦ｼ井ｾ具ｼ・3竏・・・,
+      '謨ｰ縺ｮ鬆・ｺ上・螟ｧ蟆乗ｯ斐∋',
+      '譎りｨ医・隱ｭ縺ｿ譁ｹ・医・凾繝ｻ縲・凾蜊奇ｼ・,
+      '髟ｷ縺輔・縺九＆繝ｻ驥阪＆縺ｮ諢溯ｦ・,
     ]
   },
-  '小学2年': {
-    subject: '算数',
+  '蟆丞ｭｦ2蟷ｴ': {
+    subject: '邂玲焚',
     badge: 'sansuu',
-    label: '小学2年生',
+    label: '蟆丞ｭｦ2蟷ｴ逕・,
     weaknesses: [
-      'かけ算（九九）の習得',
-      '2・3桁のたし算の筆算',
-      '2・3桁のひき算の筆算',
-      '時刻と時間（〇分後・〇分前）',
-      '長さの単位（mm・cm・m）',
-      'かさの単位（mL・dL・L）',
-      '正方形・長方形・三角形',
+      '縺九￠邂暦ｼ井ｹ昜ｹ晢ｼ峨・鄙貞ｾ・,
+      '2繝ｻ3譯√・縺溘＠邂励・遲・ｮ・,
+      '2繝ｻ3譯√・縺ｲ縺咲ｮ励・遲・ｮ・,
+      '譎ょ綾縺ｨ譎る俣・医・・蠕後・縲・・蜑搾ｼ・,
+      '髟ｷ縺輔・蜊倅ｽ搾ｼ・m繝ｻcm繝ｻm・・,
+      '縺九＆縺ｮ蜊倅ｽ搾ｼ・L繝ｻdL繝ｻL・・,
+      '豁｣譁ｹ蠖｢繝ｻ髟ｷ譁ｹ蠖｢繝ｻ荳芽ｧ貞ｽ｢',
     ]
   },
-  '小学3年': {
-    subject: '算数',
+  '蟆丞ｭｦ3蟷ｴ': {
+    subject: '邂玲焚',
     badge: 'sansuu',
-    label: '小学3年生',
+    label: '蟆丞ｭｦ3蟷ｴ逕・,
     weaknesses: [
-      'わり算の基本',
-      'あまりのあるわり算',
-      '大きな数（万の位まで）',
-      '小数の基本（0.1の位）',
-      '分数の基本（同分母）',
-      '重さの単位（g・kg・t）',
-      '時間の計算',
-      '表とグラフ',
+      '繧上ｊ邂励・蝓ｺ譛ｬ',
+      '縺ゅ∪繧翫・縺ゅｋ繧上ｊ邂・,
+      '螟ｧ縺阪↑謨ｰ・井ｸ・・菴阪∪縺ｧ・・,
+      '蟆乗焚縺ｮ蝓ｺ譛ｬ・・.1縺ｮ菴搾ｼ・,
+      '蛻・焚縺ｮ蝓ｺ譛ｬ・亥酔蛻・ｯ搾ｼ・,
+      '驥阪＆縺ｮ蜊倅ｽ搾ｼ・繝ｻkg繝ｻt・・,
+      '譎る俣縺ｮ險育ｮ・,
+      '陦ｨ縺ｨ繧ｰ繝ｩ繝・,
     ]
   },
-  '小学4年': {
-    subject: '算数',
+  '蟆丞ｭｦ4蟷ｴ': {
+    subject: '邂玲焚',
     badge: 'sansuu',
-    label: '小学4年生',
+    label: '蟆丞ｭｦ4蟷ｴ逕・,
     weaknesses: [
-      '大きな数（億・兆）',
-      '小数のたし算・ひき算',
-      '分数のたし算・ひき算（同分母）',
-      '面積（長方形・正方形）',
-      '角の大きさ・三角定規',
-      '2桁÷1桁の筆算',
-      '3桁÷2桁の筆算',
-      '概数と四捨五入',
+      '螟ｧ縺阪↑謨ｰ・亥т繝ｻ蜈・ｼ・,
+      '蟆乗焚縺ｮ縺溘＠邂励・縺ｲ縺咲ｮ・,
+      '蛻・焚縺ｮ縺溘＠邂励・縺ｲ縺咲ｮ暦ｼ亥酔蛻・ｯ搾ｼ・,
+      '髱｢遨搾ｼ磯聞譁ｹ蠖｢繝ｻ豁｣譁ｹ蠖｢・・,
+      '隗偵・螟ｧ縺阪＆繝ｻ荳芽ｧ貞ｮ夊ｦ・,
+      '2譯・ｷ1譯√・遲・ｮ・,
+      '3譯・ｷ2譯√・遲・ｮ・,
+      '讎よ焚縺ｨ蝗帶昏莠泌・',
     ]
   },
-  '小学5年': {
-    subject: '算数',
+  '蟆丞ｭｦ5蟷ｴ': {
+    subject: '邂玲焚',
     badge: 'sansuu',
-    label: '小学5年生',
+    label: '蟆丞ｭｦ5蟷ｴ逕・,
     weaknesses: [
-      '小数のかけ算',
-      '小数のわり算',
-      '分数のたし算・ひき算（異分母）',
-      '割合・百分率（%）',
-      '単位量あたりの大きさ',
-      '面積（三角形・平行四辺形・台形）',
-      '体積（直方体・立方体）',
-      '正多角形・円周',
+      '蟆乗焚縺ｮ縺九￠邂・,
+      '蟆乗焚縺ｮ繧上ｊ邂・,
+      '蛻・焚縺ｮ縺溘＠邂励・縺ｲ縺咲ｮ暦ｼ育焚蛻・ｯ搾ｼ・,
+      '蜑ｲ蜷医・逋ｾ蛻・紫・・・・,
+      '蜊倅ｽ埼㍼縺ゅ◆繧翫・螟ｧ縺阪＆',
+      '髱｢遨搾ｼ井ｸ芽ｧ貞ｽ｢繝ｻ蟷ｳ陦悟屁霎ｺ蠖｢繝ｻ蜿ｰ蠖｢・・,
+      '菴鍋ｩ搾ｼ育峩譁ｹ菴薙・遶区婿菴難ｼ・,
+      '豁｣螟夊ｧ貞ｽ｢繝ｻ蜀・捉',
     ]
   },
-  '小学6年': {
-    subject: '算数',
+  '蟆丞ｭｦ6蟷ｴ': {
+    subject: '邂玲焚',
     badge: 'sansuu',
-    label: '小学6年生',
+    label: '蟆丞ｭｦ6蟷ｴ逕・,
     weaknesses: [
-      '分数×分数・分数÷分数',
-      '比と比の値',
-      '速さ・時間・距離の関係',
-      '文字を使った式（□や△）',
-      '拡大図・縮小図・縮尺',
-      '対称な図形',
-      'データの調べ方（平均・代表値）',
-      '場合の数・順列',
+      '蛻・焚ﾃ怜・謨ｰ繝ｻ蛻・焚ﾃｷ蛻・焚',
+      '豈斐→豈斐・蛟､',
+      '騾溘＆繝ｻ譎る俣繝ｻ霍晞屬縺ｮ髢｢菫・,
+      '譁・ｭ励ｒ菴ｿ縺｣縺溷ｼ擾ｼ遺味繧・無・・,
+      '諡｡螟ｧ蝗ｳ繝ｻ邵ｮ蟆丞峙繝ｻ邵ｮ蟆ｺ',
+      '蟇ｾ遘ｰ縺ｪ蝗ｳ蠖｢',
+      '繝・・繧ｿ縺ｮ隱ｿ縺ｹ譁ｹ・亥ｹｳ蝮・・莉｣陦ｨ蛟､・・,
+      '蝣ｴ蜷医・謨ｰ繝ｻ鬆・・',
     ]
   },
-  '中学1年': {
-    subject: '数学',
+  '荳ｭ蟄ｦ1蟷ｴ': {
+    subject: '謨ｰ蟄ｦ',
     badge: 'suugaku',
-    label: '中学1年生',
+    label: '荳ｭ蟄ｦ1蟷ｴ逕・,
     weaknesses: [
-      '正負の数の計算（四則）',
-      '文字式の基本・式の値',
-      '一次方程式を解く',
-      '比例・反比例のグラフ',
-      '平面図形（作図・おうぎ形）',
-      '空間図形（体積・表面積）',
-      '度数分布表・ヒストグラム',
+      '豁｣雋縺ｮ謨ｰ縺ｮ險育ｮ暦ｼ亥屁蜑・ｼ・,
+      '譁・ｭ怜ｼ上・蝓ｺ譛ｬ繝ｻ蠑上・蛟､',
+      '荳谺｡譁ｹ遞句ｼ上ｒ隗｣縺・,
+      '豈比ｾ九・蜿肴ｯ比ｾ九・繧ｰ繝ｩ繝・,
+      '蟷ｳ髱｢蝗ｳ蠖｢・井ｽ懷峙繝ｻ縺翫≧縺主ｽ｢・・,
+      '遨ｺ髢灘峙蠖｢・井ｽ鍋ｩ阪・陦ｨ髱｢遨搾ｼ・,
+      '蠎ｦ謨ｰ蛻・ｸ・｡ｨ繝ｻ繝偵せ繝医げ繝ｩ繝',
     ]
   },
-  '中学2年': {
-    subject: '数学',
+  '荳ｭ蟄ｦ2蟷ｴ': {
+    subject: '謨ｰ蟄ｦ',
     badge: 'suugaku',
-    label: '中学2年生',
+    label: '荳ｭ蟄ｦ2蟷ｴ逕・,
     weaknesses: [
-      '連立方程式を解く',
-      '一次関数の式とグラフ',
-      '一次関数の応用問題',
-      '多項式の計算（展開）',
-      '単項式×多項式・多項式÷単項式',
-      '三角形の合同条件・証明',
-      '平行四辺形の性質・証明',
-      '確率の基本',
+      '騾｣遶区婿遞句ｼ上ｒ隗｣縺・,
+      '荳谺｡髢｢謨ｰ縺ｮ蠑上→繧ｰ繝ｩ繝・,
+      '荳谺｡髢｢謨ｰ縺ｮ蠢懃畑蝠城｡・,
+      '螟夐・ｼ上・險育ｮ暦ｼ亥ｱ暮幕・・,
+      '蜊倬・ｼ湘怜､夐・ｼ上・螟夐・ｼ湘ｷ蜊倬・ｼ・,
+      '荳芽ｧ貞ｽ｢縺ｮ蜷亥酔譚｡莉ｶ繝ｻ險ｼ譏・,
+      '蟷ｳ陦悟屁霎ｺ蠖｢縺ｮ諤ｧ雉ｪ繝ｻ險ｼ譏・,
+      '遒ｺ邇・・蝓ｺ譛ｬ',
     ]
   },
-  '中学3年': {
-    subject: '数学',
+  '荳ｭ蟄ｦ3蟷ｴ': {
+    subject: '謨ｰ蟄ｦ',
     badge: 'suugaku',
-    label: '中学3年生',
+    label: '荳ｭ蟄ｦ3蟷ｴ逕・,
     weaknesses: [
-      '式の展開と因数分解',
-      '平方根の計算',
-      '二次方程式を解く（解の公式）',
-      '二次関数のグラフと変化',
-      '相似な図形・相似比',
-      '三平方の定理の応用',
-      '円の性質（円周角・弧）',
-      '標本調査',
+      '蠑上・螻暮幕縺ｨ蝗謨ｰ蛻・ｧ｣',
+      '蟷ｳ譁ｹ譬ｹ縺ｮ險育ｮ・,
+      '莠梧ｬ｡譁ｹ遞句ｼ上ｒ隗｣縺擾ｼ郁ｧ｣縺ｮ蜈ｬ蠑擾ｼ・,
+      '莠梧ｬ｡髢｢謨ｰ縺ｮ繧ｰ繝ｩ繝輔→螟牙喧',
+      '逶ｸ莨ｼ縺ｪ蝗ｳ蠖｢繝ｻ逶ｸ莨ｼ豈・,
+      '荳牙ｹｳ譁ｹ縺ｮ螳夂炊縺ｮ蠢懃畑',
+      '蜀・・諤ｧ雉ｪ・亥・蜻ｨ隗偵・蠑ｧ・・,
+      '讓呎悽隱ｿ譟ｻ',
     ]
   },
 };
@@ -655,14 +654,14 @@ function onApiKeyInput() {
     showApiKeyOk();
   } else {
     document.getElementById('apiKeyStatus').innerHTML =
-      '環境変数 <code>ANTHROPIC_API_KEY</code> が設定されていれば自動入力されます。<br>ブラウザで直接開く場合は手動で入力してください。';
+      '迺ｰ蠅・､画焚 <code>ANTHROPIC_API_KEY</code> 縺瑚ｨｭ螳壹＆繧後※縺・ｌ縺ｰ閾ｪ蜍募・蜉帙＆繧後∪縺吶・br>繝悶Λ繧ｦ繧ｶ縺ｧ逶ｴ謗･髢九￥蝣ｴ蜷医・謇句虚縺ｧ蜈･蜉帙＠縺ｦ縺上□縺輔＞縲・;
     document.getElementById('apiKeyStatus').className = 'api-key-hint';
   }
 }
 
 function showApiKeyOk() {
   document.getElementById('apiKeyStatus').innerHTML =
-    '<span class="api-key-status ok">✓ APIキーが設定されています</span>';
+    '<span class="api-key-status ok">笨・API繧ｭ繝ｼ縺瑚ｨｭ螳壹＆繧後※縺・∪縺・/span>';
 }
 
 function toggleKeyVisibility() {
@@ -670,10 +669,10 @@ function toggleKeyVisibility() {
   const btn = document.getElementById('toggleKeyBtn');
   if (input.type === 'password') {
     input.type = 'text';
-    btn.textContent = '隠す';
+    btn.textContent = '髫縺・;
   } else {
     input.type = 'password';
-    btn.textContent = '表示';
+    btn.textContent = '陦ｨ遉ｺ';
   }
 }
 
@@ -699,7 +698,7 @@ function onGradeChange() {
 
   // Badge
   const badgeClass = { sansuu: 'badge-sansuu', suugaku: 'badge-suugaku', prep: 'badge-prep' }[data.badge];
-  const badgeIcon = { sansuu: '📐', suugaku: '📊', prep: '🎒' }[data.badge];
+  const badgeIcon = { sansuu: '盗', suugaku: '投', prep: '賜' }[data.badge];
   document.getElementById('subjectBadge').innerHTML =
     `<span class="subject-badge ${badgeClass}">${badgeIcon} ${data.subject}</span>`;
 
@@ -738,7 +737,7 @@ function updateSelectedCount() {
 
   if (n > 0) {
     section.style.display = 'block';
-    countEl.innerHTML = `<strong>${n}</strong> 個の苦手場面を選択中 → <strong>${n * 2}</strong> 問生成されます`;
+    countEl.innerHTML = `<strong>${n}</strong> 蛟九・闍ｦ謇句ｴ髱｢繧帝∈謚樔ｸｭ 竊・<strong>${n * 2}</strong> 蝠冗函謌舌＆繧後∪縺兪;
     btn.disabled = false;
   } else {
     section.style.display = 'none';
@@ -754,26 +753,42 @@ function getApiKey() {
 
 async function callClaude(prompt) {
   const apiKey = getApiKey();
-  if (!apiKey) throw new Error('APIキーを入力してください。');
+  if (!apiKey) throw new Error('API繧ｭ繝ｼ繧貞・蜉帙＠縺ｦ縺上□縺輔＞縲・);
 
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-      'anthropic-dangerous-allow-browser': 'true',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 1024,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-  });
+  let res;
+  try {
+    res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+        'anthropic-dangerous-allow-browser': 'true',
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 1024,
+        messages: [{ role: 'user', content: prompt }],
+      }),
+    });
+  } catch (networkErr) {
+    // fetch() itself threw 窶・network error or CORS preflight failure
+    throw new Error(
+      '繝阪ャ繝医Ρ繝ｼ繧ｯ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺ｾ縺励◆縲・n' +
+      '竭 API繧ｭ繝ｼ縺梧ｭ｣縺励￥蜈･蜉帙＆繧後※縺・ｋ縺狗｢ｺ隱阪＠縺ｦ縺上□縺輔＞縲・n' +
+      '竭｡ 繝悶Λ繧ｦ繧ｶ縺ｮ髢狗匱閠・ヤ繝ｼ繝ｫ・・12・俄・ Console 縺ｧ繧ｨ繝ｩ繝ｼ隧ｳ邏ｰ繧堤｢ｺ隱阪＠縺ｦ縺上□縺輔＞縲・n' +
+      '竭｢ 蠎・相繝悶Ο繝・き繝ｼ遲峨・諡｡蠑ｵ讖溯・縺窟PI繝ｪ繧ｯ繧ｨ繧ｹ繝医ｒ繝悶Ο繝・け縺励※縺・↑縺・°遒ｺ隱阪＠縺ｦ縺上□縺輔＞縲・n' +
+      `(蜴溷屏: ${networkErr.message})`
+    );
+  }
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `APIエラー (${res.status})`);
+    const msg = err.error?.message || `HTTP繧ｨ繝ｩ繝ｼ (${res.status})`;
+    if (res.status === 401) throw new Error('API繧ｭ繝ｼ縺檎┌蜉ｹ縺ｧ縺吶よｭ｣縺励＞繧ｭ繝ｼ繧貞・蜉帙＠縺ｦ縺上□縺輔＞縲・);
+    if (res.status === 429) throw new Error('API縺ｮ蛻ｩ逕ｨ蛻ｶ髯舌↓驕斐＠縺ｾ縺励◆縲ゅ＠縺ｰ繧峨￥蠕・▲縺ｦ縺九ｉ蜀崎ｩｦ陦後＠縺ｦ縺上□縺輔＞縲・);
+    throw new Error(msg);
   }
 
   const data = await res.json();
@@ -783,27 +798,25 @@ async function callClaude(prompt) {
 function buildPrompt(grade, subject, weakness, count = 2, existingQ = []) {
   const gradeLabel = GRADE_DATA[grade].label;
   const existingNote = existingQ.length > 0
-    ? `\n\n既に出題した問題（重複しないようにしてください）:\n${existingQ.map((q, i) => `${i+1}. ${q}`).join('\n')}`
+    ? `\n\n譌｢縺ｫ蜃ｺ鬘後＠縺溷撫鬘鯉ｼ磯㍾隍・＠縺ｪ縺・ｈ縺・↓縺励※縺上□縺輔＞・・\n${existingQ.map((q, i) => `${i+1}. ${q}`).join('\n')}`
     : '';
 
-  return `あなたは${gradeLabel}向けの${subject}の先生です。
-「${weakness}」が苦手な子どものために、練習問題を${count}問作ってください。${existingNote}
+  return `縺ゅ↑縺溘・${gradeLabel}蜷代￠縺ｮ${subject}縺ｮ蜈育函縺ｧ縺吶・縲・{weakness}縲阪′闍ｦ謇九↑蟄舌←繧ゅ・縺溘ａ縺ｫ縲∫ｷｴ鄙貞撫鬘後ｒ${count}蝠丈ｽ懊▲縺ｦ縺上□縺輔＞縲・{existingNote}
 
-以下のJSON形式のみで返答してください（他の文章・説明は不要）:
+莉･荳九・JSON蠖｢蠑上・縺ｿ縺ｧ霑皮ｭ斐＠縺ｦ縺上□縺輔＞・井ｻ悶・譁・ｫ繝ｻ隱ｬ譏弱・荳崎ｦ・ｼ・
 {
   "problems": [
     {
-      "question": "問題文（${gradeLabel}にわかりやすい表現で）",
-      "answer": "答えと丁寧な解説"
+      "question": "蝠城｡梧枚・・{gradeLabel}縺ｫ繧上°繧翫ｄ縺吶＞陦ｨ迴ｾ縺ｧ・・,
+      "answer": "遲斐∴縺ｨ荳∝ｯｧ縺ｪ隗｣隱ｬ"
     }
   ]
 }
 
-条件:
-- ${gradeLabel}の学習レベルに合った難易度にする
-- 問題文は子どもが理解できる言葉で書く
-- 答えには計算の途中式や考え方の解説を含める
-- JSONのみ返す`;
+譚｡莉ｶ:
+- ${gradeLabel}縺ｮ蟄ｦ鄙偵Ξ繝吶Ν縺ｫ蜷医▲縺滄屮譏灘ｺｦ縺ｫ縺吶ｋ
+- 蝠城｡梧枚縺ｯ蟄舌←繧ゅ′逅・ｧ｣縺ｧ縺阪ｋ險闡峨〒譖ｸ縺・- 遲斐∴縺ｫ縺ｯ險育ｮ励・騾比ｸｭ蠑上ｄ閠・∴譁ｹ縺ｮ隗｣隱ｬ繧貞性繧√ｋ
+- JSON縺ｮ縺ｿ霑斐☆`;
 }
 
 function parseProblems(text) {
@@ -814,7 +827,7 @@ function parseProblems(text) {
     if (!Array.isArray(data.problems)) throw new Error('problems array missing');
     return data.problems;
   } catch (e) {
-    throw new Error('AIの回答を解析できませんでした。もう一度お試しください。');
+    throw new Error('AI縺ｮ蝗樒ｭ斐ｒ隗｣譫舌〒縺阪∪縺帙ｓ縺ｧ縺励◆縲ゅｂ縺・ｸ蠎ｦ縺願ｩｦ縺励￥縺縺輔＞縲・);
   }
 }
 
@@ -832,13 +845,13 @@ function cardId(weakness) {
 async function generateAllProblems() {
   const apiKey = getApiKey();
   if (!apiKey) {
-    alert('APIキーを入力してください。');
+    alert('API繧ｭ繝ｼ繧貞・蜉帙＠縺ｦ縺上□縺輔＞縲・);
     return;
   }
 
   const btn = document.getElementById('generateBtn');
   btn.disabled = true;
-  btn.innerHTML = '<span class="loading-spinner"></span> 生成中...';
+  btn.innerHTML = '<span class="loading-spinner"></span> 逕滓・荳ｭ...';
 
   const resultsSection = document.getElementById('resultsSection');
   resultsSection.innerHTML = '';
@@ -859,13 +872,13 @@ async function generateAllProblems() {
   );
 
   btn.disabled = false;
-  btn.innerHTML = '✨ もう一度生成する';
+  btn.innerHTML = '笨ｨ 繧ゅ≧荳蠎ｦ逕滓・縺吶ｋ';
 
   results.forEach((r, i) => {
     if (r.status === 'rejected') {
       const id = cardId(weaknesses[i]);
       const el = document.getElementById(`${id}-body`);
-      if (el) el.innerHTML = `<div class="error-box">エラー: ${escHtml(r.reason.message)}</div>`;
+      if (el) el.innerHTML = `<div class="error-box">繧ｨ繝ｩ繝ｼ: ${escHtml(r.reason.message)}</div>`;
     }
   });
 }
@@ -926,7 +939,7 @@ function renderProblemsHtml(id, problems, startIdx) {
 }
 
 function renderMoreProblems(id, problems, startIdx) {
-  return `<div class="divider"><span>追加問題</span></div>
+  return `<div class="divider"><span>霑ｽ蜉蝠城｡・/span></div>
   <div class="problems-list">
     ${problems.map((p, i) => renderProblemItem(id, p, startIdx + i)).join('')}
   </div>`;
@@ -937,11 +950,11 @@ function renderProblemItem(id, problem, idx) {
   return `
   <div class="problem-item">
     <div class="problem-question">
-      <span class="problem-number">問 ${idx + 1}</span>
+      <span class="problem-number">蝠・${idx + 1}</span>
       ${escHtml(problem.question)}
     </div>
     <div class="problem-answer" id="${ansId}">
-      <div class="answer-label">解答・解説</div>
+      <div class="answer-label">隗｣遲斐・隗｣隱ｬ</div>
       ${escHtml(problem.answer)}
     </div>
   </div>`;
@@ -951,10 +964,10 @@ function renderCardActions(id, weakness, data) {
   return `
   <div class="card-actions" id="${id}-actions">
     <button class="btn btn-success" id="${id}-toggle-btn" onclick="toggleAllAnswers('${id}')">
-      ✓ 解答を見る
+      笨・隗｣遲斐ｒ隕九ｋ
     </button>
     <button class="btn btn-outline" id="${id}-more-btn" onclick="addMoreProblems('${id}', '${escHtml(weakness)}')">
-      ＋ さらに2問追加
+      ・・縺輔ｉ縺ｫ2蝠剰ｿｽ蜉
     </button>
   </div>`;
 }
@@ -970,7 +983,7 @@ function toggleAllAnswers(id) {
   const allVisible = [...answers].every(a => a.classList.contains('visible'));
 
   answers.forEach(a => a.classList.toggle('visible', !allVisible));
-  btn.textContent = allVisible ? '✓ 解答を見る' : '✗ 解答を隠す';
+  btn.textContent = allVisible ? '笨・隗｣遲斐ｒ隕九ｋ' : '笨・隗｣遲斐ｒ髫縺・;
 }
 
 // ================================================================
@@ -983,23 +996,23 @@ async function addMoreProblems(id, weakness) {
 
   const existingProblems = JSON.parse(card.dataset.problems || '[]');
   moreBtn.disabled = true;
-  moreBtn.innerHTML = '<span class="loading-spinner dark"></span> 生成中...';
+  moreBtn.innerHTML = '<span class="loading-spinner dark"></span> 逕滓・荳ｭ...';
 
   const data = GRADE_DATA[currentGrade];
 
   try {
     await generateProblemsForWeakness(weakness, data, id, existingProblems);
     moreBtn.disabled = false;
-    moreBtn.innerHTML = '＋ さらに2問追加';
+    moreBtn.innerHTML = '・・縺輔ｉ縺ｫ2蝠剰ｿｽ蜉';
   } catch (e) {
     moreBtn.disabled = false;
-    moreBtn.innerHTML = '＋ さらに2問追加';
+    moreBtn.innerHTML = '・・縺輔ｉ縺ｫ2蝠剰ｿｽ蜉';
     const actionsEl = document.getElementById(`${id}-actions`);
     if (actionsEl) {
       const errDiv = document.createElement('div');
       errDiv.className = 'error-box';
       errDiv.style.width = '100%';
-      errDiv.textContent = 'エラー: ' + e.message;
+      errDiv.textContent = '繧ｨ繝ｩ繝ｼ: ' + e.message;
       actionsEl.insertAdjacentElement('afterend', errDiv);
       setTimeout(() => errDiv.remove(), 5000);
     }
