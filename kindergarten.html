@@ -108,7 +108,7 @@ const sl=ms=>new Promise(r=>setTimeout(r,ms));
 const TOTAL=5;let unitType='',questions=[],currentQ=0,results=[],phase='main',retryQs=[],retryResults=[],answered=false,questionLog=[];
 
 // Data
-const EMOJI_ITEMS=[{e:'🍎',n:'りんご'},{e:'🍊',n:'みかん'},{e:'🍌',n:'バナナ'},{e:'🍓',n:'いちご'},{e:'🌸',n:'おはな'},{e:'⭐',n:'おほし'},{e:'🐟',n:'おさかな'},{e:'🦋',n:'ちょうちょ'},{e:'🐞',n:'てんとうむし'},{e:'🎈',n:'ふうせん'},{e:'🚗',n:'くるま'},{e:'✏️',n:'えんぴつ'},{e:'🐤',n:'ひよこ'},{e:'🍰',n:'ケーキ'},{e:'🐸',n:'かえる'}];
+const EMOJI_ITEMS=[{e:'🍎',n:'りんご'},{e:'🍊',n:'みかん'},{e:'🍌',n:'バナナ'},{e:'🍓',n:'いちご'},{e:'🌸',n:'おはな'},{e:'⭐',n:'ほし'},{e:'🐟',n:'おさかな'},{e:'🦋',n:'ちょうちょ'},{e:'🐞',n:'てんとうむし'},{e:'🎈',n:'ふうせん'},{e:'🚗',n:'くるま'},{e:'✏️',n:'えんぴつ'},{e:'🐤',n:'ひよこ'},{e:'🍰',n:'ケーキ'},{e:'🐸',n:'かえる'}];
 const SHAPES=[{e:'⭕',n:'まる',shape:'circle'},{e:'🔺',n:'さんかく',shape:'triangle'},{e:'🟧',n:'しかく',shape:'square'}];
 const SHAPE_ITEMS=[{e:'⚽',s:'circle'},{e:'🍩',s:'circle'},{e:'🕐',s:'circle'},{e:'🍊',s:'circle'},{e:'🌕',s:'circle'},{e:'🔺',s:'triangle'},{e:'🍕',s:'triangle'},{e:'📐',s:'triangle'},{e:'⛺',s:'triangle'},{e:'📦',s:'square'},{e:'🎁',s:'square'},{e:'📺',s:'square'},{e:'🪟',s:'square'},{e:'📱',s:'square'}];
 const CLASSIFY_GROUPS=[{label:'くだもの',members:['🍎','🍊','🍌','🍓','🍇','🍑'],distractors:['🚗','🐸','✏️','📦','⭐','🎈']},{label:'どうぶつ',members:['🐶','🐱','🐸','🐟','🦋','🐤'],distractors:['🍎','🚗','✏️','📦','🌸','🍰']},{label:'のりもの',members:['🚗','🚌','🚲','✈️','🚢','🚁'],distractors:['🍎','🐸','✏️','🌸','⭐','🍰']}];
@@ -190,6 +190,7 @@ function playReviewAnim(idx){
   const area=document.getElementById(`raa-${idx}`);const btn=document.getElementById(`rab-${idx}`);
   if(area.classList.contains('show')){area.classList.remove('show');area.innerHTML='';btn.textContent='🎬 かいせつアニメを みる';return}
   btn.textContent='⏳ さいせいちゅう…';btn.disabled=true;area.classList.add('show');
+  setTimeout(()=>{area.scrollIntoView({behavior:'smooth',block:'center'})},100);
   switch(q.type){
     case'count':animCount(area,q,btn,idx);break;
     case'compare':animCompare(area,q,btn,idx);break;
@@ -272,7 +273,7 @@ async function animClassify(el,q,btn,idx){
 // --- ORDER: count from direction one by one ---
 async function animOrder(el,q,btn,idx){
   const dt=q.direction==='left'?'ひだりから':'みぎから';
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${dt} かぞえてみよう！</div><div style="display:flex;justify-content:center;gap:6px;margin:12px 0">${q.items.map((e,i)=>`<div style="text-align:center"><span class="anim-emoji" id="ao${idx}-${i}" style="font-size:2rem;opacity:1">${e}</span><div class="anim-count" id="aoc${idx}-${i}" style="font-size:1rem">${q.direction==='left'?i+1:q.items.length-i}</div></div>`).join('')}</div><div class="anim-result" id="xr${idx}"></div></div>`;
+  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${dt} かぞえてみよう！</div><div style="display:flex;justify-content:center;gap:6px;margin:12px 0">${q.items.map((e,i)=>`<div style="text-align:center;display:flex;flex-direction:column;align-items:center;width:42px"><div class="anim-count" id="aoc${idx}-${i}" style="font-size:1rem;min-height:24px;display:block;margin:0;width:100%">${q.direction==='left'?i+1:q.items.length-i}</div><div id="ao${idx}-${i}" style="font-size:2rem;transition:all .4s">${e}</div></div>`).join('')}</div><div class="anim-result" id="xr${idx}"></div></div>`;
   await sl(800);
   const order=q.direction==='left'?q.items.map((_,i)=>i):q.items.map((_,i)=>q.items.length-1-i);
   for(let step=0;step<order.length;step++){

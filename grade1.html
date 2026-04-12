@@ -39,27 +39,22 @@
   @keyframes bannerIn{0%{opacity:0;transform:scale(.9)}100%{opacity:1;transform:scale(1)}}
   .result-banner.correct-banner{background:var(--green-light);color:#2b8a3e;border:2.5px solid #86efac}.result-banner.wrong-banner{background:#fff0f0;color:#c92a2a;border:2.5px solid #fca5a5}
   .result-banner .banner-icon{font-size:2rem;display:block;margin-bottom:4px}.result-banner .banner-sub{font-size:.9rem;font-weight:700;margin-top:4px;color:var(--text-soft)}
-  /* Result & Review */
   .result-screen{text-align:center;padding:28px 16px}.result-icon{font-size:3.5rem;margin-bottom:10px}.result-title{font-size:1.4rem;font-weight:900;margin-bottom:8px}.result-message{font-size:.95rem;color:var(--text-soft);line-height:1.7;margin-bottom:16px}
   .result-score{display:flex;justify-content:center;gap:6px;margin-bottom:16px}.result-score-dot{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem}.result-score-dot.s-correct{background:var(--green-light);color:#2b8a3e}.result-score-dot.s-wrong{background:#ffe0e0;color:#c92a2a}
   .review-section{text-align:left;margin-top:20px;border-top:2px solid #e0e0e0;padding-top:16px}.review-title{font-size:1rem;font-weight:900;color:var(--red);text-align:center;margin-bottom:12px}
-  .review-item{background:#fff;border:2px solid #fca5a5;border-radius:14px;padding:14px;margin-bottom:10px}
-  .review-q{font-weight:700;font-size:.95rem;margin-bottom:4px}.review-ans{font-size:.88rem;color:#2b8a3e;font-weight:700;margin-bottom:8px}
-  .review-anim-btn{display:block;width:100%;padding:10px;border:2px solid var(--orange);border-radius:12px;background:var(--yellow-light);font-family:inherit;font-size:.9rem;font-weight:700;color:#b45309;cursor:pointer;transition:all .15s;text-align:center}
-  .review-anim-btn:active{transform:scale(.97)}
-  .review-anim-area{margin-top:10px;display:none}
-  .review-anim-area.show{display:block;animation:fadeIn .4s}
-  /* Anim stage */
+  .review-item{background:#fff;border:2px solid #fca5a5;border-radius:14px;padding:14px;margin-bottom:10px}.review-q{font-weight:700;font-size:.95rem;margin-bottom:4px}.review-ans{font-size:.88rem;color:#2b8a3e;font-weight:700;margin-bottom:8px}
+  .review-anim-btn{display:block;width:100%;padding:10px;border:2px solid var(--orange);border-radius:12px;background:var(--yellow-light);font-family:inherit;font-size:.9rem;font-weight:700;color:#b45309;cursor:pointer;text-align:center}.review-anim-btn:active{transform:scale(.97)}
+  .review-anim-area{margin-top:10px;display:none}.review-anim-area.show{display:block;animation:fadeIn .4s}
   .anim-stage{background:var(--yellow-light);border:2px solid #ffe066;border-radius:16px;padding:16px 12px;text-align:center}
   .anim-msg{font-size:.95rem;font-weight:900;min-height:22px;margin-bottom:10px}.anim-msg.blue{color:#3b82f6}.anim-msg.red{color:#e74c3c}.anim-msg.green{color:#22c55e}.anim-msg.orange{color:#f59e0b}
-  .anim-blocks{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:174px;margin:0 auto;min-height:28px}
+  .anim-blocks{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:174px;margin:0 auto;min-height:28px}
   .anim-blocks-row{display:flex;align-items:flex-start;justify-content:center;gap:14px;flex-wrap:wrap}
   .anim-col{display:flex;flex-direction:column;align-items:center}
   .anim-label{font-size:.9rem;font-weight:900;color:#636e72;margin-top:6px}
-  .ab{width:28px;height:28px;border-radius:7px;transition:all .4s;flex-shrink:0}.ab.blue{background:linear-gradient(135deg,#4ea8de,#3b82f6)}.ab.orange{background:linear-gradient(135deg,#ff922b,#f59e0b)}.ab.green{background:linear-gradient(135deg,#51cf66,#22c55e)}.ab.red-mark{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 0 10px rgba(239,68,68,.4);transform:scale(1.1)}.ab.fading{opacity:0;transform:scale(.3)}.ab.moving{background:linear-gradient(135deg,#fbbf24,#f59e0b);box-shadow:0 0 10px rgba(251,191,36,.5);transform:scale(1.1)}
+  .ab{width:28px;height:28px;border-radius:7px;transition:all .5s;flex-shrink:0}.ab.blue{background:linear-gradient(135deg,#4ea8de,#3b82f6)}.ab.orange{background:linear-gradient(135deg,#ff922b,#f59e0b)}.ab.green{background:linear-gradient(135deg,#51cf66,#22c55e)}.ab.red-mark{background:linear-gradient(135deg,#ef4444,#dc2626);box-shadow:0 0 10px rgba(239,68,68,.4);transform:scale(1.1)}.ab.fading{opacity:0;transform:scale(.3)}.ab.moving{background:linear-gradient(135deg,#fbbf24,#f59e0b);box-shadow:0 0 10px rgba(251,191,36,.5);transform:scale(1.1)}
   .ten-frame{border:3px dashed #22c55e;border-radius:12px;padding:6px;position:relative}.ten-frame.glow{box-shadow:0 0 16px rgba(34,197,94,.4);border-style:solid}.ten-badge{position:absolute;top:-12px;right:-8px;background:#22c55e;color:#fff;font-size:.7rem;font-weight:900;padding:2px 8px;border-radius:20px}
   .anim-plus{font-size:1.3rem;font-weight:900;color:var(--blue);align-self:center}
-  .anim-result{font-size:1.2rem;font-weight:900;color:#22c55e;margin-top:8px;opacity:0;transition:opacity .4s}.anim-result.show{opacity:1}
+  .anim-result{font-size:1.2rem;font-weight:900;color:#22c55e;margin-top:10px;opacity:0;transition:opacity .4s}.anim-result.show{opacity:1}
   .clock-legend{display:flex;justify-content:center;gap:14px;font-size:.75rem;font-weight:700;margin:8px 0}.clock-legend-dot{display:inline-block;width:14px;height:5px;border-radius:3px;margin-right:4px}.clock-legend-dot.short{background:#e74c3c;height:6px}.clock-legend-dot.long{background:#2980b9;width:18px}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border:none;border-radius:14px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}.btn:active{transform:scale(.96)}.btn-pink{background:var(--pink);color:#fff}.btn-blue{background:var(--blue);color:#fff}.btn-green{background:var(--green);color:#fff}
   .btn-group{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
@@ -93,36 +88,37 @@
 <script>
 // Sound
 const AC=window.AudioContext||window.webkitAudioContext;let ac;function ea(){if(!ac)ac=new AC}
-function sndPop(f=600){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.15);o.start(ac.currentTime);o.stop(ac.currentTime+.15)}
 function sndOk(){ea();[523.25,659.25,783.99].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.3,ac.currentTime+i*.12);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.12+.4);o.start(ac.currentTime+i*.12);o.stop(ac.currentTime+i*.12+.4)})}
 function sndNg(){ea();[329.63,261.63].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.2,ac.currentTime+i*.15);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.15+.35);o.start(ac.currentTime+i*.15);o.stop(ac.currentTime+i*.15+.35)})}
 function sndFanfare(){ea();[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(.3,ac.currentTime+i*.15);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.15+.5);o.start(ac.currentTime+i*.15);o.stop(ac.currentTime+i*.15+.5)})}
 function sndClick(){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=800;g.gain.setValueAtTime(.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.08);o.start(ac.currentTime);o.stop(ac.currentTime+.08)}
 function sndTick(){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=1200;g.gain.setValueAtTime(.1,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.06);o.start(ac.currentTime);o.stop(ac.currentTime+.06)}
+function sndPop(f=600){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.15);o.start(ac.currentTime);o.stop(ac.currentTime+.15)}
 function sndMove(){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='triangle';o.frequency.value=500;o.frequency.exponentialRampToValueAtTime(700,ac.currentTime+.2);g.gain.setValueAtTime(.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.25);o.start(ac.currentTime);o.stop(ac.currentTime+.25)}
 function sndRemove(){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=300;o.frequency.exponentialRampToValueAtTime(150,ac.currentTime+.25);g.gain.setValueAtTime(.2,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.3);o.start(ac.currentTime);o.stop(ac.currentTime+.3)}
 const sl=ms=>new Promise(r=>setTimeout(r,ms));
+function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 
-// State
 const TOTAL=5;let unitType='',questions=[],currentQ=0,results=[],phase='main',retryQs=[],retryResults=[],answered=false,questionLog=[],inputVal='';
 
-// Generators
-function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
-function genAddBasic(){const a=rnd(1,9),b=rnd(1,9-a);return{type:'calc',subtype:'add',a,b,op:'+',answer:a+b}}
-function genSubBasic(){const ans=rnd(1,8),b=rnd(1,9-ans),a=ans+b;return{type:'calc',subtype:'sub',a,b,op:'−',answer:ans}}
-function genAddCarry(){const a=rnd(4,9),b=rnd(10-a+1,9);return{type:'calc',subtype:'carry',a,b,op:'+',answer:a+b}}
-function genSubBorrow(){const a=rnd(11,18),b=rnd(a-9,9);return{type:'calc',subtype:'borrow',a,b,op:'−',answer:a-b}}
-function genNumberOrder(){const a=rnd(1,20),b=rnd(1,20);if(a===b)return genNumberOrder();return{type:'compare_num',a,b,answer:a>b?'left':'right'}}
-function genClock(){const h=rnd(1,12),half=Math.random()>.5;const label=half?`${h}じはん`:`${h}じ`;const hAngle=(h%12)*30+(half?15:0);const mAngle=half?180:0;const totalMin=((h%12)*60)+(half?30:0);const choices=[label];while(choices.length<3){const ch=rnd(1,12),chalf=Math.random()>.5;const cl=chalf?`${ch}じはん`:`${ch}じ`;if(!choices.includes(cl))choices.push(cl)}for(let i=choices.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[choices[i],choices[j]]=[choices[j],choices[i]]}return{type:'clock',hour:h,half,hourAngle:hAngle,minAngle:mAngle,totalMin,answer:label,choices}}
-function genLength(){const items=[{a:'えんぴつ（15cm）',b:'けしゴム（3cm）',answer:'left',al:15,bl:3,qType:'ながい'},{a:'ほん（25cm）',b:'ノート（20cm）',answer:'left',al:25,bl:20,qType:'ながい'},{a:'くれよん（8cm）',b:'はさみ（16cm）',answer:'right',al:8,bl:16,qType:'ながい'},{a:'つくえ（60cm）',b:'いす（40cm）',answer:'left',al:60,bl:40,qType:'ながい'},{a:'スプーン（12cm）',b:'おはし（18cm）',answer:'right',al:12,bl:18,qType:'ながい'},{a:'バケツ（5L）',b:'コップ（2L）',answer:'left',al:5,bl:2,qType:'おおい'},{a:'ペットボトル（500mL）',b:'ジュースのかん（350mL）',answer:'left',al:500,bl:350,qType:'おおい'},{a:'やかん（3L）',b:'すいとう（1L）',answer:'left',al:3,bl:1,qType:'おおい'},{a:'おなべ（2L）',b:'おおきいなべ（4L）',answer:'right',al:2,bl:4,qType:'おおい'},{a:'スイカ（5kg）',b:'りんご（300g）',answer:'left',al:5000,bl:300,qType:'おもい'},{a:'ランドセル（1kg）',b:'きょうかしょ（200g）',answer:'left',al:1000,bl:200,qType:'おもい'},{a:'たまご（60g）',b:'バナナ（150g）',answer:'right',al:60,bl:150,qType:'おもい'}];return{type:'length',...items[rnd(0,items.length-1)]}}
-function generateQs(n,type){const qs=[];for(let i=0;i<n;i++){let q;switch(type){case'add_basic':q=genAddBasic();break;case'sub_basic':q=genSubBasic();break;case'add_carry':q=genAddCarry();break;case'sub_borrow':q=genSubBorrow();break;case'number_order':q=genNumberOrder();break;case'clock':q=genClock();break;case'length':q=genLength();break}qs.push(q)}return qs}
+// Clock SVG
+function drawSVG(hA,mA,sz){const cx=sz/2,cy=sz/2,r=sz/2-15;let s=`<svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}"><circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="#333" stroke-width="3"/>`;for(let i=0;i<60;i++){if(i%5===0)continue;const a=(i*6-90)*Math.PI/180;s+=`<line x1="${cx+Math.cos(a)*(r-6)}" y1="${cy+Math.sin(a)*(r-6)}" x2="${cx+Math.cos(a)*(r-10)}" y2="${cy+Math.sin(a)*(r-10)}" stroke="#ddd" stroke-width="1"/>`}for(let i=1;i<=12;i++){const a=(i*30-90)*Math.PI/180;s+=`<line x1="${cx+Math.cos(a)*(r-6)}" y1="${cy+Math.sin(a)*(r-6)}" x2="${cx+Math.cos(a)*(r-16)}" y2="${cy+Math.sin(a)*(r-16)}" stroke="#333" stroke-width="2.5" stroke-linecap="round"/><text x="${cx+Math.cos(a)*(r-28)}" y="${cy+Math.sin(a)*(r-28)}" text-anchor="middle" dominant-baseline="central" font-size="${sz>180?16:13}" font-weight="900" fill="#333" font-family="Zen Maru Gothic,sans-serif">${i}</text>`}const ha=(hA-90)*Math.PI/180;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ha)*r*.42}" y2="${cy+Math.sin(ha)*r*.42}" stroke="#e74c3c" stroke-width="5.5" stroke-linecap="round"/>`;const ma=(mA-90)*Math.PI/180;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ma)*r*.65}" y2="${cy+Math.sin(ma)*r*.65}" stroke="#2980b9" stroke-width="3.5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="5" fill="#333"/></svg>`;return s}
+
+// Generators (with duplicate prevention)
+function genAddBasic(prev){let a,b;do{a=rnd(1,9);b=rnd(1,9-a)}while(prev&&prev.a===a&&prev.b===b);return{type:'calc',subtype:'add',a,b,op:'+',answer:a+b}}
+function genSubBasic(prev){let ans,b,a;do{ans=rnd(1,8);b=rnd(1,9-ans);a=ans+b}while(prev&&prev.a===a&&prev.b===b);return{type:'calc',subtype:'sub',a,b,op:'−',answer:ans}}
+function genAddCarry(prev){let a,b;do{a=rnd(4,9);b=rnd(10-a+1,9)}while(prev&&prev.a===a&&prev.b===b);return{type:'calc',subtype:'carry',a,b,op:'+',answer:a+b}}
+function genSubBorrow(prev){let a,b;do{a=rnd(11,18);b=rnd(a-9,9)}while(prev&&prev.a===a&&prev.b===b);return{type:'calc',subtype:'borrow',a,b,op:'−',answer:a-b}}
+function genNumberOrder(prev){let a,b;do{a=rnd(1,20);b=rnd(1,20)}while(a===b||(prev&&prev.a===a&&prev.b===b));return{type:'compare_num',a,b,answer:a>b?'left':'right'}}
+function genClock(prev){let h,half;do{h=rnd(1,12);half=Math.random()>.5}while(prev&&prev.hour===h&&prev.half===half);const label=half?`${h}じはん`:`${h}じ`;const hAngle=(h%12)*30+(half?15:0);const mAngle=half?180:0;const totalMin=((h%12)*60)+(half?30:0);const choices=[label];while(choices.length<3){const ch=rnd(1,12),chalf=Math.random()>.5;const cl=chalf?`${ch}じはん`:`${ch}じ`;if(!choices.includes(cl))choices.push(cl)}for(let i=choices.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[choices[i],choices[j]]=[choices[j],choices[i]]}return{type:'clock',hour:h,half,hourAngle:hAngle,minAngle:mAngle,totalMin,answer:label,choices}}
+function genLength(prev){const items=[{a:'えんぴつ（15cm）',b:'けしゴム（3cm）',answer:'left',al:15,bl:3,qType:'ながい'},{a:'ほん（25cm）',b:'ノート（20cm）',answer:'left',al:25,bl:20,qType:'ながい'},{a:'くれよん（8cm）',b:'はさみ（16cm）',answer:'right',al:8,bl:16,qType:'ながい'},{a:'つくえ（60cm）',b:'いす（40cm）',answer:'left',al:60,bl:40,qType:'ながい'},{a:'スプーン（12cm）',b:'おはし（18cm）',answer:'right',al:12,bl:18,qType:'ながい'},{a:'バケツ（5L）',b:'コップ（2L）',answer:'left',al:5,bl:2,qType:'おおい'},{a:'ペットボトル（500mL）',b:'ジュースのかん（350mL）',answer:'left',al:500,bl:350,qType:'おおい'},{a:'やかん（3L）',b:'すいとう（1L）',answer:'left',al:3,bl:1,qType:'おおい'},{a:'おなべ（2L）',b:'おおきいなべ（4L）',answer:'right',al:2,bl:4,qType:'おおい'},{a:'スイカ（5kg）',b:'りんご（1kg）',answer:'left',al:5,bl:1,qType:'おもい'},{a:'ランドセル（3kg）',b:'ふでばこ（1kg）',answer:'left',al:3,bl:1,qType:'おもい'},{a:'たまご（1こ）',b:'バナナ（3ぼん）',answer:'right',al:1,bl:3,qType:'おもい'}];let item;do{item=items[rnd(0,items.length-1)]}while(prev&&prev.a===item.a);return{type:'length',...item}}
+function generateQs(n,type){const qs=[];for(let i=0;i<n;i++){const prev=i>0?qs[i-1]:null;let q;switch(type){case'add_basic':q=genAddBasic(prev);break;case'sub_basic':q=genSubBasic(prev);break;case'add_carry':q=genAddCarry(prev);break;case'sub_borrow':q=genSubBorrow(prev);break;case'number_order':q=genNumberOrder(prev);break;case'clock':q=genClock(prev);break;case'length':q=genLength(prev);break}qs.push(q)}return qs}
 
 // Nav
 function startUnit(type){sndClick();unitType=type;phase='main';questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];document.getElementById('menuScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');document.getElementById('resultScreen').classList.add('hidden');renderQ()}
 function backToMenu(){sndClick();document.getElementById('menuScreen').classList.remove('hidden');document.getElementById('quizScreen').classList.add('hidden');document.getElementById('resultScreen').classList.add('hidden');window.scrollTo({top:0})}
 function nextQuestion(){sndClick();const qs=phase==='main'?questions:retryQs;if(currentQ<qs.length-1){currentQ++;renderQ()}else showResult()}
 
-// Render
 function renderQ(){answered=false;inputVal='';const qs=phase==='main'?questions:retryQs,q=qs[currentQ],total=qs.length,r=phase==='main'?results:retryResults;document.getElementById('questionNumber').textContent=`だい ${currentQ+1} もん / ${total} もん`;const pb=document.getElementById('progressBar');pb.innerHTML=Array.from({length:total},(_,i)=>{let c='progress-dot';if(i===currentQ)c+=' active';else if(i<r.length)c+=r[i].correct?' correct':' wrong';return`<div class="${c}"></div>`}).join('');document.getElementById('resultBanner').className='result-banner';document.getElementById('resultBanner').style.display='none';document.getElementById('nextBtnGroup').classList.add('hidden');const el=document.getElementById('quizContent');switch(q.type){case'calc':renderCalc(el,q);break;case'compare_num':renderCN(el,q);break;case'clock':renderClock(el,q);break;case'length':renderLen(el,q);break}window.scrollTo({top:0,behavior:'smooth'})}
 
 // Calc
@@ -132,11 +128,10 @@ function numCl(){if(answered)return;sndClick();inputVal='';document.getElementBy
 function numOk(){if(answered||inputVal==='')return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const picked=parseInt(inputVal);const ok=picked===q.answer;document.querySelectorAll('.numpad-btn').forEach(b=>b.disabled=true);const box=document.getElementById('ansBox');if(ok){box.classList.add('correct-ans');box.textContent=q.answer}else{box.classList.add('wrong-ans');box.textContent=picked;setTimeout(()=>{box.insertAdjacentHTML('afterend',`<span class="correct-after">→ ${q.answer}</span>`)},600)}showBanner(ok);recordResult(ok,q)}
 
 // Clock
-function drawSVG(hA,mA,sz){const cx=sz/2,cy=sz/2,r=sz/2-15;let s=`<svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}"><circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="#333" stroke-width="3"/>`;for(let i=0;i<60;i++){if(i%5===0)continue;const a=(i*6-90)*Math.PI/180;s+=`<line x1="${cx+Math.cos(a)*(r-6)}" y1="${cy+Math.sin(a)*(r-6)}" x2="${cx+Math.cos(a)*(r-10)}" y2="${cy+Math.sin(a)*(r-10)}" stroke="#ddd" stroke-width="1"/>`}for(let i=1;i<=12;i++){const a=(i*30-90)*Math.PI/180;s+=`<line x1="${cx+Math.cos(a)*(r-6)}" y1="${cy+Math.sin(a)*(r-6)}" x2="${cx+Math.cos(a)*(r-16)}" y2="${cy+Math.sin(a)*(r-16)}" stroke="#333" stroke-width="2.5" stroke-linecap="round"/><text x="${cx+Math.cos(a)*(r-28)}" y="${cy+Math.sin(a)*(r-28)}" text-anchor="middle" dominant-baseline="central" font-size="${sz>180?16:13}" font-weight="900" fill="#333" font-family="Zen Maru Gothic,sans-serif">${i}</text>`}const ha=(hA-90)*Math.PI/180;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ha)*r*.42}" y2="${cy+Math.sin(ha)*r*.42}" stroke="#e74c3c" stroke-width="5.5" stroke-linecap="round"/>`;const ma=(mA-90)*Math.PI/180;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ma)*r*.65}" y2="${cy+Math.sin(ma)*r*.65}" stroke="#2980b9" stroke-width="3.5" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="5" fill="#333"/></svg>`;return s}
 function renderClock(el,q){el.innerHTML=`<div style="text-align:center;margin:8px 0">${drawSVG(q.hourAngle,q.minAngle,200)}</div><div style="text-align:center;font-size:.75rem;color:var(--text-soft);margin-bottom:8px">🔴 みじかいはり（じ）　🔵 ながいはり（ふん）</div><div class="question-text">いま なんじ？</div><div class="choice-grid-3" id="answerArea">${q.choices.map((c,i)=>`<button class="choice-btn" disabled id="clk-${i}" onclick="checkClk(${i})" style="font-size:1.1rem;padding:16px 8px">${c}</button>`).join('')}</div>`;setTimeout(()=>{el.querySelectorAll('.choice-btn').forEach(b=>b.disabled=false)},250)}
 function checkClk(idx){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=q.choices[idx]===q.answer;document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);document.getElementById(`clk-${idx}`).classList.add(ok?'correct':'wrong');if(!ok){const ci=q.choices.indexOf(q.answer);document.getElementById(`clk-${ci}`).classList.add('correct')}showBanner(ok);recordResult(ok,q)}
 
-// Compare
+// Compare num
 function renderCN(el,q){el.innerHTML=`<div class="question-text">どっちが おおきい？</div><div class="choice-grid-2"><button class="choice-btn" disabled id="cmp-left" onclick="checkCN2('left')" style="font-size:2rem">${q.a}</button><button class="choice-btn" disabled id="cmp-right" onclick="checkCN2('right')" style="font-size:2rem">${q.b}</button></div>`;setTimeout(()=>{el.querySelectorAll('.choice-btn').forEach(b=>b.disabled=false)},250)}
 function checkCN2(side){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=side===q.answer;document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);document.getElementById(`cmp-${side}`).classList.add(ok?'correct':'wrong');if(!ok)document.getElementById(`cmp-${q.answer}`).classList.add('correct');showBanner(ok);recordResult(ok,q)}
 
@@ -148,7 +143,7 @@ function checkLen2(side){if(answered)return;answered=true;const q=(phase==='main
 function showBanner(ok){const b=document.getElementById('resultBanner');const q=(phase==='main'?questions:retryQs)[currentQ];let sub='';if(!ok){if(q.type==='calc')sub=`こたえは ${q.answer} だよ`;else if(q.type==='clock')sub=`こたえは ${q.answer} だよ`;else if(q.type==='compare_num')sub=`${q.answer==='left'?q.a:q.b} のほうが おおきいよ`;else if(q.type==='length')sub=`${q.answer==='left'?q.a:q.b} のほうが ${q.qType||'ながい'}よ`}b.className='result-banner show '+(ok?'correct-banner':'wrong-banner');b.innerHTML=`<span class="banner-icon">${ok?'🎉':'😢'}</span>${ok?'せいかい！':'ざんねん…'}${sub?`<div class="banner-sub">${sub}</div>`:''}`;setTimeout(()=>{ok?sndOk():sndNg()},150)}
 function recordResult(ok,q){const r=phase==='main'?results:retryResults;r.push({correct:ok});questionLog.push({correct:ok,question:q});const dots=document.querySelectorAll('.progress-dot');dots[currentQ].classList.remove('active');dots[currentQ].classList.add(ok?'correct':'wrong');setTimeout(()=>{document.getElementById('nextBtnGroup').classList.remove('hidden');const qs=phase==='main'?questions:retryQs;document.getElementById('nextBtn').textContent=currentQ===qs.length-1?'けっかを みる →':'つぎの もんだい →'},ok?800:1500)}
 
-// === RESULT SCREEN ===
+// Result - ALL types have animation
 function showResult(){
   document.getElementById('quizScreen').classList.add('hidden');document.getElementById('resultScreen').classList.remove('hidden');
   const content=document.getElementById('resultContent'),r=phase==='main'?results:retryResults;
@@ -164,94 +159,160 @@ function showResult(){
       else if(q.type==='clock'){qText=`とけい → なんじ？`;ansText=`こたえ：${q.answer}`}
       else if(q.type==='compare_num'){qText=`${q.a} と ${q.b}、どっちが おおきい？`;ansText=`こたえ：${q.answer==='left'?q.a:q.b}`}
       else if(q.type==='length'){qText=`${q.a} と ${q.b}、どっちが ${q.qType||'ながい'}？`;ansText=`こたえ：${q.answer==='left'?q.a:q.b}`}
-      const hasAnim=q.type==='calc'||q.type==='clock';
-      reviewHtml+=`<div class="review-item"><div class="review-q">${qText}</div><div class="review-ans">✅ ${ansText}</div>${hasAnim?`<button class="review-anim-btn" id="rab-${i}" onclick="playReviewAnim(${i})">🎬 解説アニメを見る</button><div class="review-anim-area" id="raa-${i}"></div>`:''}</div>`;
-    });
-    reviewHtml+=`</div>`;
+      reviewHtml+=`<div class="review-item"><div class="review-q">${qText}</div><div class="review-ans">✅ ${ansText}</div><button class="review-anim-btn" id="rab-${i}" onclick="playRA(${i})">🎬 解説アニメを見る</button><div class="review-anim-area" id="raa-${i}"></div></div>`;
+    });reviewHtml+=`</div>`;
   }
   if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🏆</div><div class="result-title" style="color:#2b8a3e">ぜんもん せいかい！</div><div class="result-score">${dots}</div><div class="result-message">すごい！バッチリだね！🎉</div><div class="btn-group"><button class="btn btn-green" onclick="backToMenu()">もどる</button><button class="btn btn-blue" onclick="startUnit('${unitType}')">もういちど</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！れんしゅうしよう！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button></div>`}}
   else{if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🌟</div><div class="result-title" style="color:#2b8a3e">やったね！</div><div class="result-score">${dots}</div><div class="result-message">できるように なったね！<strong style="color:var(--pink)">🎉</strong></div><div class="btn-group"><button class="btn btn-green" onclick="backToMenu()">もどる</button><button class="btn btn-blue" onclick="startUnit('${unitType}')">もういちど</button></div>`}else{content.innerHTML=`<div class="result-icon">🤗</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">だいじょうぶ！れんしゅうすれば できるよ！</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど！</button><button class="btn btn-blue" onclick="backToMenu()">もどる</button></div>`}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// === REVIEW ANIMATIONS ===
-function playReviewAnim(idx){
-  const wrongItems=questionLog.filter(l=>!l.correct);
-  const q=wrongItems[idx].question;
-  const area=document.getElementById(`raa-${idx}`);
-  const btn=document.getElementById(`rab-${idx}`);
+// === ALL REVIEW ANIMATIONS ===
+function playRA(idx){
+  const wrongItems=questionLog.filter(l=>!l.correct);const q=wrongItems[idx].question;
+  const area=document.getElementById(`raa-${idx}`);const btn=document.getElementById(`rab-${idx}`);
   if(area.classList.contains('show')){area.classList.remove('show');area.innerHTML='';btn.textContent='🎬 解説アニメを見る';return}
-  btn.textContent='⏳ さいせいちゅう…';btn.disabled=true;
-  area.classList.add('show');
-  if(q.type==='calc') playCalcAnim(area,q,btn);
-  else if(q.type==='clock') playClockAnim(area,q,btn);
+  btn.textContent='⏳ さいせいちゅう…';btn.disabled=true;area.classList.add('show');
+  setTimeout(()=>{area.scrollIntoView({behavior:'smooth',block:'center'})},100);
+  if(q.type==='calc') playCalcAnim(area,q,btn,idx);
+  else if(q.type==='clock') playClockAnim(area,q,btn,idx);
+  else if(q.type==='compare_num') playCompareAnim(area,q,btn,idx);
+  else if(q.type==='length') playLenAnim(area,q,btn,idx);
 }
-
 function mkB(n,cls){return Array.from({length:n},()=>`<div class="ab ${cls}"></div>`).join('')}
 
-// Calc animations
-async function playCalcAnim(area,q,btn){
-  if(q.subtype==='add') await animAdd(area,q.a,q.b,q.answer);
-  else if(q.subtype==='sub'||q.subtype==='borrow') await animSub(area,q.a,q.b,q.answer);
-  else if(q.subtype==='carry') await animCarry(area,q.a,q.b,q.answer);
+// --- CALC ANIMATIONS ---
+async function playCalcAnim(area,q,btn,idx){
+  if(q.subtype==='add') await animAdd(area,q,idx);
+  else if(q.subtype==='sub') await animSub(area,q,idx);
+  else if(q.subtype==='carry') await animCarry(area,q,idx);
+  else if(q.subtype==='borrow') await animSub(area,q,idx);
   btn.disabled=false;btn.textContent='🎬 もういちど見る';
 }
-async function animAdd(el,a,b,ans){
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm">まず ${a}こ と ${b}こ</div><div class="anim-blocks-row"><div class="anim-col"><div class="anim-blocks">${mkB(a,'blue')}</div><div class="anim-label">${a}こ</div></div><div class="anim-plus">＋</div><div class="anim-col"><div class="anim-blocks">${mkB(b,'orange')}</div><div class="anim-label">${b}こ</div></div></div><div class="anim-result" id="xr"></div></div>`;
-  await sl(1200);el.querySelector('#xm').textContent='あわせると…';el.querySelector('#xm').className='anim-msg green';await sl(600);
-  el.querySelector('.anim-blocks-row').innerHTML=`<div class="anim-col"><div class="anim-blocks">${mkB(ans,'green')}</div><div class="anim-label" style="color:#22c55e;font-size:1.1rem">${ans}こ</div></div>`;
-  sndOk();await sl(400);const r=el.querySelector('#xr');r.textContent=`${a} + ${b} = ${ans}！`;r.classList.add('show');
-}
-async function animSub(el,a,b,ans){
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm">${a}こ あるよ</div><div class="anim-blocks" id="xbl">${Array.from({length:a},(_,i)=>`<div class="ab blue" id="xb-${i}"></div>`).join('')}</div><div class="anim-label" id="xlbl">${a}こ</div><div class="anim-result" id="xr"></div></div>`;
-  await sl(1000);el.querySelector('#xm').textContent=`ここから ${b}こ とるよ！`;el.querySelector('#xm').className='anim-msg red';await sl(800);
-  for(let i=a-b;i<a;i++){el.querySelector(`#xb-${i}`).classList.add('red-mark');sndRemove();await sl(350)}await sl(500);
-  for(let i=a-b;i<a;i++){el.querySelector(`#xb-${i}`).classList.remove('red-mark');el.querySelector(`#xb-${i}`).classList.add('fading')}await sl(600);
-  el.querySelector('#xbl').textContent=`${ans}こ`;el.querySelector('#xbl').style.color='#22c55e';
-  el.querySelector('#xbl').insertAdjacentHTML('beforebegin',`<div class="anim-blocks">${mkB(ans,'green')}</div>`);el.querySelector('#xbl').previousElementSibling.previousElementSibling.remove();
-  el.querySelector('#xm').textContent='のこりは…';el.querySelector('#xm').className='anim-msg green';sndOk();await sl(400);
-  const r=el.querySelector('#xr');r.textContent=`${a} − ${b} = ${ans}！`;r.classList.add('show');
-}
-async function animCarry(el,a,b,ans){
-  const need=10-a,remain=b-need;
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm">${a}こ と ${b}こ</div><div class="anim-blocks-row" id="xbr"><div class="anim-col"><div class="anim-blocks">${mkB(a,'blue')}</div><div class="anim-label">${a}こ</div></div><div class="anim-plus">＋</div><div class="anim-col"><div class="anim-blocks">${Array.from({length:b},(_,i)=>`<div class="ab orange" id="xo-${i}"></div>`).join('')}</div><div class="anim-label">${b}こ</div></div></div><div class="anim-result" id="xr"></div></div>`;
-  await sl(1200);el.querySelector('#xm').textContent=`10を つくるために ${need}こ うごかすよ！`;el.querySelector('#xm').className='anim-msg orange';await sl(1000);
-  for(let i=0;i<need;i++){el.querySelector(`#xo-${i}`).classList.add('moving');sndMove();await sl(300)}await sl(600);
-  let tenB=mkB(a,'blue')+mkB(need,'orange'),remB=mkB(remain,'orange');
-  el.querySelector('#xm').textContent='10の まとまりが できた！';el.querySelector('#xm').className='anim-msg green';
-  el.querySelector('#xbr').innerHTML=`<div class="anim-col"><div class="ten-frame glow"><div class="anim-blocks">${tenB}</div><div class="ten-badge">10</div></div><div class="anim-label" style="color:#22c55e">10こ</div></div>${remain>0?`<div class="anim-plus">＋</div><div class="anim-col"><div class="anim-blocks">${remB}</div><div class="anim-label">${remain}こ</div></div>`:''}`;
-  sndFanfare();await sl(1200);
-  el.querySelector('#xm').textContent=`10 + ${remain} = ${ans}！`;
-  const r=el.querySelector('#xr');r.textContent=`こたえは ${ans}！`;r.classList.add('show');sndOk();
+
+// ADD: show two groups → message → merge with all green, clear transition
+async function animAdd(area,q,idx){
+  const a=q.a,b=q.b,ans=q.answer;
+  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${a}こ と ${b}こ を あわせるよ</div><div class="anim-blocks-row" id="xbr${idx}"><div class="anim-col"><div class="anim-blocks">${mkB(a,'blue')}</div><div class="anim-label">${a}こ</div></div><div class="anim-plus">＋</div><div class="anim-col"><div class="anim-blocks">${mkB(b,'orange')}</div><div class="anim-label">${b}こ</div></div></div><div class="anim-result" id="xr${idx}"></div></div>`;
+  await sl(1500);
+  document.getElementById(`xm${idx}`).textContent='あわせると…';document.getElementById(`xm${idx}`).className='anim-msg orange';
+  await sl(1000);
+  // Rebuild as single group, showing blue then orange then all turn green
+  document.getElementById(`xbr${idx}`).innerHTML=`<div class="anim-col"><div class="anim-blocks" id="xmg${idx}">${mkB(a,'blue')}${mkB(b,'orange')}</div><div class="anim-label" style="opacity:0" id="xml${idx}">${ans}こ</div></div>`;
+  await sl(800);
+  // Turn all green
+  document.getElementById(`xmg${idx}`).querySelectorAll('.ab').forEach(d=>{d.classList.remove('blue','orange');d.classList.add('green')});
+  document.getElementById(`xml${idx}`).style.opacity='1';document.getElementById(`xml${idx}`).style.color='#22c55e';document.getElementById(`xml${idx}`).style.fontSize='1.1rem';
+  document.getElementById(`xm${idx}`).textContent=`ぜんぶで ${ans}こ！`;document.getElementById(`xm${idx}`).className='anim-msg green';
+  sndOk();await sl(400);
+  document.getElementById(`xr${idx}`).textContent=`${a} + ${b} = ${ans}！`;document.getElementById(`xr${idx}`).classList.add('show');
 }
 
-// Clock animation - REALISTIC: both hands move simultaneously
-async function playClockAnim(area,q,btn){
-  const totalMin=q.totalMin||((q.hour%12)*60+(q.half?30:0));
-  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm">12じから じかんを すすめるよ</div><div style="text-align:center" id="xclk">${drawSVG(0,0,180)}</div><div class="clock-legend"><span><span class="clock-legend-dot short"></span>みじかいはり</span><span><span class="clock-legend-dot long"></span>ながいはり</span></div><div class="anim-result" id="xr"></div></div>`;
+// SUB: blocks fade out, remaining stay in place and turn green
+async function animSub(area,q,idx){
+  const a=q.a,b=q.b,ans=q.answer;
+  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${a}こ あるよ</div><div class="anim-blocks" id="xbl${idx}">${Array.from({length:a},(_,i)=>`<div class="ab blue" id="xb${idx}-${i}"></div>`).join('')}</div><div class="anim-label" id="xlbl${idx}">${a}こ</div><div class="anim-result" id="xr${idx}"></div></div>`;
+  await sl(1200);
+  document.getElementById(`xm${idx}`).textContent=`ここから ${b}こ とるよ！`;document.getElementById(`xm${idx}`).className='anim-msg red';
   await sl(1000);
-  const xm=area.querySelector('#xm');const xclk=area.querySelector('#xclk');
-  xm.textContent='🔴🔵 はりが うごくよ！';xm.className='anim-msg orange';
+  // Mark blocks to remove (from right side)
+  for(let i=a-b;i<a;i++){document.getElementById(`xb${idx}-${i}`).classList.add('red-mark');sndRemove();await sl(400)}
   await sl(600);
-  // Animate: both hands move from 0 to totalMin, over ~3-4 seconds
-  const duration=Math.min(4000,Math.max(2000,totalMin*8));// Scale duration
-  const fps=30;const frames=Math.round(duration/1000*fps);
+  // Fade them out
+  for(let i=a-b;i<a;i++){document.getElementById(`xb${idx}-${i}`).classList.remove('red-mark');document.getElementById(`xb${idx}-${i}`).classList.add('fading')}
+  await sl(800);
+  // Turn remaining green (in place, no movement)
+  for(let i=0;i<ans;i++){document.getElementById(`xb${idx}-${i}`).classList.remove('blue');document.getElementById(`xb${idx}-${i}`).classList.add('green')}
+  document.getElementById(`xlbl${idx}`).textContent=`のこり ${ans}こ！`;document.getElementById(`xlbl${idx}`).style.color='#22c55e';
+  document.getElementById(`xm${idx}`).textContent=`のこりは ${ans}こ！`;document.getElementById(`xm${idx}`).className='anim-msg green';
+  sndOk();await sl(400);
+  document.getElementById(`xr${idx}`).textContent=`${a} − ${b} = ${ans}！`;document.getElementById(`xr${idx}`).classList.add('show');
+}
+
+// CARRY: 10のまとまり
+async function animCarry(area,q,idx){
+  const a=q.a,b=q.b,ans=q.answer,need=10-a,remain=b-need;
+  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${a}こ と ${b}こ</div><div class="anim-blocks-row" id="xbr${idx}"><div class="anim-col"><div class="anim-blocks">${mkB(a,'blue')}</div><div class="anim-label">${a}こ</div></div><div class="anim-plus">＋</div><div class="anim-col"><div class="anim-blocks">${Array.from({length:b},(_,i)=>`<div class="ab orange" id="xo${idx}-${i}"></div>`).join('')}</div><div class="anim-label">${b}こ</div></div></div><div class="anim-result" id="xr${idx}"></div></div>`;
+  await sl(1500);
+  document.getElementById(`xm${idx}`).textContent=`10を つくるために ${need}こ うごかすよ！`;document.getElementById(`xm${idx}`).className='anim-msg orange';
+  await sl(1200);
+  for(let i=0;i<need;i++){document.getElementById(`xo${idx}-${i}`).classList.add('moving');sndMove();await sl(400)}
+  await sl(700);
+  let tenB=mkB(a,'blue')+mkB(need,'orange'),remB=mkB(remain,'orange');
+  document.getElementById(`xm${idx}`).textContent='10の まとまりが できた！';document.getElementById(`xm${idx}`).className='anim-msg green';
+  document.getElementById(`xbr${idx}`).innerHTML=`<div class="anim-col"><div class="ten-frame glow"><div class="anim-blocks">${tenB}</div><div class="ten-badge">10</div></div><div class="anim-label" style="color:#22c55e">10こ</div></div>${remain>0?`<div class="anim-plus">＋</div><div class="anim-col"><div class="anim-blocks">${remB}</div><div class="anim-label">${remain}こ</div></div>`:''}`;
+  sndFanfare();await sl(1500);
+  document.getElementById(`xm${idx}`).textContent=`10 + ${remain} = ${ans}！`;
+  document.getElementById(`xr${idx}`).textContent=`こたえは ${ans}！`;document.getElementById(`xr${idx}`).classList.add('show');sndOk();
+}
+
+// CLOCK: speed halved
+async function playClockAnim(area,q,btn,idx){
+  const totalMin=q.totalMin||((q.hour%12)*60+(q.half?30:0));
+  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">12じから じかんを すすめるよ</div><div style="text-align:center" id="xclk${idx}">${drawSVG(0,0,180)}</div><div class="clock-legend"><span><span class="clock-legend-dot short"></span>みじかいはり</span><span><span class="clock-legend-dot long"></span>ながいはり</span></div><div class="anim-result" id="xr${idx}"></div></div>`;
+  await sl(1200);
+  document.getElementById(`xm${idx}`).textContent='🔴🔵 はりが うごくよ！';document.getElementById(`xm${idx}`).className='anim-msg orange';
+  await sl(800);
+  // DOUBLED duration for slower speed
+  const duration=Math.min(8000,Math.max(4000,totalMin*16));
+  const fps=25;const frames=Math.round(duration/1000*fps);
+  const xclk=document.getElementById(`xclk${idx}`);
   for(let f=1;f<=frames;f++){
     const elapsed=totalMin*(f/frames);
-    const mAngle=(elapsed%60)*6;// minute hand: 6 degrees per minute
-    const hAngle=elapsed*0.5;// hour hand: 0.5 degrees per minute
+    const mAngle=(elapsed%60)*6;const hAngle=elapsed*0.5;
     xclk.innerHTML=drawSVG(hAngle,mAngle,180);
-    if(f%(Math.round(fps/4))===0)sndTick();
+    if(f%(Math.round(fps/3))===0)sndTick();
     await sl(1000/fps);
   }
-  // Final exact position
   xclk.innerHTML=drawSVG(q.hourAngle,q.minAngle,180);
-  await sl(300);
-  xm.className='anim-msg green';
-  if(q.half){xm.textContent=`🔴 みじかいはり → ${q.hour}と${(q.hour%12)+1}のあいだ`;await sl(1200);xm.textContent='🔵 ながいはり → 6（はん）';await sl(1000)}
-  else{xm.textContent=`🔴 みじかいはり → ${q.hour}`;await sl(1200);xm.textContent='🔵 ながいはり → 12（ちょうど）';await sl(1000)}
-  xm.textContent=`${q.answer}！`;sndOk();
-  const r=area.querySelector('#xr');r.textContent=`🕐 こたえは ${q.answer}`;r.classList.add('show');
+  await sl(400);
+  document.getElementById(`xm${idx}`).className='anim-msg green';
+  if(q.half){document.getElementById(`xm${idx}`).textContent=`🔴 みじかいはり → ${q.hour}と${(q.hour%12)+1}のあいだ`;await sl(1500);document.getElementById(`xm${idx}`).textContent='🔵 ながいはり → 6（はん）';await sl(1200)}
+  else{document.getElementById(`xm${idx}`).textContent=`🔴 みじかいはり → ${q.hour}`;await sl(1500);document.getElementById(`xm${idx}`).textContent='🔵 ながいはり → 12（ちょうど）';await sl(1200)}
+  document.getElementById(`xm${idx}`).textContent=`${q.answer}！`;sndOk();
+  document.getElementById(`xr${idx}`).textContent=`🕐 こたえは ${q.answer}`;document.getElementById(`xr${idx}`).classList.add('show');
+  btn.disabled=false;btn.textContent='🎬 もういちど見る';
+}
+
+// COMPARE NUM: show blocks side by side
+async function playCompareAnim(area,q,btn,idx){
+  const a=q.a,b=q.b,bigger=q.answer==='left'?a:b;
+  // Scale blocks down for bigger numbers
+  const scale=Math.max(a,b)>10?18:24;
+  const maxW=scale*5+4*4+10;
+  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">ブロックで くらべてみよう！</div><div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:10px 0"><div class="anim-col"><div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:${maxW}px" id="xcl${idx}"></div><div class="anim-label" id="xla${idx}" style="font-size:1.1rem">${a}</div></div><div style="font-size:1.2rem;font-weight:900;color:var(--text-soft);align-self:center">vs</div><div class="anim-col"><div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:${maxW}px" id="xcr${idx}"></div><div class="anim-label" id="xlb${idx}" style="font-size:1.1rem">${b}</div></div></div><div class="anim-result" id="xr${idx}"></div></div>`;
+  await sl(800);
+  // Build left blocks one by one
+  const cl=document.getElementById(`xcl${idx}`),cr=document.getElementById(`xcr${idx}`);
+  for(let i=0;i<a;i++){const d=document.createElement('div');d.className='ab blue';d.style.width=scale+'px';d.style.height=scale+'px';cl.appendChild(d);sndPop(500+i*20);await sl(150)}
+  await sl(400);
+  for(let i=0;i<b;i++){const d=document.createElement('div');d.className='ab orange';d.style.width=scale+'px';d.style.height=scale+'px';cr.appendChild(d);sndPop(500+i*20);await sl(150)}
+  await sl(600);
+  document.getElementById(`xm${idx}`).textContent=`${a} と ${b} → ${bigger} のほうが おおきい！`;document.getElementById(`xm${idx}`).className='anim-msg green';
+  // Highlight winner
+  const winLabel=q.answer==='left'?`xla${idx}`:`xlb${idx}`;
+  document.getElementById(winLabel).style.color='#22c55e';document.getElementById(winLabel).style.fontSize='1.3rem';
+  sndOk();await sl(400);
+  document.getElementById(`xr${idx}`).textContent=`${bigger} のほうが おおきい！`;document.getElementById(`xr${idx}`).classList.add('show');
+  btn.disabled=false;btn.textContent='🎬 もういちど見る';
+}
+
+// LENGTH/WEIGHT: visual comparison with blocks
+async function playLenAnim(area,q,btn,idx){
+  const w=q.qType||'ながい';
+  const bigger=q.answer==='left'?q.a:q.b;
+  // Use bar visualization
+  const maxVal=Math.max(q.al,q.bl);
+  const aW=Math.round((q.al/maxVal)*100);const bW=Math.round((q.bl/maxVal)*100);
+  area.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">くらべてみよう！</div><div style="max-width:280px;margin:16px auto"><div style="margin-bottom:12px"><div style="font-size:.85rem;font-weight:700;margin-bottom:4px">${q.a}</div><div style="height:24px;border-radius:8px;background:#dbeafe;overflow:hidden"><div id="xba${idx}" style="height:100%;width:0;background:linear-gradient(90deg,#4ea8de,#3b82f6);border-radius:8px;transition:width 1s ease"></div></div></div><div><div style="font-size:.85rem;font-weight:700;margin-bottom:4px">${q.b}</div><div style="height:24px;border-radius:8px;background:#fef3c7;overflow:hidden"><div id="xbb${idx}" style="height:100%;width:0;background:linear-gradient(90deg,#ff922b,#f59e0b);border-radius:8px;transition:width 1s ease"></div></div></div></div><div class="anim-result" id="xr${idx}"></div></div>`;
+  await sl(800);
+  document.getElementById(`xba${idx}`).style.width=aW+'%';sndPop(600);
+  await sl(600);
+  document.getElementById(`xbb${idx}`).style.width=bW+'%';sndPop(700);
+  await sl(1200);
+  document.getElementById(`xm${idx}`).textContent=`${bigger} のほうが ${w}！`;document.getElementById(`xm${idx}`).className='anim-msg green';
+  sndOk();await sl(400);
+  document.getElementById(`xr${idx}`).textContent=`${bigger} が ${w}よ！`;document.getElementById(`xr${idx}`).classList.add('show');
   btn.disabled=false;btn.textContent='🎬 もういちど見る';
 }
 

@@ -286,6 +286,7 @@ function playRA(idx){
   const area=document.getElementById(`raa-${idx}`);const btn=document.getElementById(`rab-${idx}`);
   if(area.classList.contains('show')){area.classList.remove('show');area.innerHTML='';btn.textContent='🎬 かいせつアニメを みる';return}
   btn.textContent='⏳ さいせいちゅう…';btn.disabled=true;area.classList.add('show');
+  setTimeout(()=>{area.scrollIntoView({behavior:'smooth',block:'center'})},100);
   switch(q.subtype){
     case'kuku':animKuku(area,q,btn,idx);break;
     case'add_h':animHissan(area,q,btn,idx,true);break;
