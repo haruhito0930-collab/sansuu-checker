@@ -67,19 +67,50 @@
   .anim-group{margin:8px 0;line-height:2.2}
   .anim-shape-example{display:inline-block;font-size:2.5rem;margin:4px 8px;opacity:0;transition:all .4s;transform:scale(.5)}.anim-shape-example.show{opacity:1;transform:scale(1)}
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 24px;border:none;border-radius:14px;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}.btn:active{transform:scale(.96)}
-  .btn-pink{background:var(--pink);color:#fff}.btn-blue{background:var(--blue);color:#fff}.btn-green{background:var(--green);color:#fff}.btn-orange{background:var(--orange);color:#fff}
+  .btn-pink{background:var(--pink);color:#fff}.btn-blue{background:var(--blue);color:#fff}.btn-green{background:var(--green);color:#fff}.btn-orange{background:var(--orange);color:#fff}.btn-purple{background:var(--purple);color:#fff}
   .btn-group{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
   .hidden{display:none!important}
   .philosophy{text-align:center;padding:16px;color:var(--text-soft);font-size:.82rem;line-height:1.7}.philosophy strong{color:var(--pink)}
   .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1100;overflow:hidden}.confetti{position:absolute;top:-20px;font-size:1.5rem;animation:confettiFall linear forwards}@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
   .back-btn{position:absolute;top:8px;left:8px;background:none;border:none;font-size:1.2rem;cursor:pointer;padding:4px 8px;font-family:inherit;font-weight:700;color:var(--text-soft)}.quiz-wrapper{position:relative;padding-top:32px}
+  /* Guide */
+  .guide-box{background:var(--blue-light);border:2px solid #93c5fd;border-radius:16px;padding:14px;margin-bottom:12px;font-size:.85rem;line-height:1.7;color:#1e40af}
+  .guide-box .guide-title{font-weight:900;font-size:.95rem;margin-bottom:6px}
+  /* MyPage */
+  .mypage-btn{display:flex;align-items:center;gap:10px;padding:14px;border:2.5px solid var(--purple);border-radius:16px;cursor:pointer;transition:all .15s;background:var(--pink-light);margin-bottom:8px;width:100%}.mypage-btn:active{transform:scale(.97)}
+  .mypage-btn .menu-icon{font-size:1.5rem}.mypage-btn .menu-label{color:var(--purple)}
+  .chart-container{text-align:center;margin:16px 0}
+  .unit-list{margin-top:16px}
+  .unit-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f0f0f0}
+  .unit-row:last-child{border-bottom:none}
+  .unit-name{flex:1;font-weight:700;font-size:.9rem}
+  .unit-rate{font-weight:900;font-size:.9rem;min-width:50px;text-align:right}
+  .unit-bar{flex:2;height:12px;background:#f0f0f0;border-radius:6px;overflow:hidden}
+  .unit-bar-fill{height:100%;border-radius:6px;transition:width .8s ease}
+  .rate-green{color:#2b8a3e}.rate-yellow{color:#b45309}.rate-red{color:#c92a2a}
+  .diagnosis-box{background:var(--yellow-light);border:2px solid #ffe066;border-radius:16px;padding:16px;margin-top:16px;text-align:left}
+  .diagnosis-title{font-weight:900;font-size:1rem;color:#b45309;margin-bottom:8px;text-align:center}
+  .diagnosis-item{padding:8px 0;border-bottom:1px solid #ffe066;font-size:.9rem;line-height:1.6}.diagnosis-item:last-child{border-bottom:none}
+  .challenge-btn{display:block;width:100%;padding:14px;border:3px solid var(--pink);border-radius:16px;background:var(--pink-light);font-family:inherit;font-size:1rem;font-weight:900;color:var(--pink);cursor:pointer;margin-top:16px;text-align:center;transition:all .15s}.challenge-btn:active{transform:scale(.97)}
 </style>
 </head>
 <body>
 <div class="container">
   <div id="menuScreen">
     <div class="header"><div class="header-icon">🎒</div><h1>さんすう れんしゅう</h1><p>ようちえん</p></div>
-    <div class="card"><p style="text-align:center;font-weight:700;margin-bottom:14px;font-size:1rem">れんしゅうしたい ものを えらんでね！</p>
+    <div class="guide-box">
+      <div class="guide-title">📝 つかいかた</div>
+      にがてな たんげんの もんだいを といてみよう！<br>
+      どこが にがてか わからないときは、ぜんぶの たんげんを といてから<br>
+      <strong>📊マイページ</strong>で けっかを チェック！
+    </div>
+    <div class="card" style="background:linear-gradient(135deg,#f5f3ff,#fce7f3);border:2.5px solid var(--purple);cursor:pointer;text-align:center;padding:16px" onclick="showMyPage()">
+      <div style="font-size:2rem">📊</div>
+      <div style="font-size:1.1rem;font-weight:900;color:var(--purple);margin-top:4px">マイページ</div>
+      <div style="font-size:.8rem;color:var(--text-soft);margin-top:2px">とくい・にがてを チェック！</div>
+    </div>
+    <div class="card">
+      <p style="text-align:center;font-weight:700;margin-bottom:14px;font-size:1rem">れんしゅうしたい ものを えらんでね！</p>
       <div class="menu-grid">
         <div class="menu-item c1" onclick="startUnit('count')"><div class="menu-icon">🔢</div><div><div class="menu-label">かずを かぞえよう</div><div class="menu-desc">1〜10の かずを かぞえるよ</div></div></div>
         <div class="menu-item c2" onclick="startUnit('compare')"><div class="menu-icon">⚖️</div><div><div class="menu-label">おおきさくらべ</div><div class="menu-desc">どっちが おおい？</div></div></div>
@@ -92,6 +123,7 @@
   </div>
   <div id="quizScreen" class="hidden"><div class="card quiz-wrapper"><button class="back-btn" onclick="backToMenu()">← もどる</button><div class="progress-bar" id="progressBar"></div><div class="question-number" id="questionNumber"></div><div id="quizContent"></div><div class="result-banner" id="resultBanner"></div><div class="btn-group hidden" id="nextBtnGroup"><button class="btn btn-blue" id="nextBtn" onclick="nextQuestion()">つぎの もんだい →</button></div></div></div>
   <div id="resultScreen" class="hidden"><div class="card result-screen" id="resultContent"></div></div>
+  <div id="myPageScreen" class="hidden"></div>
 </div>
 <div class="confetti-container" id="confettiContainer"></div>
 <script>
@@ -104,8 +136,28 @@ function sndFanfare(){ea();[523.25,659.25,783.99,1046.5].forEach((f,i)=>{const o
 function sndClick(){ea();const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=800;g.gain.setValueAtTime(.15,ac.currentTime);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.08);o.start(ac.currentTime);o.stop(ac.currentTime+.08)}
 const sl=ms=>new Promise(r=>setTimeout(r,ms));
 
+// === DATA STORAGE ===
+const GRADE='kindergarten';
+const UNITS=[
+  {id:'count',name:'🔢 かず',label:'かず'},
+  {id:'compare',name:'⚖️ おおきさ',label:'おおきさ'},
+  {id:'shape',name:'🔺 かたち',label:'かたち'},
+  {id:'classify',name:'🧺 なかまわけ',label:'なかまわけ'},
+  {id:'order',name:'👆 じゅんばん',label:'じゅんばん'}
+];
+function getKey(unitId){return `sc_${GRADE}_${unitId}`}
+function loadData(unitId){try{return JSON.parse(localStorage.getItem(getKey(unitId)))||{attempts:0,correct:0,total:0}}catch(e){return{attempts:0,correct:0,total:0}}}
+function saveData(unitId,correctCount,totalCount){
+  const d=loadData(unitId);
+  d.attempts++;d.correct+=correctCount;d.total+=totalCount;d.lastDate=new Date().toISOString().slice(0,10);
+  localStorage.setItem(getKey(unitId),JSON.stringify(d));
+}
+function getRate(unitId){const d=loadData(unitId);return d.total===0?-1:Math.round(d.correct/d.total*100)}
+function getRateLevel(rate){if(rate<0)return{statusLabel:'まだ',color:'#94a3b8',level:0};if(rate>=95)return{statusLabel:'バッチリ！',color:'#22c55e',level:3};if(rate>=80)return{statusLabel:'もうすこし',color:'#f59e0b',level:2};return{statusLabel:'つまずき',color:'#ef4444',level:1}}
+
 // State
 const TOTAL=5;let unitType='',questions=[],currentQ=0,results=[],phase='main',retryQs=[],retryResults=[],answered=false,questionLog=[];
+let challengeMode=false,challengeUnits=[];
 
 // Data
 const EMOJI_ITEMS=[{e:'🍎',n:'りんご'},{e:'🍊',n:'みかん'},{e:'🍌',n:'バナナ'},{e:'🍓',n:'いちご'},{e:'🌸',n:'おはな'},{e:'⭐',n:'ほし'},{e:'🐟',n:'おさかな'},{e:'🦋',n:'ちょうちょ'},{e:'🐞',n:'てんとうむし'},{e:'🎈',n:'ふうせん'},{e:'🚗',n:'くるま'},{e:'✏️',n:'えんぴつ'},{e:'🐤',n:'ひよこ'},{e:'🍰',n:'ケーキ'},{e:'🐸',n:'かえる'}];
@@ -124,8 +176,9 @@ function genOrder(){const pool=shuffle([...ORDER_EMOJIS]).slice(0,5);const ti=Ma
 function generateQs(n,type,existing=[]){const qs=[],used=existing.map(q=>({e:q.e,count:q.count}));for(let i=0;i<n;i++){let q;switch(type){case'count':q=genCount(used);used.push({e:q.e,count:q.count});break;case'compare':q=genCompare();break;case'shape':q=genShape();break;case'classify':q=genClassify();break;case'order':q=genOrder();break}qs.push(q)}return qs}
 
 // Nav
-function startUnit(type){sndClick();unitType=type;phase='main';questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];document.getElementById('menuScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');document.getElementById('resultScreen').classList.add('hidden');renderQ()}
-function backToMenu(){sndClick();document.getElementById('menuScreen').classList.remove('hidden');document.getElementById('quizScreen').classList.add('hidden');document.getElementById('resultScreen').classList.add('hidden');window.scrollTo({top:0})}
+function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function backToMenu(){sndClick();hideAll();document.getElementById('menuScreen').classList.remove('hidden');window.scrollTo({top:0})}
+function hideAll(){['menuScreen','quizScreen','resultScreen','myPageScreen'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
 function nextQuestion(){sndClick();const qs=phase==='main'?questions:retryQs;if(currentQ<qs.length-1){currentQ++;renderQ()}else showResult()}
 
 function renderQ(){answered=false;const qs=phase==='main'?questions:retryQs,q=qs[currentQ],total=qs.length,r=phase==='main'?results:retryResults;
@@ -137,15 +190,15 @@ const el=document.getElementById('quizContent');
 switch(q.type){case'count':renderCount(el,q);break;case'compare':renderCompare(el,q);break;case'shape':renderShape(el,q);break;case'classify':renderClassify(el,q);break;case'order':renderOrder(el,q);break}
 window.scrollTo({top:0,behavior:'smooth'})}
 
-// === QUIZ RENDERS & CHECKS ===
-function renderCount(el,q){el.innerHTML=`<div class="emoji-display">${Array.from({length:q.count},(_,i)=>`<span class="emoji-item">${q.e}</span>`).join('')}</div><div class="question-text">${q.n}は いくつ？</div><div class="number-grid">${Array.from({length:10},(_,i)=>`<button class="num-btn" disabled id="ab-${i}" onclick="checkCount(${i+1},${q.count})">${i+1}</button>`).join('')}</div>`;setTimeout(()=>{el.querySelectorAll('.num-btn').forEach(b=>b.disabled=false)},250)}
-function checkCount(picked,correct){if(answered)return;answered=true;document.querySelectorAll('.num-btn').forEach(b=>b.disabled=true);const ok=picked===correct;document.getElementById(`ab-${picked-1}`).classList.add(ok?'correct':'wrong');if(!ok)setTimeout(()=>{document.getElementById(`ab-${correct-1}`).classList.add('correct')},500);const q=(phase==='main'?questions:retryQs)[currentQ];showBanner(ok,`こたえは ${correct} だよ`);recordResult(ok,q)}
+// Quiz renders (same as before)
+function renderCount(el,q){el.innerHTML=`<div class="emoji-display">${Array.from({length:q.count},()=>`<span class="emoji-item">${q.e}</span>`).join('')}</div><div class="question-text">${q.n}は いくつ？</div><div class="number-grid">${Array.from({length:10},(_,i)=>`<button class="num-btn" disabled id="ab-${i}" onclick="checkCount(${i+1},${q.count})">${i+1}</button>`).join('')}</div>`;setTimeout(()=>{el.querySelectorAll('.num-btn').forEach(b=>b.disabled=false)},250)}
+function checkCount(picked,correct){if(answered)return;answered=true;document.querySelectorAll('.num-btn').forEach(b=>b.disabled=true);const ok=picked===correct;document.getElementById(`ab-${picked-1}`).classList.add(ok?'correct':'wrong');if(!ok)setTimeout(()=>{document.getElementById(`ab-${correct-1}`).classList.add('correct')},500);showBanner(ok,`こたえは ${correct} だよ`);recordResult(ok,(phase==='main'?questions:retryQs)[currentQ])}
 
 function renderCompare(el,q){el.innerHTML=`<div class="question-text">どっちが おおい？</div><div class="choice-grid-2"><button class="choice-btn" disabled id="cmp-left" onclick="checkCompare('left')"><div class="choice-emoji">${q.e1.repeat(Math.min(q.c1,5))}</div>${q.c1>5?'<div style="font-size:1.8rem">'+q.e1.repeat(q.c1-5)+'</div>':''}<div class="choice-label">${q.n1}</div></button><button class="choice-btn" disabled id="cmp-right" onclick="checkCompare('right')"><div class="choice-emoji">${q.e2.repeat(Math.min(q.c2,5))}</div>${q.c2>5?'<div style="font-size:1.8rem">'+q.e2.repeat(q.c2-5)+'</div>':''}<div class="choice-label">${q.n2}</div></button></div>`;setTimeout(()=>{el.querySelectorAll('.choice-btn').forEach(b=>b.disabled=false)},250)}
 function checkCompare(side){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=side===q.answer;document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);document.getElementById(`cmp-${side}`).classList.add(ok?'correct':'wrong');if(!ok)document.getElementById(`cmp-${q.answer}`).classList.add('correct');const cn=q.answer==='left'?q.n1:q.n2,cc=q.answer==='left'?q.c1:q.c2;showBanner(ok,`${cn}（${cc}こ）が おおいよ`);recordResult(ok,q)}
 
 function renderShape(el,q){el.innerHTML=`<div class="emoji-display"><span style="font-size:4rem">${q.e}</span></div><div class="question-text">この かたちは なあに？</div><div class="choice-grid-3">${SHAPES.map(s=>`<button class="choice-btn" disabled id="shp-${s.shape}" onclick="checkShape('${s.shape}')"><div class="choice-emoji">${s.e}</div><div class="choice-label">${s.n}</div></button>`).join('')}</div>`;setTimeout(()=>{el.querySelectorAll('.choice-btn').forEach(b=>b.disabled=false)},250)}
-function checkShape(picked){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=picked===q.answer;document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);document.getElementById(`shp-${picked}`).classList.add(ok?'correct':'wrong');if(!ok)document.getElementById(`shp-${q.answer}`).classList.add('correct');const cn=SHAPES.find(s=>s.shape===q.answer).n;showBanner(ok,`これは「${cn}」だよ`);recordResult(ok,q)}
+function checkShape(picked){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=picked===q.answer;document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);document.getElementById(`shp-${picked}`).classList.add(ok?'correct':'wrong');if(!ok)document.getElementById(`shp-${q.answer}`).classList.add('correct');showBanner(ok,`これは「${SHAPES.find(s=>s.shape===q.answer).n}」だよ`);recordResult(ok,q)}
 
 function renderClassify(el,q){el.innerHTML=`<div class="question-text">「${q.label}」の なかまを ぜんぶ えらんでね！</div><div class="tap-grid">${q.items.map((e,i)=>`<button class="tap-item" id="tap-${i}" onclick="toggleTap(${i})">${e}</button>`).join('')}</div><div class="submit-row"><button class="btn btn-orange" id="classifySubmit" onclick="checkClassify()">こたえあわせ ✓</button></div>`}
 function toggleTap(i){if(answered)return;sndClick();document.getElementById(`tap-${i}`).classList.toggle('selected')}
@@ -154,15 +207,21 @@ function checkClassify(){if(answered)return;answered=true;const q=(phase==='main
 function renderOrder(el,q){const dt=q.direction==='left'?'ひだりから':'みぎから';el.innerHTML=`<div class="question-text">${dt} ${q.displayPos}ばんめは どれ？</div><div class="order-grid">${q.items.map((e,i)=>`<button class="order-item" id="ord-${i}" onclick="checkOrder(${i})"><span>${e}</span><span class="order-label" style="visibility:hidden">${q.direction==='left'?i+1:q.items.length-i}</span></button>`).join('')}</div>`;setTimeout(()=>{el.querySelectorAll('.order-item').forEach(b=>b.style.pointerEvents='auto')},250)}
 function checkOrder(picked){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=picked===q.targetIdx;document.querySelectorAll('.order-item').forEach(b=>b.style.pointerEvents='none');document.getElementById(`ord-${picked}`).classList.add(ok?'correct-mark':'wrong-mark');if(!ok)document.getElementById(`ord-${q.targetIdx}`).classList.add('correct-mark');document.querySelectorAll('.order-label').forEach(l=>l.style.visibility='visible');const dt=q.direction==='left'?'ひだりから':'みぎから';showBanner(ok,`${dt} ${q.displayPos}ばんめは ${q.items[q.targetIdx]} だよ`);recordResult(ok,q)}
 
-// Common
 function showBanner(ok,wrongSub){const b=document.getElementById('resultBanner');b.className='result-banner show '+(ok?'correct-banner':'wrong-banner');b.innerHTML=`<span class="banner-icon">${ok?'🎉':'😢'}</span>${ok?'せいかい！':'ざんねん…'}${!ok?`<div class="banner-sub">${wrongSub}</div>`:''}`;setTimeout(()=>{ok?sndOk():sndNg()},150)}
 function recordResult(ok,q){const r=phase==='main'?results:retryResults;r.push({correct:ok});questionLog.push({correct:ok,question:q});const dots=document.querySelectorAll('.progress-dot');dots[currentQ].classList.remove('active');dots[currentQ].classList.add(ok?'correct':'wrong');setTimeout(()=>{document.getElementById('nextBtnGroup').classList.remove('hidden');const qs=phase==='main'?questions:retryQs;document.getElementById('nextBtn').textContent=currentQ===qs.length-1?'けっかを みる →':'つぎの もんだい →'},ok?800:1500)}
 
-// === RESULT ===
+// === RESULT (with data save) ===
 function showResult(){
-  document.getElementById('quizScreen').classList.add('hidden');document.getElementById('resultScreen').classList.remove('hidden');
+  hideAll();document.getElementById('resultScreen').classList.remove('hidden');
   const content=document.getElementById('resultContent'),r=phase==='main'?results:retryResults;
   const cc=r.filter(x=>x.correct).length,total=r.length;
+  // SAVE DATA
+  if(!challengeMode){saveData(unitType,cc,total)}
+  else{
+    // Challenge mode: save per unit
+    const unitCounts={};questionLog.forEach(l=>{const t=l.question.type;if(!unitCounts[t])unitCounts[t]={c:0,t:0};unitCounts[t].t++;if(l.correct)unitCounts[t].c++});
+    Object.keys(unitCounts).forEach(t=>{saveData(t,unitCounts[t].c,unitCounts[t].t)});
+  }
   const dots=r.map(x=>`<div class="result-score-dot ${x.correct?'s-correct':'s-wrong'}">${x.correct?'⭕':'❌'}</div>`).join('');
   const wrongItems=questionLog.filter(l=>!l.correct);
   let reviewHtml='';
@@ -176,15 +235,111 @@ function showResult(){
       else if(q.type==='classify'){qText=`「${q.label}」の なかまは？`;ansText=`せいかい：${q.correctItems.join(' ')}`}
       else if(q.type==='order'){const dt=q.direction==='left'?'ひだりから':'みぎから';qText=`${dt} ${q.displayPos}ばんめは？`;ansText=`こたえ：${q.items[q.targetIdx]}`}
       reviewHtml+=`<div class="review-item"><div class="review-q">${qText}</div><div class="review-ans">✅ ${ansText}</div><button class="review-anim-btn" id="rab-${i}" onclick="playReviewAnim(${i})">🎬 かいせつアニメを みる</button><div class="review-anim-area" id="raa-${i}"></div></div>`;
-    });
-    reviewHtml+=`</div>`;
+    });reviewHtml+=`</div>`;
   }
-  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🏆</div><div class="result-title" style="color:#2b8a3e">ぜんもん せいかい！</div><div class="result-score">${dots}</div><div class="result-message">すごい！バッチリだね！🎉<br>ほかの れんしゅうにも ちょうせんしよう！</div><div class="btn-group"><button class="btn btn-green" onclick="backToMenu()">もどる</button><button class="btn btn-blue" onclick="startUnit('${unitType}')">もういちど</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！'}<br>もういちど ちょうせんしよう！</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button></div>`}}
-  else{if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🌟</div><div class="result-title" style="color:#2b8a3e">やったね！ぜんもん せいかい！</div><div class="result-score">${dots}</div><div class="result-message">できるように なったね！<br><strong style="color:var(--pink)">がんばったね！🎉</strong></div><div class="btn-group"><button class="btn btn-green" onclick="backToMenu()">もどる</button><button class="btn btn-blue" onclick="startUnit('${unitType}')">もういちど</button></div>`}else{content.innerHTML=`<div class="result-icon">🤗</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">だいじょうぶ！れんしゅうすれば できるよ！<br>おうちのひとと いっしょに やってみてね 😊</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど！</button><button class="btn btn-blue" onclick="backToMenu()">もどる</button></div>`}}
+  const isChallenge=challengeMode;
+  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${isChallenge?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${isChallenge?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div><div class="result-message">${isChallenge?'すごい！にがてを のりこえたね！🎉':'すごい！バッチリだね！🎉'}</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
+  else{if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🌟</div><div class="result-title" style="color:#2b8a3e">やったね！</div><div class="result-score">${dots}</div><div class="result-message">できるように なったね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">🤗</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">だいじょうぶ！れんしゅうすれば できるよ！</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど！</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// === REVIEW ANIMATIONS ===
+// === MY PAGE ===
+function showMyPage(){
+  sndClick();hideAll();document.getElementById('myPageScreen').classList.remove('hidden');
+  const rates=UNITS.map(u=>({...u,rate:getRate(u.id),...getRateLevel(getRate(u.id))}));
+  const hasData=rates.some(r=>r.rate>=0);
+
+  // Pentagon chart SVG
+  const cx=160,cy=160,r=100;
+  const angles=UNITS.map((_,i)=>(i*72-90)*Math.PI/180);
+  let chartSVG=`<svg viewBox="0 0 320 320" width="280" height="280">`;
+  // Grid lines
+  for(let lv=0.25;lv<=1;lv+=0.25){
+    const pts=angles.map(a=>`${cx+Math.cos(a)*r*lv},${cy+Math.sin(a)*r*lv}`).join(' ');
+    chartSVG+=`<polygon points="${pts}" fill="none" stroke="#e0e0e0" stroke-width="1"/>`
+  }
+  // Axis lines
+  angles.forEach(a=>{chartSVG+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a)*r}" y2="${cy+Math.sin(a)*r}" stroke="#e0e0e0" stroke-width="1"/>`});
+  // Labels
+  UNITS.forEach((u,i)=>{
+    const lx=cx+Math.cos(angles[i])*(r+30);
+    const ly=cy+Math.sin(angles[i])*(r+30);
+    chartSVG+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#636e72" font-family="Zen Maru Gothic,sans-serif">${u.label}</text>`;
+  });
+  // Data polygon
+  if(hasData){
+    const dataPts=rates.map((rr,i)=>{const val=rr.rate<0?0:rr.rate/100;return`${cx+Math.cos(angles[i])*r*val},${cy+Math.sin(angles[i])*r*val}`}).join(' ');
+    chartSVG+=`<polygon points="${dataPts}" fill="rgba(204,93,232,.15)" stroke="var(--purple)" stroke-width="2.5"/>`;
+    rates.forEach((rr,i)=>{if(rr.rate>=0){const px=cx+Math.cos(angles[i])*r*(rr.rate/100),py=cy+Math.sin(angles[i])*r*(rr.rate/100);chartSVG+=`<circle cx="${px}" cy="${py}" r="5" fill="${rr.color}" stroke="#fff" stroke-width="2"/>`}});
+  }
+  chartSVG+=`</svg>`;
+
+  // Unit list
+  let unitListHtml=rates.map(rr=>{
+    const barColor=rr.rate<0?'#e0e0e0':rr.color;
+    const barWidth=rr.rate<0?0:rr.rate;
+    const rateText=rr.rate<0?'—':rr.rate+'%';
+    const rateClass=rr.rate<0?'':rr.rate>=95?'rate-green':rr.rate>=80?'rate-yellow':'rate-red';
+    return`<div class="unit-row"><div class="unit-name">${rr.name}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barWidth}%;background:${barColor}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`;
+  }).join('');
+
+  // Diagnosis
+  const weakUnits=rates.filter(r=>r.rate>=0&&r.rate<80);
+  const okUnits=rates.filter(r=>r.rate>=80&&r.rate<95);
+  const strongUnits=rates.filter(r=>r.rate>=95);
+  const noData=rates.filter(r=>r.rate<0);
+  let diagHtml='';
+  if(hasData){
+    diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;
+    if(strongUnits.length>0) diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongUnits.map(u=>u.label).join('・')}</strong> は バッチリ！このちょうしでがんばろう！</div>`;
+    if(okUnits.length>0) diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okUnits.map(u=>u.label).join('・')}</strong> は もうすこし！あと すこしで かんぺき！</div>`;
+    if(weakUnits.length>0) diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakUnits.map(u=>u.label).join('・')}</strong> が つまずきポイント！ここを れんしゅうしよう！</div>`;
+    if(noData.length>0) diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ。ちょうせんしてみよう！</div>`;
+    diagHtml+=`</div>`;
+    if(weakUnits.length>0){
+      diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakUnits.map(u=>u.label).join('・')} を れんしゅう</span></button>`;
+    }
+  }else{
+    diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div><div class="diagnosis-item">まだ データが ないよ。<br>まずは ぜんぶの たんげんを といてみよう！</div></div>`;
+  }
+
+  document.getElementById('myPageScreen').innerHTML=`
+    <div class="card">
+      <button class="back-btn" onclick="backToMenu()">← もどる</button>
+      <div style="text-align:center;padding-top:24px"><span style="font-size:1.8rem">📊</span><div style="font-size:1.2rem;font-weight:900;margin-top:4px">マイページ</div></div>
+      <div class="chart-container">${chartSVG}</div>
+      <div class="unit-list">${unitListHtml}</div>
+      ${diagHtml}
+    </div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// === CHALLENGE MODE ===
+function startChallenge(){
+  sndClick();challengeMode=true;
+  const rates=UNITS.map(u=>({...u,rate:getRate(u.id)}));
+  challengeUnits=rates.filter(r=>r.rate>=0&&r.rate<80).map(r=>r.id);
+  if(challengeUnits.length===0){backToMenu();return}
+  // Generate 3 questions per weak unit
+  questions=[];
+  challengeUnits.forEach(uid=>{
+    const qs=generateQs(3,uid);
+    questions.push(...qs);
+  });
+  shuffle(questions);
+  unitType=challengeUnits[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];
+  hideAll();document.getElementById('quizScreen').classList.remove('hidden');
+  renderQ();
+}
+
+function resetData(){
+  if(confirm('データを リセットしますか？')){UNITS.forEach(u=>localStorage.removeItem(getKey(u.id)));showMyPage()}
+}
+
+function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType,questions);retryResults=[];questionLog=[];currentQ=0;hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function showConfetti(){const c=document.getElementById('confettiContainer');const es=['🎉','⭐','🌟','✨','🎊','💫','🌈','🎈'];for(let i=0;i<40;i++){const el=document.createElement('span');el.className='confetti';el.textContent=es[Math.floor(Math.random()*es.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.8)+'s';el.style.fontSize=(1+Math.random()*1.5)+'rem';c.appendChild(el)}setTimeout(()=>{c.innerHTML=''},4000)}
+
+// === REVIEW ANIMATIONS (same as before) ===
 function playReviewAnim(idx){
   const wrongItems=questionLog.filter(l=>!l.correct);const q=wrongItems[idx].question;
   const area=document.getElementById(`raa-${idx}`);const btn=document.getElementById(`rab-${idx}`);
@@ -199,104 +354,11 @@ function playReviewAnim(idx){
     case'order':animOrder(area,q,btn,idx);break;
   }
 }
-
-// --- COUNT: emoji light up one by one with numbers ---
-async function animCount(el,q,btn,idx){
-  let emojis='';for(let i=0;i<q.count;i++)emojis+=`<span class="anim-emoji" id="ae${idx}-${i}">${q.e}</span><span class="anim-count" id="ac${idx}-${i}">${i+1}</span>`;
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${q.n}を かぞえるよ！</div><div class="anim-group">${emojis}</div><div class="anim-result" id="xr${idx}"></div></div>`;
-  await sl(800);
-  for(let i=0;i<q.count;i++){
-    document.getElementById(`ae${idx}-${i}`).classList.add('lit');sndPop(500+i*40);
-    await sl(200);document.getElementById(`ac${idx}-${i}`).classList.add('show');await sl(400);
-  }
-  await sl(400);sndOk();
-  document.getElementById(`xm${idx}`).textContent=`${q.n}は ${q.count}こ！`;document.getElementById(`xm${idx}`).className='anim-msg green';
-  document.getElementById(`xr${idx}`).textContent=`こたえは ${q.count}こ！`;document.getElementById(`xr${idx}`).classList.add('show');
-  btn.disabled=false;btn.textContent='🎬 もういちど みる';
-}
-
-// --- COMPARE: count both sides, then show winner ---
-async function animCompare(el,q,btn,idx){
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">それぞれ かぞえよう！</div><div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap"><div class="anim-col"><div class="anim-group" id="xg1${idx}">${Array.from({length:q.c1},(_,i)=>`<span class="anim-emoji" id="al${idx}-${i}">${q.e1}</span>`).join('')}</div><div class="anim-label" id="xl1${idx}">？こ</div></div><div style="font-size:1.3rem;font-weight:900;color:var(--text-soft);align-self:center">vs</div><div class="anim-col"><div class="anim-group" id="xg2${idx}">${Array.from({length:q.c2},(_,i)=>`<span class="anim-emoji" id="ar${idx}-${i}">${q.e2}</span>`).join('')}</div><div class="anim-label" id="xl2${idx}">？こ</div></div></div><div class="anim-result" id="xr${idx}"></div></div>`;
-  await sl(800);
-  for(let i=0;i<q.c1;i++){document.getElementById(`al${idx}-${i}`).classList.add('lit');sndPop(500+i*30);await sl(300)}
-  document.getElementById(`xl1${idx}`).textContent=`${q.c1}こ`;document.getElementById(`xl1${idx}`).style.color='#3b82f6';
-  await sl(400);
-  for(let i=0;i<q.c2;i++){document.getElementById(`ar${idx}-${i}`).classList.add('lit');sndPop(500+i*30);await sl(300)}
-  document.getElementById(`xl2${idx}`).textContent=`${q.c2}こ`;document.getElementById(`xl2${idx}`).style.color='#3b82f6';
-  await sl(600);sndOk();
-  const cn=q.answer==='left'?q.n1:q.n2,cc=q.answer==='left'?q.c1:q.c2;
-  document.getElementById(`xm${idx}`).textContent=`${cn}（${cc}こ）の ほうが おおい！`;document.getElementById(`xm${idx}`).className='anim-msg green';
-  document.getElementById(`xr${idx}`).textContent=`${q.c1} と ${q.c2} → ${cc}こ が おおいね！`;document.getElementById(`xr${idx}`).classList.add('show');
-  btn.disabled=false;btn.textContent='🎬 もういちど みる';
-}
-
-// --- SHAPE: show shape with real-world examples appearing ---
-async function animShape(el,q,btn,idx){
-  const cn=SHAPES.find(s=>s.shape===q.answer).n;
-  const examples={circle:['⚽','🍩','🕐','🌕','🍊'],triangle:['🔺','🍕','📐','⛺','🏔️'],square:['📦','🎁','📺','🪟','📱']};
-  const ex=examples[q.answer]||[];
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${q.e} は どんな かたち？</div><div style="font-size:3rem;margin:8px 0">${q.e}</div><div style="margin:12px 0" id="xex${idx}"></div><div class="anim-result" id="xr${idx}"></div></div>`;
-  await sl(1000);
-  document.getElementById(`xm${idx}`).textContent=`これは「${cn}」の かたち！`;document.getElementById(`xm${idx}`).className='anim-msg green';
-  await sl(600);
-  document.getElementById(`xm${idx}`).textContent=`「${cn}」の なかまは…`;
-  const exEl=document.getElementById(`xex${idx}`);
-  for(let i=0;i<ex.length;i++){
-    const span=document.createElement('span');span.className='anim-shape-example';span.textContent=ex[i];exEl.appendChild(span);
-    await sl(100);span.classList.add('show');sndPop(500+i*60);await sl(400);
-  }
-  await sl(400);sndOk();
-  document.getElementById(`xr${idx}`).textContent=`${cn} → ${ex.join(' ')}`;document.getElementById(`xr${idx}`).classList.add('show');
-  btn.disabled=false;btn.textContent='🎬 もういちど みる';
-}
-
-// --- CLASSIFY: correct items glow and gather ---
-async function animClassify(el,q,btn,idx){
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">「${q.label}」の なかまを さがそう！</div><div class="anim-group" id="xitems${idx}" style="font-size:2.2rem;letter-spacing:8px">${q.items.map((e,i)=>`<span class="anim-emoji" id="ai${idx}-${i}" style="opacity:1">${e}</span>`).join('')}</div><div style="margin-top:12px" id="xgathered${idx}"></div><div class="anim-result" id="xr${idx}"></div></div>`;
-  await sl(1000);
-  document.getElementById(`xm${idx}`).textContent=`${q.label}は どれかな…？`;document.getElementById(`xm${idx}`).className='anim-msg orange';
-  await sl(800);
-  // Highlight correct items
-  for(let i=0;i<q.items.length;i++){
-    const isCorrect=q.correctItems.includes(q.items[i]);
-    if(isCorrect){document.getElementById(`ai${idx}-${i}`).style.transform='scale(1.3)';document.getElementById(`ai${idx}-${i}`).style.textShadow='0 0 12px rgba(81,207,102,.6)';sndPop(600);await sl(500)}
-    else{document.getElementById(`ai${idx}-${i}`).style.opacity='.2';await sl(200)}
-  }
-  await sl(600);sndOk();
-  document.getElementById(`xm${idx}`).textContent=`「${q.label}」の なかまは…`;document.getElementById(`xm${idx}`).className='anim-msg green';
-  document.getElementById(`xgathered${idx}`).innerHTML=`<div style="font-size:2.5rem;letter-spacing:12px">${q.correctItems.join(' ')}</div>`;
-  document.getElementById(`xr${idx}`).textContent=`${q.correctItems.join(' ')} が なかまだよ！`;document.getElementById(`xr${idx}`).classList.add('show');
-  btn.disabled=false;btn.textContent='🎬 もういちど みる';
-}
-
-// --- ORDER: count from direction one by one ---
-async function animOrder(el,q,btn,idx){
-  const dt=q.direction==='left'?'ひだりから':'みぎから';
-  el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${dt} かぞえてみよう！</div><div style="display:flex;justify-content:center;gap:6px;margin:12px 0">${q.items.map((e,i)=>`<div style="text-align:center;display:flex;flex-direction:column;align-items:center;width:42px"><div class="anim-count" id="aoc${idx}-${i}" style="font-size:1rem;min-height:24px;display:block;margin:0;width:100%">${q.direction==='left'?i+1:q.items.length-i}</div><div id="ao${idx}-${i}" style="font-size:2rem;transition:all .4s">${e}</div></div>`).join('')}</div><div class="anim-result" id="xr${idx}"></div></div>`;
-  await sl(800);
-  const order=q.direction==='left'?q.items.map((_,i)=>i):q.items.map((_,i)=>q.items.length-1-i);
-  for(let step=0;step<order.length;step++){
-    const i=order[step];
-    document.getElementById(`ao${idx}-${i}`).style.transform='scale(1.3)';
-    document.getElementById(`ao${idx}-${i}`).style.textShadow='0 0 10px rgba(78,168,222,.5)';
-    document.getElementById(`aoc${idx}-${i}`).classList.add('show');
-    sndPop(500+step*50);
-    if(i===q.targetIdx){
-      document.getElementById(`ao${idx}-${i}`).style.textShadow='0 0 14px rgba(81,207,102,.6)';
-      document.getElementById(`aoc${idx}-${i}`).style.color='#22c55e';document.getElementById(`aoc${idx}-${i}`).style.fontSize='1.3rem';
-    }
-    await sl(500);
-    if(i!==q.targetIdx){document.getElementById(`ao${idx}-${i}`).style.transform='';document.getElementById(`ao${idx}-${i}`).style.textShadow=''}
-  }
-  await sl(400);sndOk();
-  document.getElementById(`xm${idx}`).textContent=`${dt} ${q.displayPos}ばんめは ${q.items[q.targetIdx]}！`;document.getElementById(`xm${idx}`).className='anim-msg green';
-  document.getElementById(`xr${idx}`).textContent=`こたえは ${q.items[q.targetIdx]} だよ！`;document.getElementById(`xr${idx}`).classList.add('show');
-  btn.disabled=false;btn.textContent='🎬 もういちど みる';
-}
-
-function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType,questions);retryResults=[];questionLog=[];currentQ=0;document.getElementById('resultScreen').classList.add('hidden');document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
-function showConfetti(){const c=document.getElementById('confettiContainer');const es=['🎉','⭐','🌟','✨','🎊','💫','🌈','🎈'];for(let i=0;i<40;i++){const el=document.createElement('span');el.className='confetti';el.textContent=es[Math.floor(Math.random()*es.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.8)+'s';el.style.fontSize=(1+Math.random()*1.5)+'rem';c.appendChild(el)}setTimeout(()=>{c.innerHTML=''},4000)}
+async function animCount(el,q,btn,idx){let emojis='';for(let i=0;i<q.count;i++)emojis+=`<span class="anim-emoji" id="ae${idx}-${i}">${q.e}</span><span class="anim-count" id="ac${idx}-${i}">${i+1}</span>`;el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${q.n}を かぞえるよ！</div><div class="anim-group">${emojis}</div><div class="anim-result" id="xr${idx}"></div></div>`;await sl(800);for(let i=0;i<q.count;i++){document.getElementById(`ae${idx}-${i}`).classList.add('lit');sndPop(500+i*40);await sl(200);document.getElementById(`ac${idx}-${i}`).classList.add('show');await sl(400)}await sl(400);sndOk();document.getElementById(`xm${idx}`).textContent=`${q.n}は ${q.count}こ！`;document.getElementById(`xm${idx}`).className='anim-msg green';document.getElementById(`xr${idx}`).textContent=`こたえは ${q.count}こ！`;document.getElementById(`xr${idx}`).classList.add('show');btn.disabled=false;btn.textContent='🎬 もういちど みる'}
+async function animCompare(el,q,btn,idx){el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">それぞれ かぞえよう！</div><div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap"><div style="display:flex;flex-direction:column;align-items:center"><div class="anim-group" id="xg1${idx}">${Array.from({length:q.c1},(_,i)=>`<span class="anim-emoji" id="al${idx}-${i}">${q.e1}</span>`).join('')}</div><div class="anim-label" id="xl1${idx}">？こ</div></div><div style="font-size:1.3rem;font-weight:900;color:var(--text-soft);align-self:center">vs</div><div style="display:flex;flex-direction:column;align-items:center"><div class="anim-group" id="xg2${idx}">${Array.from({length:q.c2},(_,i)=>`<span class="anim-emoji" id="ar${idx}-${i}">${q.e2}</span>`).join('')}</div><div class="anim-label" id="xl2${idx}">？こ</div></div></div><div class="anim-result" id="xr${idx}"></div></div>`;await sl(800);for(let i=0;i<q.c1;i++){document.getElementById(`al${idx}-${i}`).classList.add('lit');sndPop(500+i*30);await sl(300)}document.getElementById(`xl1${idx}`).textContent=`${q.c1}こ`;document.getElementById(`xl1${idx}`).style.color='#3b82f6';await sl(400);for(let i=0;i<q.c2;i++){document.getElementById(`ar${idx}-${i}`).classList.add('lit');sndPop(500+i*30);await sl(300)}document.getElementById(`xl2${idx}`).textContent=`${q.c2}こ`;document.getElementById(`xl2${idx}`).style.color='#3b82f6';await sl(600);sndOk();const cn=q.answer==='left'?q.n1:q.n2,cc=q.answer==='left'?q.c1:q.c2;document.getElementById(`xm${idx}`).textContent=`${cn}（${cc}こ）の ほうが おおい！`;document.getElementById(`xm${idx}`).className='anim-msg green';document.getElementById(`xr${idx}`).textContent=`${q.c1} と ${q.c2} → ${cc}こ が おおいね！`;document.getElementById(`xr${idx}`).classList.add('show');btn.disabled=false;btn.textContent='🎬 もういちど みる'}
+async function animShape(el,q,btn,idx){const cn=SHAPES.find(s=>s.shape===q.answer).n;const examples={circle:['⚽','🍩','🕐','🌕','🍊'],triangle:['🔺','🍕','📐','⛺','🏔️'],square:['📦','🎁','📺','🪟','📱']};const ex=examples[q.answer]||[];el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${q.e} は どんな かたち？</div><div style="font-size:3rem;margin:8px 0">${q.e}</div><div style="margin:12px 0" id="xex${idx}"></div><div class="anim-result" id="xr${idx}"></div></div>`;await sl(1000);document.getElementById(`xm${idx}`).textContent=`これは「${cn}」の かたち！`;document.getElementById(`xm${idx}`).className='anim-msg green';await sl(600);document.getElementById(`xm${idx}`).textContent=`「${cn}」の なかまは…`;const exEl=document.getElementById(`xex${idx}`);for(let i=0;i<ex.length;i++){const span=document.createElement('span');span.className='anim-shape-example';span.textContent=ex[i];exEl.appendChild(span);await sl(100);span.classList.add('show');sndPop(500+i*60);await sl(400)}await sl(400);sndOk();document.getElementById(`xr${idx}`).textContent=`${cn} → ${ex.join(' ')}`;document.getElementById(`xr${idx}`).classList.add('show');btn.disabled=false;btn.textContent='🎬 もういちど みる'}
+async function animClassify(el,q,btn,idx){el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">「${q.label}」の なかまを さがそう！</div><div class="anim-group" id="xitems${idx}" style="font-size:2.2rem;letter-spacing:8px">${q.items.map((e,i)=>`<span class="anim-emoji" id="ai${idx}-${i}" style="opacity:1">${e}</span>`).join('')}</div><div style="margin-top:12px" id="xgathered${idx}"></div><div class="anim-result" id="xr${idx}"></div></div>`;await sl(1000);document.getElementById(`xm${idx}`).textContent=`${q.label}は どれかな…？`;document.getElementById(`xm${idx}`).className='anim-msg orange';await sl(800);for(let i=0;i<q.items.length;i++){const isCorrect=q.correctItems.includes(q.items[i]);if(isCorrect){document.getElementById(`ai${idx}-${i}`).style.transform='scale(1.3)';document.getElementById(`ai${idx}-${i}`).style.textShadow='0 0 12px rgba(81,207,102,.6)';sndPop(600);await sl(500)}else{document.getElementById(`ai${idx}-${i}`).style.opacity='.2';await sl(200)}}await sl(600);sndOk();document.getElementById(`xm${idx}`).textContent=`「${q.label}」の なかまは…`;document.getElementById(`xm${idx}`).className='anim-msg green';document.getElementById(`xgathered${idx}`).innerHTML=`<div style="font-size:2.5rem;letter-spacing:12px">${q.correctItems.join(' ')}</div>`;document.getElementById(`xr${idx}`).textContent=`${q.correctItems.join(' ')} が なかまだよ！`;document.getElementById(`xr${idx}`).classList.add('show');btn.disabled=false;btn.textContent='🎬 もういちど みる'}
+async function animOrder(el,q,btn,idx){const dt=q.direction==='left'?'ひだりから':'みぎから';el.innerHTML=`<div class="anim-stage"><div class="anim-msg blue" id="xm${idx}">${dt} かぞえてみよう！</div><div style="display:flex;justify-content:center;gap:6px;margin:12px 0">${q.items.map((e,i)=>`<div style="text-align:center;display:flex;flex-direction:column;align-items:center;width:42px"><div class="anim-count" id="aoc${idx}-${i}" style="font-size:1rem;min-height:24px;display:block;margin:0;width:100%">${q.direction==='left'?i+1:q.items.length-i}</div><div id="ao${idx}-${i}" style="font-size:2rem;transition:all .4s">${e}</div></div>`).join('')}</div><div class="anim-result" id="xr${idx}"></div></div>`;await sl(800);const order=q.direction==='left'?q.items.map((_,i)=>i):q.items.map((_,i)=>q.items.length-1-i);for(let step=0;step<order.length;step++){const i=order[step];document.getElementById(`ao${idx}-${i}`).style.transform='scale(1.3)';document.getElementById(`ao${idx}-${i}`).style.textShadow='0 0 10px rgba(78,168,222,.5)';document.getElementById(`aoc${idx}-${i}`).classList.add('show');sndPop(500+step*50);if(i===q.targetIdx){document.getElementById(`ao${idx}-${i}`).style.textShadow='0 0 14px rgba(81,207,102,.6)';document.getElementById(`aoc${idx}-${i}`).style.color='#22c55e';document.getElementById(`aoc${idx}-${i}`).style.fontSize='1.3rem'}await sl(500);if(i!==q.targetIdx){document.getElementById(`ao${idx}-${i}`).style.transform='';document.getElementById(`ao${idx}-${i}`).style.textShadow=''}}await sl(400);sndOk();document.getElementById(`xm${idx}`).textContent=`${dt} ${q.displayPos}ばんめは ${q.items[q.targetIdx]}！`;document.getElementById(`xm${idx}`).className='anim-msg green';document.getElementById(`xr${idx}`).textContent=`こたえは ${q.items[q.targetIdx]} だよ！`;document.getElementById(`xr${idx}`).classList.add('show');btn.disabled=false;btn.textContent='🎬 もういちど みる'}
 </script>
 </body>
 </html>
