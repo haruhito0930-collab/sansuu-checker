@@ -124,6 +124,51 @@ function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 
 const TOTAL=5;let unitType='',questions=[],currentQ=0,results=[],phase='main',retryQs=[],retryResults=[],answered=false,questionLog=[],inputVal='';
 let challengeMode=false;
+let quizStartTime=0;
+
+// === DETAILED DIAGNOSIS ===
+const DIAGNOSIS={
+  add_basic:{
+    red:'指を使ってもいいので、まず正確に計算する練習をしましょう。おはじきやブロックを使って「合わせる」感覚をつかむのが効果的です。',
+    yellow:'あと少しです！指に頼りすぎず、頭で計算することを意識させてみてください。スピードも少しずつ上げていきましょう。',
+    green:'正確に計算できています。スピードも意識して練習を続けましょう！'
+  },
+  sub_basic:{
+    red:'ひき算は「取り除く」感覚が大切です。指を使ってもOKなので、まず確実に正解できるように練習しましょう。',
+    yellow:'あと少し！頭の中で計算できるようになってきています。スピードアップを意識してみてください。',
+    green:'ひき算がしっかりできています。この調子！'
+  },
+  add_carry:{
+    red:'「10のまとまりを作る」がポイントです。たとえば8+5なら、5から2を持ってきて10を作り、残りの3を足す。この考え方を練習しましょう。',
+    yellow:'10のまとまりの感覚はついてきています。もう少し練習すれば自然にできるようになります！',
+    green:'くりあがりの計算がしっかり身についています！'
+  },
+  sub_borrow:{
+    red:'「10を借りてきてひく」感覚がポイントです。たとえば13−7なら、10から7をひいて3、残りの3を足して6。この手順を繰り返し練習しましょう。',
+    yellow:'くりさがりの考え方はわかってきています。あとは練習量を増やしてスピードアップ！',
+    green:'くりさがりの計算がバッチリです！'
+  },
+  number_order:{
+    red:'数の大きさの感覚を育てましょう。おうちで「どっちが多い？」「どっちが大きい数？」と聞いてあげてください。数直線を使って視覚的に理解するのも効果的です。',
+    yellow:'だいたいわかっていますが、近い数の比較で迷うことがあるようです。もう少し練習しましょう。',
+    green:'数の大小がしっかり判断できています！'
+  },
+  clock:{
+    red:'まずは「長い針が12→ちょうど（00分）」「長い針が6→はん（30分）」を覚えましょう。おうちの時計を見ながら「今何時？」と日常的に聞いてあげてください。',
+    yellow:'時計の読み方はわかってきています。感覚で答えられるようになるまで繰り返し練習しましょう。',
+    green:'時計がスラスラ読めています！'
+  },
+  length:{
+    red:'「どっちが長い？重い？多い？」を日常の中で比べる経験を増やしましょう。実際にものを持ち比べたり、並べて比べたりするのが効果的です。',
+    yellow:'比べる感覚はついてきています。基本的な単位（cm、L、kgなど）も少しずつ生活の中で紹介してあげてください。',
+    green:'比べる力がしっかり身についています！'
+  },
+  word_problem:{
+    red:'文章題は「使う数字はどれ？」「たし算かひき算か、どの言葉で判断する？」の2ステップです。「もらった→ふえる→たし算」「あげた→へる→ひき算」のようにキーワードに注目する練習をしましょう。',
+    yellow:'式を作る力はついてきています。問題文のキーワード（もらった・あげた・たべた等）から演算を判断する練習を続けましょう。',
+    green:'文章から式を作る力がバッチリです！'
+  }
+};
 
 // === DATA STORAGE ===
 const GRADE='grade1';
@@ -147,7 +192,7 @@ const CHART_AXES=[
 ];
 function getKey(unitId){return `sc_${GRADE}_${unitId}`}
 function loadData(unitId){try{return JSON.parse(localStorage.getItem(getKey(unitId)))||{attempts:0,correct:0,total:0}}catch(e){return{attempts:0,correct:0,total:0}}}
-function saveData(unitId,correctCount,totalCount){const d=loadData(unitId);d.attempts++;d.correct+=correctCount;d.total+=totalCount;d.lastDate=new Date().toISOString().slice(0,10);localStorage.setItem(getKey(unitId),JSON.stringify(d))}
+function saveData(unitId,correctCount,totalCount,elapsed){const d=loadData(unitId);d.attempts++;d.correct+=correctCount;d.total+=totalCount;d.lastDate=new Date().toISOString().slice(0,10);if(correctCount===totalCount&&elapsed&&elapsed>0){if(!d.bestTime||elapsed<d.bestTime){d.bestTime=elapsed;d.newRecord=true}else{d.newRecord=false}}localStorage.setItem(getKey(unitId),JSON.stringify(d))}
 function getRate(unitId){const d=loadData(unitId);return d.total===0?-1:Math.round(d.correct/d.total*100)}
 function getGroupRate(ids){let c=0,t=0;ids.forEach(id=>{const d=loadData(id);c+=d.correct;t+=d.total});return t===0?-1:Math.round(c/t*100)}
 function getRateLevel(rate){if(rate<0)return{statusLabel:'まだ',color:'#94a3b8',level:0};if(rate>=95)return{statusLabel:'バッチリ！',color:'#22c55e',level:3};if(rate>=80)return{statusLabel:'もうすこし',color:'#f59e0b',level:2};return{statusLabel:'つまずき',color:'#ef4444',level:1}}
@@ -188,7 +233,7 @@ function generateQs(n,type){const qs=[];for(let i=0;i<n;i++){const prev=i>0?qs[i
 
 // Nav
 function hideAll(){['menuScreen','quizScreen','resultScreen','myPageScreen'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
-function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];quizStartTime=Date.now();hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
 function backToMenu(){sndClick();hideAll();document.getElementById('menuScreen').classList.remove('hidden');window.scrollTo({top:0})}
 function nextQuestion(){sndClick();const qs=phase==='main'?questions:retryQs;if(currentQ<qs.length-1){currentQ++;renderQ()}else showResult()}
 
@@ -292,9 +337,14 @@ function showResult(){
   const content=document.getElementById('resultContent'),r=phase==='main'?results:retryResults;
   const cc=r.filter(x=>x.correct).length,total=r.length;
   // SAVE DATA
-  if(!challengeMode){saveData(unitType,cc,total)}
-  else{const unitCounts={};questionLog.forEach(l=>{const st=l.question.subtype||l.question.type;const uid=st==='add'?'add_basic':st==='sub'?'sub_basic':st==='carry'?'add_carry':st==='borrow'?'sub_borrow':l.question.type;if(!unitCounts[uid])unitCounts[uid]={c:0,t:0};unitCounts[uid].t++;if(l.correct)unitCounts[uid].c++});Object.keys(unitCounts).forEach(uid=>{saveData(uid,unitCounts[uid].c,unitCounts[uid].t)})}
+  const elapsed=Math.round((Date.now()-quizStartTime)/1000);
+  if(!challengeMode){
+    saveData(unitType,cc,total,elapsed);
+    var isNewRecord=cc===total&&loadData(unitType).newRecord;
+  }else{const unitCounts={};questionLog.forEach(l=>{const st=l.question.subtype||l.question.type;const uid=st==='add'?'add_basic':st==='sub'?'sub_basic':st==='carry'?'add_carry':st==='borrow'?'sub_borrow':l.question.type;if(!unitCounts[uid])unitCounts[uid]={c:0,t:0};unitCounts[uid].t++;if(l.correct)unitCounts[uid].c++});Object.keys(unitCounts).forEach(uid=>{saveData(uid,unitCounts[uid].c,unitCounts[uid].t,0)});var isNewRecord=false}
   const dots=r.map(x=>`<div class="result-score-dot ${x.correct?'s-correct':'s-wrong'}">${x.correct?'⭕':'❌'}</div>`).join('');
+  const timeStr=elapsed>=60?`${Math.floor(elapsed/60)}ふん${elapsed%60}びょう`:`${elapsed}びょう`;
+  const timeHtml=cc===total?`<div style="text-align:center;font-size:1.1rem;font-weight:700;color:#b45309;margin-bottom:4px">タイム：${timeStr}</div>${isNewRecord?'<div style="text-align:center;font-size:1.2rem;font-weight:900;color:#e74c3c;margin-bottom:12px;animation:fadeIn .4s">🏅 じこベスト！</div>':''}`:'';
   const wrongItems=questionLog.filter(l=>!l.correct);
   let reviewHtml='';
   if(wrongItems.length>0){
@@ -309,7 +359,7 @@ function showResult(){
       reviewHtml+=`<div class="review-item"><div class="review-q">${qText}</div><div class="review-ans">✅ ${ansText}</div><button class="review-anim-btn" id="rab-${i}" onclick="playRA(${i})">🎬 解説アニメを見る</button><div class="review-anim-area" id="raa-${i}"></div></div>`;
     });reviewHtml+=`</div>`;
   }
-  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${challengeMode?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${challengeMode?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div><div class="result-message">すごい！バッチリだね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！れんしゅうしよう！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
+  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${challengeMode?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${challengeMode?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div>${timeHtml}<div class="result-message">すごい！バッチリだね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！れんしゅうしよう！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   else{if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🌟</div><div class="result-title" style="color:#2b8a3e">やったね！</div><div class="result-score">${dots}</div><div class="result-message">できるように なったね！<strong style="color:var(--pink)">🎉</strong></div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">🤗</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">だいじょうぶ！れんしゅうすれば できるよ！</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど！</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -516,10 +566,14 @@ function showMyPage(){
   CHART_AXES.forEach((ax,i)=>{const lx=cx+Math.cos(angles[i])*(r+30),ly=cy+Math.sin(angles[i])*(r+30);chartSVG+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#636e72" font-family="Zen Maru Gothic,sans-serif">${ax.label}</text>`});
   if(hasData){const dataPts=axisData.map((rr,i)=>{const val=rr.rate<0?0:rr.rate/100;return`${cx+Math.cos(angles[i])*r*val},${cy+Math.sin(angles[i])*r*val}`}).join(' ');chartSVG+=`<polygon points="${dataPts}" fill="rgba(78,168,222,.15)" stroke="var(--blue)" stroke-width="2.5"/>`;axisData.forEach((rr,i)=>{if(rr.rate>=0){const px=cx+Math.cos(angles[i])*r*(rr.rate/100),py=cy+Math.sin(angles[i])*r*(rr.rate/100);chartSVG+=`<circle cx="${px}" cy="${py}" r="5" fill="${rr.color}" stroke="#fff" stroke-width="2"/>`}})}
   chartSVG+=`</svg>`;
-  let unitListHtml=UNITS.map(u=>{const rate=getRate(u.id);const lv=getRateLevel(rate);const barW=rate<0?0:rate;const rateText=rate<0?'—':rate+'%';const rateClass=rate<0?'':rate>=95?'rate-green':rate>=80?'rate-yellow':'rate-red';return`<div class="unit-row"><div class="unit-name">${u.name}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barW}%;background:${lv.color}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`}).join('');
+  let unitListHtml=UNITS.map(u=>{const rate=getRate(u.id);const lv=getRateLevel(rate);const barW=rate<0?0:rate;const rateText=rate<0?'—':rate+'%';const rateClass=rate<0?'':rate>=95?'rate-green':rate>=80?'rate-yellow':'rate-red';const d=loadData(u.id);const bestTime=d.bestTime?`じこベスト ${d.bestTime>=60?Math.floor(d.bestTime/60)+'ふん'+d.bestTime%60+'びょう':d.bestTime+'びょう'}`:'';return`<div class="unit-row"><div class="unit-name">${u.name}${bestTime?`<div style="font-size:.7rem;color:#b45309;margin-top:2px">🏅 ${bestTime}</div>`:''}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barW}%;background:${lv.color}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`}).join('');
   const weakAxes=axisData.filter(r=>r.rate>=0&&r.rate<80);const okAxes=axisData.filter(r=>r.rate>=80&&r.rate<95);const strongAxes=axisData.filter(r=>r.rate>=95);const noData=axisData.filter(r=>r.rate<0);
   let diagHtml='';
-  if(hasData){diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;if(strongAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongAxes.map(u=>u.label).join('・')}</strong> は バッチリ！</div>`;if(okAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okAxes.map(u=>u.label).join('・')}</strong> は もうすこし！</div>`;if(weakAxes.length>0)diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakAxes.map(u=>u.label).join('・')}</strong> が つまずきポイント！</div>`;if(noData.length>0)diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ</div>`;diagHtml+=`</div>`;if(weakAxes.length>0)diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakAxes.map(u=>u.label).join('・')} を れんしゅう</span></button>`}
+  if(hasData){diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;if(strongAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongAxes.map(u=>u.label).join('・')}</strong> は バッチリ！</div>`;if(okAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okAxes.map(u=>u.label).join('・')}</strong> は もうすこし！</div>`;if(weakAxes.length>0)diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakAxes.map(u=>u.label).join('・')}</strong> が つまずきポイント！</div>`;if(noData.length>0)diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ</div>`;diagHtml+=`</div>`;
+    // Detailed advice
+    const adviceUnits=UNITS.map(u=>({...u,rate:getRate(u.id)})).filter(u=>u.rate>=0);
+    if(adviceUnits.length>0){diagHtml+=`<div class="diagnosis-box" style="margin-top:12px"><div class="diagnosis-title">📖 くわしいアドバイス</div><div style="text-align:center;font-size:.8rem;color:#b45309;margin-bottom:8px">👨‍👩‍👧 おうちの ひとに みせてね！</div>`;adviceUnits.forEach(u=>{const d=DIAGNOSIS[u.id];if(!d)return;const level=u.rate>=95?'green':u.rate>=80?'yellow':'red';const icon=level==='green'?'🟢':level==='yellow'?'🟡':'🔴';diagHtml+=`<div class="diagnosis-item">${icon} <strong>${u.name}（${u.rate}%）</strong><br><span style="font-size:.85rem">${d[level]}</span></div>`});diagHtml+=`</div>`}
+    if(weakAxes.length>0)diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakAxes.map(u=>u.label).join('・')} を れんしゅう</span></button>`}
   else{diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div><div class="diagnosis-item">まだ データが ないよ。<br>まずは ぜんぶの たんげんを といてみよう！</div></div>`}
   document.getElementById('myPageScreen').innerHTML=`<div class="card"><button class="back-btn" onclick="backToMenu()">← もどる</button><div style="text-align:center;padding-top:24px"><span style="font-size:1.8rem">📊</span><div style="font-size:1.2rem;font-weight:900;margin-top:4px">マイページ</div></div><div class="chart-container">${chartSVG}</div><div class="unit-list">${unitListHtml}</div>${diagHtml}</div>`;
   window.scrollTo({top:0,behavior:'smooth'});
@@ -530,11 +584,11 @@ function startChallenge(){
   if(weakIds.length===0){backToMenu();return}
   questions=[];weakIds.forEach(uid=>{questions.push(...generateQs(3,uid))});
   for(let i=questions.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[questions[i],questions[j]]=[questions[j],questions[i]]}
-  unitType=weakIds[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];
+  unitType=weakIds[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];quizStartTime=Date.now();
   hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ();
 }
 
-function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType);retryResults=[];questionLog=[];currentQ=0;hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType);retryResults=[];questionLog=[];currentQ=0;quizStartTime=Date.now();hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
 function showConfetti(){const c=document.getElementById('confettiContainer');const es=['🎉','⭐','🌟','✨','🎊','💫','🌈','🎈'];for(let i=0;i<40;i++){const el=document.createElement('span');el.className='confetti';el.textContent=es[Math.floor(Math.random()*es.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.8)+'s';el.style.fontSize=(1+Math.random()*1.5)+'rem';c.appendChild(el)}setTimeout(()=>{c.innerHTML=''},4000)}
 </script>
 </body>

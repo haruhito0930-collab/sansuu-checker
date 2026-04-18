@@ -155,7 +155,7 @@ const CHART_AXES=[
 ];
 function getKey(unitId){return `sc_${GRADE}_${unitId}`}
 function loadData(unitId){try{return JSON.parse(localStorage.getItem(getKey(unitId)))||{attempts:0,correct:0,total:0}}catch(e){return{attempts:0,correct:0,total:0}}}
-function saveData(unitId,correctCount,totalCount){const d=loadData(unitId);d.attempts++;d.correct+=correctCount;d.total+=totalCount;d.lastDate=new Date().toISOString().slice(0,10);localStorage.setItem(getKey(unitId),JSON.stringify(d))}
+function saveData(unitId,correctCount,totalCount,elapsed){const d=loadData(unitId);d.attempts++;d.correct+=correctCount;d.total+=totalCount;d.lastDate=new Date().toISOString().slice(0,10);if(correctCount===totalCount&&elapsed&&elapsed>0){if(!d.bestTime||elapsed<d.bestTime){d.bestTime=elapsed;d.newRecord=true}else{d.newRecord=false}}localStorage.setItem(getKey(unitId),JSON.stringify(d))}
 function getRate(unitId){const d=loadData(unitId);return d.total===0?-1:Math.round(d.correct/d.total*100)}
 function getGroupRate(ids){let c=0,t=0;ids.forEach(id=>{const d=loadData(id);c+=d.correct;t+=d.total});return t===0?-1:Math.round(c/t*100)}
 function getRateLevel(rate){if(rate<0)return{statusLabel:'まだ',color:'#94a3b8',level:0};if(rate>=95)return{statusLabel:'バッチリ！',color:'#22c55e',level:3};if(rate>=80)return{statusLabel:'もうすこし',color:'#f59e0b',level:2};return{statusLabel:'つまずき',color:'#ef4444',level:1}}
@@ -266,8 +266,9 @@ function genWordProblem(prev){
 function generateQs(n,type){const qs=[];for(let i=0;i<n;i++){const prev=i>0?qs[i-1]:null;let q;switch(type){case'kuku':q=genKuku(prev);break;case'add_h':q=genAddH(prev);break;case'sub_h':q=genSubH(prev);break;case'time':q=genTime(prev);break;case'length':q=genLength(prev);break;case'volume':q=genVolume(prev);break;case'shapes':q=genShapes(prev);break;case'word_problem':q=genWordProblem(prev);break}qs.push(q)}return qs}
 
 // Nav
+let quizStartTime=0;
 function hideAll(){['menuScreen','quizScreen','resultScreen','myPageScreen'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
-function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];quizStartTime=Date.now();hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
 function backToMenu(){sndClick();hideAll();document.getElementById('menuScreen').classList.remove('hidden');window.scrollTo({top:0})}
 function nextQuestion(){sndClick();const qs=phase==='main'?questions:retryQs;if(currentQ<qs.length-1){currentQ++;renderQ()}else showResult()}
 
@@ -406,9 +407,14 @@ function showResult(){
   const content=document.getElementById('resultContent'),r=phase==='main'?results:retryResults;
   const cc=r.filter(x=>x.correct).length,total=r.length;
   // SAVE DATA
-  if(!challengeMode){saveData(unitType,cc,total)}
-  else{const unitCounts={};questionLog.forEach(l=>{const uid=l.question.subtype||unitType;if(!unitCounts[uid])unitCounts[uid]={c:0,t:0};unitCounts[uid].t++;if(l.correct)unitCounts[uid].c++});Object.keys(unitCounts).forEach(uid=>{saveData(uid,unitCounts[uid].c,unitCounts[uid].t)})}
+  const elapsed=Math.round((Date.now()-quizStartTime)/1000);
+  if(!challengeMode){
+    saveData(unitType,cc,total,elapsed);
+    var isNewRecord=cc===total&&loadData(unitType).newRecord;
+  }else{const unitCounts={};questionLog.forEach(l=>{const uid=l.question.subtype||unitType;if(!unitCounts[uid])unitCounts[uid]={c:0,t:0};unitCounts[uid].t++;if(l.correct)unitCounts[uid].c++});Object.keys(unitCounts).forEach(uid=>{saveData(uid,unitCounts[uid].c,unitCounts[uid].t,0)});var isNewRecord=false}
   const dots=r.map(x=>`<div class="result-score-dot ${x.correct?'s-correct':'s-wrong'}">${x.correct?'⭕':'❌'}</div>`).join('');
+  const timeStr=elapsed>=60?`${Math.floor(elapsed/60)}ふん${elapsed%60}びょう`:`${elapsed}びょう`;
+  const timeHtml=cc===total?`<div style="text-align:center;font-size:1.1rem;font-weight:700;color:#b45309;margin-bottom:4px">タイム：${timeStr}</div>${isNewRecord?'<div style="text-align:center;font-size:1.2rem;font-weight:900;color:#e74c3c;margin-bottom:12px;animation:fadeIn .4s">🏅 じこベスト！</div>':''}`:'';
   const wrongItems=questionLog.filter(l=>!l.correct);
   let reviewHtml='';
   if(wrongItems.length>0){
@@ -418,7 +424,7 @@ function showResult(){
       reviewHtml+=`<div class="review-item"><div class="review-q">${w.question.qText||w.question.text}</div><div class="review-ans">✅ ${ansDisp}</div><button class="review-anim-btn" id="rab-${i}" onclick="playRA(${i})">🎬 かいせつアニメを みる</button><div class="review-anim-area" id="raa-${i}"></div></div>`;
     });reviewHtml+=`</div>`;
   }
-  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${challengeMode?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${challengeMode?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div><div class="result-message">すごい！バッチリだね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！れんしゅうしよう！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
+  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${challengeMode?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${challengeMode?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div>${timeHtml}<div class="result-message">すごい！バッチリだね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！れんしゅうしよう！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   else{if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🌟</div><div class="result-title" style="color:#2b8a3e">やったね！</div><div class="result-score">${dots}</div><div class="result-message">できるように なったね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">🤗</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">だいじょうぶ！れんしゅうすれば できるよ！</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど！</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -634,7 +640,7 @@ function showMyPage(){
   CHART_AXES.forEach((ax,i)=>{const lx=cx+Math.cos(angles[i])*(r+30),ly=cy+Math.sin(angles[i])*(r+30);chartSVG+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="12" font-weight="700" fill="#636e72" font-family="Zen Maru Gothic,sans-serif">${ax.label}</text>`});
   if(hasData){const dataPts=axisData.map((rr,i)=>{const val=rr.rate<0?0:rr.rate/100;return`${cx+Math.cos(angles[i])*r*val},${cy+Math.sin(angles[i])*r*val}`}).join(' ');chartSVG+=`<polygon points="${dataPts}" fill="rgba(34,197,94,.12)" stroke="var(--green)" stroke-width="2.5"/>`;axisData.forEach((rr,i)=>{if(rr.rate>=0){const px=cx+Math.cos(angles[i])*r*(rr.rate/100),py=cy+Math.sin(angles[i])*r*(rr.rate/100);chartSVG+=`<circle cx="${px}" cy="${py}" r="5" fill="${rr.color}" stroke="#fff" stroke-width="2"/>`}})}
   chartSVG+=`</svg>`;
-  let unitListHtml=UNITS.map(u=>{const rate=getRate(u.id);const lv=getRateLevel(rate);const barW=rate<0?0:rate;const rateText=rate<0?'—':rate+'%';const rateClass=rate<0?'':rate>=95?'rate-green':rate>=80?'rate-yellow':'rate-red';return`<div class="unit-row"><div class="unit-name">${u.name}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barW}%;background:${lv.color}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`}).join('');
+  let unitListHtml=UNITS.map(u=>{const rate=getRate(u.id);const lv=getRateLevel(rate);const barW=rate<0?0:rate;const rateText=rate<0?'—':rate+'%';const rateClass=rate<0?'':rate>=95?'rate-green':rate>=80?'rate-yellow':'rate-red';const d=loadData(u.id);const bestTime=d.bestTime?`じこベスト ${d.bestTime>=60?Math.floor(d.bestTime/60)+'ふん'+d.bestTime%60+'びょう':d.bestTime+'びょう'}`:'';return`<div class="unit-row"><div class="unit-name">${u.name}${bestTime?`<div style="font-size:.7rem;color:#b45309;margin-top:2px">🏅 ${bestTime}</div>`:''}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barW}%;background:${lv.color}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`}).join('');
   const weakAxes=axisData.filter(r=>r.rate>=0&&r.rate<80);const okAxes=axisData.filter(r=>r.rate>=80&&r.rate<95);const strongAxes=axisData.filter(r=>r.rate>=95);const noData=axisData.filter(r=>r.rate<0);
   let diagHtml='';
   if(hasData){diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;if(strongAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongAxes.map(u=>u.label).join('・')}</strong> は バッチリ！</div>`;if(okAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okAxes.map(u=>u.label).join('・')}</strong> は もうすこし！</div>`;if(weakAxes.length>0)diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakAxes.map(u=>u.label).join('・')}</strong> が つまずきポイント！</div>`;if(noData.length>0)diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ</div>`;diagHtml+=`</div>`;if(weakAxes.length>0)diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakAxes.map(u=>u.label).join('・')} を れんしゅう</span></button>`}
@@ -648,11 +654,11 @@ function startChallenge(){
   if(weakIds.length===0){backToMenu();return}
   questions=[];weakIds.forEach(uid=>{questions.push(...generateQs(3,uid))});
   for(let i=questions.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[questions[i],questions[j]]=[questions[j],questions[i]]}
-  unitType=weakIds[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];
+  unitType=weakIds[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];quizStartTime=Date.now();
   hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ();
 }
 
-function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType);retryResults=[];questionLog=[];currentQ=0;hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType);retryResults=[];questionLog=[];currentQ=0;quizStartTime=Date.now();hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
 function showConfetti(){const c=document.getElementById('confettiContainer');const es=['🎉','⭐','🌟','✨','🎊','💫','🌈','🎈'];for(let i=0;i<40;i++){const el=document.createElement('span');el.className='confetti';el.textContent=es[Math.floor(Math.random()*es.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.8)+'s';el.style.fontSize=(1+Math.random()*1.5)+'rem';c.appendChild(el)}setTimeout(()=>{c.innerHTML=''},4000)}
 </script>
 </body>

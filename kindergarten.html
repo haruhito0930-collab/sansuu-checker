@@ -147,9 +147,10 @@ const UNITS=[
 ];
 function getKey(unitId){return `sc_${GRADE}_${unitId}`}
 function loadData(unitId){try{return JSON.parse(localStorage.getItem(getKey(unitId)))||{attempts:0,correct:0,total:0}}catch(e){return{attempts:0,correct:0,total:0}}}
-function saveData(unitId,correctCount,totalCount){
+function saveData(unitId,correctCount,totalCount,elapsed){
   const d=loadData(unitId);
   d.attempts++;d.correct+=correctCount;d.total+=totalCount;d.lastDate=new Date().toISOString().slice(0,10);
+  if(correctCount===totalCount&&elapsed&&elapsed>0){if(!d.bestTime||elapsed<d.bestTime){d.bestTime=elapsed;d.newRecord=true}else{d.newRecord=false}}
   localStorage.setItem(getKey(unitId),JSON.stringify(d));
 }
 function getRate(unitId){const d=loadData(unitId);return d.total===0?-1:Math.round(d.correct/d.total*100)}
@@ -158,6 +159,36 @@ function getRateLevel(rate){if(rate<0)return{statusLabel:'まだ',color:'#94a3b8
 // State
 const TOTAL=5;let unitType='',questions=[],currentQ=0,results=[],phase='main',retryQs=[],retryResults=[],answered=false,questionLog=[];
 let challengeMode=false,challengeUnits=[];
+let quizStartTime=0;
+
+// === DETAILED DIAGNOSIS ===
+const DIAGNOSIS={
+  count:{
+    red:'すべての基本です。指を使ってもいいので、まず正確に数える練習から始めましょう。おうちで「りんご何個ある？」と日常的に数える機会を作ってあげてください。',
+    yellow:'あと少しです！指に頼りすぎず、頭で数えることを意識させてみてください。',
+    green:'正確に数えられています。すべての基本がしっかり身についています！'
+  },
+  compare:{
+    red:'「どっちが多い？」を日常で繰り返し聞いてあげましょう。慣れないうちは両方数えるやり方でOKです。',
+    yellow:'パッと見で違いがわかるようになってきています。明らかに違うものは数えずに答える練習をしてみましょう。',
+    green:'見た目で判断できています。すばらしい！'
+  },
+  shape:{
+    red:'まる・さんかく・しかくの3パターンだけなので、完璧になるまで反復しましょう。おうちで「これは何の形？」と聞いてみてください。',
+    yellow:'あと少し！迷う形があるようです。「角があるかないか」に注目させてみてください。',
+    green:'形の区別がしっかりできています！'
+  },
+  classify:{
+    red:'「同じ種類のものを集める」練習をしましょう。おもちゃの片づけで「動物だけ集めて」などのゲームが効果的です。',
+    yellow:'分類の感覚はついてきています。似たものを間違えやすいので、「違うところはどこ？」と考えさせてみてください。',
+    green:'仲間を見分ける力がしっかり身についています！'
+  },
+  order:{
+    red:'「右から」「左から」の使い分けで混乱している可能性があります。まず右・左の概念を確認しましょう。指で方向を示してから数える練習を。',
+    yellow:'方向はわかっていますが、数え間違いがあるようです。ゆっくり指で示しながら練習してみましょう。',
+    green:'方向と順番の感覚がバッチリです！'
+  }
+};
 
 // Data
 const EMOJI_ITEMS=[{e:'🍎',n:'りんご'},{e:'🍊',n:'みかん'},{e:'🍌',n:'バナナ'},{e:'🍓',n:'いちご'},{e:'🌸',n:'おはな'},{e:'⭐',n:'ほし'},{e:'🐟',n:'おさかな'},{e:'🦋',n:'ちょうちょ'},{e:'🐞',n:'てんとうむし'},{e:'🎈',n:'ふうせん'},{e:'🚗',n:'くるま'},{e:'✏️',n:'えんぴつ'},{e:'🐤',n:'ひよこ'},{e:'🍰',n:'ケーキ'},{e:'🐸',n:'かえる'}];
@@ -176,7 +207,7 @@ function genOrder(){const pool=shuffle([...ORDER_EMOJIS]).slice(0,5);const ti=Ma
 function generateQs(n,type,existing=[]){const qs=[],used=existing.map(q=>({e:q.e,count:q.count}));for(let i=0;i<n;i++){let q;switch(type){case'count':q=genCount(used);used.push({e:q.e,count:q.count});break;case'compare':q=genCompare();break;case'shape':q=genShape();break;case'classify':q=genClassify();break;case'order':q=genOrder();break}qs.push(q)}return qs}
 
 // Nav
-function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function startUnit(type){sndClick();unitType=type;phase='main';challengeMode=false;questions=generateQs(TOTAL,type);currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];quizStartTime=Date.now();hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
 function backToMenu(){sndClick();hideAll();document.getElementById('menuScreen').classList.remove('hidden');window.scrollTo({top:0})}
 function hideAll(){['menuScreen','quizScreen','resultScreen','myPageScreen'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
 function nextQuestion(){sndClick();const qs=phase==='main'?questions:retryQs;if(currentQ<qs.length-1){currentQ++;renderQ()}else showResult()}
@@ -216,13 +247,18 @@ function showResult(){
   const content=document.getElementById('resultContent'),r=phase==='main'?results:retryResults;
   const cc=r.filter(x=>x.correct).length,total=r.length;
   // SAVE DATA
-  if(!challengeMode){saveData(unitType,cc,total)}
-  else{
-    // Challenge mode: save per unit
+  const elapsed=Math.round((Date.now()-quizStartTime)/1000);
+  if(!challengeMode){
+    saveData(unitType,cc,total,elapsed);
+    var isNewRecord=cc===total&&loadData(unitType).newRecord;
+  }else{
     const unitCounts={};questionLog.forEach(l=>{const t=l.question.type;if(!unitCounts[t])unitCounts[t]={c:0,t:0};unitCounts[t].t++;if(l.correct)unitCounts[t].c++});
-    Object.keys(unitCounts).forEach(t=>{saveData(t,unitCounts[t].c,unitCounts[t].t)});
+    Object.keys(unitCounts).forEach(t=>{saveData(t,unitCounts[t].c,unitCounts[t].t,0)});
+    var isNewRecord=false;
   }
   const dots=r.map(x=>`<div class="result-score-dot ${x.correct?'s-correct':'s-wrong'}">${x.correct?'⭕':'❌'}</div>`).join('');
+  const timeStr=elapsed>=60?`${Math.floor(elapsed/60)}ふん${elapsed%60}びょう`:`${elapsed}びょう`;
+  const timeHtml=cc===total?`<div style="text-align:center;font-size:1.1rem;font-weight:700;color:#b45309;margin-bottom:4px">タイム：${timeStr}</div>${isNewRecord?'<div style="text-align:center;font-size:1.2rem;font-weight:900;color:#e74c3c;margin-bottom:12px;animation:fadeIn .4s">🏅 じこベスト！</div>':''}`:'';
   const wrongItems=questionLog.filter(l=>!l.correct);
   let reviewHtml='';
   if(wrongItems.length>0){
@@ -238,7 +274,7 @@ function showResult(){
     });reviewHtml+=`</div>`;
   }
   const isChallenge=challengeMode;
-  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${isChallenge?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${isChallenge?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div><div class="result-message">${isChallenge?'すごい！にがてを のりこえたね！🎉':'すごい！バッチリだね！🎉'}</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
+  if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${isChallenge?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${isChallenge?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div>${timeHtml}<div class="result-message">${isChallenge?'すごい！にがてを のりこえたね！🎉':'すごい！バッチリだね！🎉'}</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   else{if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">🌟</div><div class="result-title" style="color:#2b8a3e">やったね！</div><div class="result-score">${dots}</div><div class="result-message">できるように なったね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">🤗</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">だいじょうぶ！れんしゅうすれば できるよ！</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど！</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -280,7 +316,8 @@ function showMyPage(){
     const barWidth=rr.rate<0?0:rr.rate;
     const rateText=rr.rate<0?'—':rr.rate+'%';
     const rateClass=rr.rate<0?'':rr.rate>=95?'rate-green':rr.rate>=80?'rate-yellow':'rate-red';
-    return`<div class="unit-row"><div class="unit-name">${rr.name}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barWidth}%;background:${barColor}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`;
+    const d=loadData(rr.id);const bestTime=d.bestTime?`じこベスト ${d.bestTime>=60?Math.floor(d.bestTime/60)+'ふん'+d.bestTime%60+'びょう':d.bestTime+'びょう'}`:'';
+    return`<div class="unit-row"><div class="unit-name">${rr.name}${bestTime?`<div style="font-size:.7rem;color:#b45309;margin-top:2px">🏅 ${bestTime}</div>`:''}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barWidth}%;background:${barColor}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`;
   }).join('');
 
   // Diagnosis
@@ -291,11 +328,23 @@ function showMyPage(){
   let diagHtml='';
   if(hasData){
     diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;
-    if(strongUnits.length>0) diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongUnits.map(u=>u.label).join('・')}</strong> は バッチリ！このちょうしでがんばろう！</div>`;
-    if(okUnits.length>0) diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okUnits.map(u=>u.label).join('・')}</strong> は もうすこし！あと すこしで かんぺき！</div>`;
-    if(weakUnits.length>0) diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakUnits.map(u=>u.label).join('・')}</strong> が つまずきポイント！ここを れんしゅうしよう！</div>`;
-    if(noData.length>0) diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ。ちょうせんしてみよう！</div>`;
+    if(strongUnits.length>0) diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongUnits.map(u=>u.label).join('・')}</strong> は バッチリ！</div>`;
+    if(okUnits.length>0) diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okUnits.map(u=>u.label).join('・')}</strong> は もうすこし！</div>`;
+    if(weakUnits.length>0) diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakUnits.map(u=>u.label).join('・')}</strong> が つまずきポイント！</div>`;
+    if(noData.length>0) diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ</div>`;
     diagHtml+=`</div>`;
+    // Detailed advice per unit
+    const adviceUnits=rates.filter(r=>r.rate>=0);
+    if(adviceUnits.length>0){
+      diagHtml+=`<div class="diagnosis-box" style="margin-top:12px"><div class="diagnosis-title">📖 くわしいアドバイス</div><div style="text-align:center;font-size:.8rem;color:#b45309;margin-bottom:8px">👨‍👩‍👧 おうちの ひとに みせてね！</div>`;
+      adviceUnits.forEach(u=>{
+        const d=DIAGNOSIS[u.id];if(!d)return;
+        const level=u.rate>=95?'green':u.rate>=80?'yellow':'red';
+        const icon=level==='green'?'🟢':level==='yellow'?'🟡':'🔴';
+        diagHtml+=`<div class="diagnosis-item">${icon} <strong>${u.label}（${u.rate}%）</strong><br><span style="font-size:.85rem">${d[level]}</span></div>`;
+      });
+      diagHtml+=`</div>`;
+    }
     if(weakUnits.length>0){
       diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakUnits.map(u=>u.label).join('・')} を れんしゅう</span></button>`;
     }
@@ -327,7 +376,7 @@ function startChallenge(){
     questions.push(...qs);
   });
   shuffle(questions);
-  unitType=challengeUnits[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];
+  unitType=challengeUnits[0];phase='main';currentQ=0;results=[];retryQs=[];retryResults=[];questionLog=[];quizStartTime=Date.now();
   hideAll();document.getElementById('quizScreen').classList.remove('hidden');
   renderQ();
 }
@@ -336,7 +385,7 @@ function resetData(){
   if(confirm('データを リセットしますか？')){UNITS.forEach(u=>localStorage.removeItem(getKey(u.id)));showMyPage()}
 }
 
-function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType,questions);retryResults=[];questionLog=[];currentQ=0;hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
+function startRetry(){sndClick();phase='retry';retryQs=generateQs(TOTAL,unitType,questions);retryResults=[];questionLog=[];currentQ=0;quizStartTime=Date.now();hideAll();document.getElementById('quizScreen').classList.remove('hidden');renderQ()}
 function showConfetti(){const c=document.getElementById('confettiContainer');const es=['🎉','⭐','🌟','✨','🎊','💫','🌈','🎈'];for(let i=0;i<40;i++){const el=document.createElement('span');el.className='confetti';el.textContent=es[Math.floor(Math.random()*es.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=(Math.random()*.8)+'s';el.style.fontSize=(1+Math.random()*1.5)+'rem';c.appendChild(el)}setTimeout(()=>{c.innerHTML=''},4000)}
 
 // === REVIEW ANIMATIONS (same as before) ===
