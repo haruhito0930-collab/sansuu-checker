@@ -109,6 +109,7 @@
         <div class="menu-item c5" onclick="startUnit('length')"><div class="menu-icon">📏</div><div><div class="menu-label">ながさの たんい</div><div class="menu-desc">mm・cm・m</div></div></div>
         <div class="menu-item c6" onclick="startUnit('volume')"><div class="menu-icon">🥤</div><div><div class="menu-label">かさの たんい</div><div class="menu-desc">mL・dL・L</div></div></div>
         <div class="menu-item c7" onclick="startUnit('shapes')"><div class="menu-icon">▢</div><div><div class="menu-label">図形のなまえ</div><div class="menu-desc">正方形・長方形・三角形</div></div></div>
+        <div class="menu-item" style="border-color:#f472b6" onclick="startUnit('word_problem')"><div class="menu-icon">📝</div><div><div class="menu-label">ぶんしょうもんだい</div><div class="menu-desc">しきを つくって こたえよう</div></div></div>
       </div>
     </div>
     <div class="philosophy">れんしゅうすれば かならず できるようになるよ！<br><strong>だいじなのは、やりかただけ。</strong></div>
@@ -141,14 +142,16 @@ const UNITS=[
   {id:'time',name:'🕐 じこくとじかん',label:'じこくとじかん'},
   {id:'length',name:'📏 ながさ',label:'たんい（ながさ・かさ）'},
   {id:'volume',name:'🥤 かさ',label:'たんい（ながさ・かさ）'},
-  {id:'shapes',name:'▢ 図形',label:'図形'}
+  {id:'shapes',name:'▢ 図形',label:'図形'},
+  {id:'word_problem',name:'📝 ぶんしょう',label:'ぶんしょうもんだい'}
 ];
 const CHART_AXES=[
   {label:'九九',ids:['kuku']},
   {label:'ひっさん',ids:['add_h','sub_h']},
   {label:'じこくとじかん',ids:['time']},
   {label:'たんい',ids:['length','volume']},
-  {label:'図形',ids:['shapes']}
+  {label:'図形',ids:['shapes']},
+  {label:'ぶんしょう',ids:['word_problem']}
 ];
 function getKey(unitId){return `sc_${GRADE}_${unitId}`}
 function loadData(unitId){try{return JSON.parse(localStorage.getItem(getKey(unitId)))||{attempts:0,correct:0,total:0}}catch(e){return{attempts:0,correct:0,total:0}}}
@@ -244,7 +247,23 @@ function genShapes(prev){
   const ch=[...item.choices];for(let i=ch.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ch[i],ch[j]]=[ch[j],ch[i]]}
   return{type:'choice',subtype:'shapes',qText:item.q,answer:item.answer,choices:ch,shape:item.shape}
 }
-function generateQs(n,type){const qs=[];for(let i=0;i<n;i++){const prev=i>0?qs[i-1]:null;let q;switch(type){case'kuku':q=genKuku(prev);break;case'add_h':q=genAddH(prev);break;case'sub_h':q=genSubH(prev);break;case'time':q=genTime(prev);break;case'length':q=genLength(prev);break;case'volume':q=genVolume(prev);break;case'shapes':q=genShapes(prev);break}qs.push(q)}return qs}
+// Word problem generator (grade 2: +- 2-digit, multiplication, time)
+function genWordProblem(prev){
+  const templates=[
+    {text:(a,b)=>`えんぴつが ${a}ほん あります。${b}ほん もらいました。ぜんぶで なんぼん？`,op:'+',genNums:()=>{const a=rnd(11,49),b=rnd(11,50-a);return[a,b]},unit:'ほん',keyword:'もらった',reason:'ふえる → たしざん（＋）！'},
+    {text:(a,b)=>`シールが ${a}まい あります。${b}まい つかいました。のこりは なんまい？`,op:'−',genNums:()=>{const b=rnd(11,30),a=rnd(b+10,60);return[a,b]},unit:'まい',keyword:'つかった',reason:'へる → ひきざん（−）！'},
+    {text:(a,b)=>`おりがみを ${a}まい かいました。いもうとに ${b}まい あげました。のこりは なんまい？`,op:'−',genNums:()=>{const b=rnd(5,20),a=rnd(b+10,50);return[a,b]},unit:'まい',keyword:'あげた',reason:'へる → ひきざん（−）！'},
+    {text:(a,b)=>`1ふくろに ${a}こずつ おかしが はいっています。${b}ふくろ あります。ぜんぶで なんこ？`,op:'×',genNums:()=>{const a=rnd(2,9),b=rnd(2,9);return[a,b]},unit:'こ',keyword:'○こずつ ○ふくろ',reason:'おなじ かずの まとまり → かけざん（×）！'},
+    {text:(a,b)=>`1れつに ${a}にん ならんでいます。${b}れつ あります。ぜんぶで なんにん？`,op:'×',genNums:()=>{const a=rnd(2,9),b=rnd(2,9);return[a,b]},unit:'にん',keyword:'○にんずつ ○れつ',reason:'おなじ かずの まとまり → かけざん（×）！'},
+    {text:(a,b)=>`1はこに クッキーが ${a}こ はいっています。${b}はこ あります。ぜんぶで なんこ？`,op:'×',genNums:()=>{const a=rnd(2,9),b=rnd(2,9);return[a,b]},unit:'こ',keyword:'○こずつ ○はこ',reason:'おなじ かずの まとまり → かけざん（×）！'},
+    {text:(a,b)=>`こどもが ${a}にん います。おとなが ${b}にん きました。ぜんぶで なんにん？`,op:'+',genNums:()=>{const a=rnd(12,40),b=rnd(10,30);return[a,b]},unit:'にん',keyword:'きた',reason:'ふえる → たしざん（＋）！'},
+  ];
+  let tmpl,a,b;
+  do{tmpl=templates[rnd(0,templates.length-1)];[a,b]=tmpl.genNums()}while(prev&&prev.wpA===a&&prev.wpB===b&&prev.wpOp===tmpl.op);
+  const answer=tmpl.op==='+'?a+b:tmpl.op==='−'?a-b:a*b;
+  return{type:'word_problem',subtype:'word',qText:tmpl.text(a,b),text:tmpl.text(a,b),wpA:a,wpB:b,wpOp:tmpl.op,answer,unit:tmpl.unit,correctExpr:`${a} ${tmpl.op} ${b} = ${answer}`,keyword:tmpl.keyword,reason:tmpl.reason}
+}
+function generateQs(n,type){const qs=[];for(let i=0;i<n;i++){const prev=i>0?qs[i-1]:null;let q;switch(type){case'kuku':q=genKuku(prev);break;case'add_h':q=genAddH(prev);break;case'sub_h':q=genSubH(prev);break;case'time':q=genTime(prev);break;case'length':q=genLength(prev);break;case'volume':q=genVolume(prev);break;case'shapes':q=genShapes(prev);break;case'word_problem':q=genWordProblem(prev);break}qs.push(q)}return qs}
 
 // Nav
 function hideAll(){['menuScreen','quizScreen','resultScreen','myPageScreen'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
@@ -260,6 +279,7 @@ document.getElementById('nextBtnGroup').classList.add('hidden');
 const el=document.getElementById('quizContent');
 if(q.type==='numpad') renderNumpad(el,q);
 else if(q.type==='hissan') renderHissanQ(el,q);
+else if(q.type==='word_problem') renderWordProblem(el,q);
 else renderChoiceQ(el,q);
 window.scrollTo({top:0,behavior:'smooth'})}
 
@@ -306,6 +326,77 @@ function renderChoiceQ(el,q){
 function chOk(idx){if(answered)return;answered=true;const q=(phase==='main'?questions:retryQs)[currentQ];const ok=q.choices[idx]===q.answer;document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);document.getElementById(`ch-${idx}`).classList.add(ok?'correct':'wrong');if(!ok){const ci=q.choices.indexOf(q.answer);document.getElementById(`ch-${ci}`).classList.add('correct')}showBanner(ok,`こたえは ${q.answer}`);recordResult(ok,q)}
 
 // Common
+// Word Problem
+let wpStep=0,wpNum1='',wpOp='',wpNum2='',wpAns='';
+function renderWordProblem(el,q){
+  wpStep=0;wpNum1='';wpOp='';wpNum2='';wpAns='';
+  const hasMultiply=q.wpOp==='×';
+  el.innerHTML=`<div style="font-size:.9rem;line-height:1.7;text-align:left;max-width:380px;margin:0 auto 8px;padding:10px 12px;background:#f8f9fa;border-radius:12px">${q.text}</div>
+  <div style="text-align:center;margin-bottom:6px">
+    <div style="display:flex;align-items:center;justify-content:center;gap:4px;font-size:1.3rem;font-weight:900;margin-bottom:4px">
+      <span style="font-size:.7rem;color:var(--text-soft)">しき</span>
+      <span id="wp-n1" style="min-width:${hasMultiply?'28':'36'}px;border-bottom:3px solid var(--blue);color:var(--blue);padding:1px 3px;text-align:center">?</span>
+      <span id="wp-op" style="min-width:22px;color:var(--text-soft)">○</span>
+      <span id="wp-n2" style="min-width:${hasMultiply?'28':'36'}px;border-bottom:3px solid var(--blue);color:var(--blue);padding:1px 3px;text-align:center">?</span>
+      <span style="color:var(--orange)">=</span>
+      <span id="wp-result" style="min-width:28px;color:var(--text-soft)">?</span>
+      <span style="margin-left:6px;font-size:.7rem;color:var(--text-soft)">こたえ</span>
+      <span id="wp-answer" style="min-width:30px;border-bottom:3px solid var(--green);color:var(--green);padding:1px 3px;text-align:center">?</span>
+      <span style="font-size:.75rem;color:var(--text-soft)">${q.unit}</span>
+    </div>
+  </div>
+  <div style="text-align:center;font-size:.85rem;font-weight:700;color:var(--blue);margin-bottom:6px" id="wp-guide">① さいしょの かずを いれてね</div>
+  <div id="wp-input-area">
+    <div class="numpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="numpad-btn" onclick="wpNumIn(${n})">${n}</button>`).join('')}<button class="numpad-btn clear-btn" onclick="wpClear()">けす</button><button class="numpad-btn" onclick="wpNumIn(0)">0</button><button class="numpad-btn enter-btn" onclick="wpNext()">OK</button></div>
+  </div>`;
+  setTimeout(()=>{el.querySelectorAll('.numpad-btn').forEach(b=>b.disabled=false)},250);
+}
+function wpNumIn(n){if(answered)return;sndClick();
+  if(wpStep===1)return;
+  const maxLen=wpStep===3?3:2;
+  if(wpStep===0){if(wpNum1.length>=maxLen)return;wpNum1+=String(n);document.getElementById('wp-n1').textContent=wpNum1;document.getElementById('wp-n1').style.color='var(--text)'}
+  else if(wpStep===2){if(wpNum2.length>=maxLen)return;wpNum2+=String(n);document.getElementById('wp-n2').textContent=wpNum2;document.getElementById('wp-n2').style.color='var(--text)'}
+  else if(wpStep===3){if(wpAns.length>=3)return;wpAns+=String(n);document.getElementById('wp-answer').textContent=wpAns;document.getElementById('wp-answer').style.color='var(--text)'}
+}
+function wpClear(){if(answered)return;sndClick();
+  if(wpStep===0){wpNum1='';document.getElementById('wp-n1').textContent='?';document.getElementById('wp-n1').style.color='var(--blue)'}
+  else if(wpStep===2){wpNum2='';document.getElementById('wp-n2').textContent='?';document.getElementById('wp-n2').style.color='var(--blue)'}
+  else if(wpStep===3){wpAns='';document.getElementById('wp-answer').textContent='?';document.getElementById('wp-answer').style.color='var(--green)'}
+}
+function wpNext(){if(answered)return;sndClick();
+  if(wpStep===0&&wpNum1!==''){
+    wpStep=1;
+    document.getElementById('wp-guide').textContent='② きごうを えらんでね';
+    document.getElementById('wp-input-area').innerHTML=`<div style="display:flex;gap:10px;justify-content:center"><button class="choice-btn" style="font-size:1.6rem;padding:14px 24px" onclick="wpOpSelect('+')">＋</button><button class="choice-btn" style="font-size:1.6rem;padding:14px 24px" onclick="wpOpSelect('−')">−</button><button class="choice-btn" style="font-size:1.6rem;padding:14px 24px" onclick="wpOpSelect('×')">×</button></div>`;
+  }
+  else if(wpStep===2&&wpNum2!==''){
+    wpStep=3;
+    const n1=parseInt(wpNum1),n2=parseInt(wpNum2);
+    const res=wpOp==='+'?n1+n2:wpOp==='−'?n1-n2:n1*n2;
+    document.getElementById('wp-result').textContent=res;document.getElementById('wp-result').style.color='var(--text)';
+    document.getElementById('wp-guide').textContent='④ こたえを いれてね';
+    document.getElementById('wp-input-area').innerHTML=`<div class="numpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="numpad-btn" onclick="wpNumIn(${n})">${n}</button>`).join('')}<button class="numpad-btn clear-btn" onclick="wpClear()">けす</button><button class="numpad-btn" onclick="wpNumIn(0)">0</button><button class="numpad-btn enter-btn" onclick="wpSubmit()">OK</button></div>`;
+  }
+}
+function wpOpSelect(op){if(answered)return;sndClick();
+  wpOp=op;wpStep=2;
+  const sym=op==='+'?'＋':op==='−'?'−':'×';
+  document.getElementById('wp-op').textContent=sym;document.getElementById('wp-op').style.color='var(--blue)';
+  document.getElementById('wp-guide').textContent='③ つぎの かずを いれてね';
+  document.getElementById('wp-input-area').innerHTML=`<div class="numpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="numpad-btn" onclick="wpNumIn(${n})">${n}</button>`).join('')}<button class="numpad-btn clear-btn" onclick="wpClear()">けす</button><button class="numpad-btn" onclick="wpNumIn(0)">0</button><button class="numpad-btn enter-btn" onclick="wpNext()">OK</button></div>`;
+}
+function wpSubmit(){if(answered||wpAns==='')return;answered=true;
+  const q=(phase==='main'?questions:retryQs)[currentQ];
+  const n1=parseInt(wpNum1),n2=parseInt(wpNum2),ans=parseInt(wpAns);
+  const exprOk=(n1===q.wpA&&wpOp===q.wpOp&&n2===q.wpB);
+  const ansOk=(ans===q.answer);
+  const ok=exprOk&&ansOk;
+  document.querySelectorAll('.numpad-btn,.choice-btn').forEach(b=>b.disabled=true);
+  document.getElementById('wp-guide').textContent=ok?'🎉 しきも こたえも せいかい！':(!exprOk?`しき → ${q.correctExpr}`:`こたえ → ${q.answer}${q.unit}`);
+  document.getElementById('wp-guide').style.color=ok?'var(--green)':'var(--red)';
+  showBanner(ok,`しき：${q.correctExpr}、こたえ：${q.answer}${q.unit}`);recordResult(ok,q);
+}
+
 function showBanner(ok,sub){const b=document.getElementById('resultBanner');b.className='result-banner show '+(ok?'correct-banner':'wrong-banner');b.innerHTML=`<span class="banner-icon">${ok?'🎉':'😢'}</span>${ok?'せいかい！':'ざんねん…'}${!ok?`<div class="banner-sub">${sub}</div>`:''}`;setTimeout(()=>{ok?sndOk():sndNg()},150)}
 function recordResult(ok,q){const r=phase==='main'?results:retryResults;r.push({correct:ok});questionLog.push({correct:ok,question:q});const dots=document.querySelectorAll('.progress-dot');dots[currentQ].classList.remove('active');dots[currentQ].classList.add(ok?'correct':'wrong');setTimeout(()=>{document.getElementById('nextBtnGroup').classList.remove('hidden');const qs=phase==='main'?questions:retryQs;document.getElementById('nextBtn').textContent=currentQ===qs.length-1?'けっかを みる →':'つぎの もんだい →'},ok?800:1500)}
 
@@ -323,7 +414,8 @@ function showResult(){
   if(wrongItems.length>0){
     reviewHtml=`<div class="review-section"><div class="review-title">❌ まちがえた もんだい</div>`;
     wrongItems.forEach((w,i)=>{
-      reviewHtml+=`<div class="review-item"><div class="review-q">${w.question.qText}</div><div class="review-ans">✅ こたえ：${w.question.answer}</div><button class="review-anim-btn" id="rab-${i}" onclick="playRA(${i})">🎬 かいせつアニメを みる</button><div class="review-anim-area" id="raa-${i}"></div></div>`;
+      const ansDisp=w.question.correctExpr?`しき：${w.question.correctExpr}、こたえ：${w.question.answer}${w.question.unit||''}`:`こたえ：${w.question.answer}`;
+      reviewHtml+=`<div class="review-item"><div class="review-q">${w.question.qText||w.question.text}</div><div class="review-ans">✅ ${ansDisp}</div><button class="review-anim-btn" id="rab-${i}" onclick="playRA(${i})">🎬 かいせつアニメを みる</button><div class="review-anim-area" id="raa-${i}"></div></div>`;
     });reviewHtml+=`</div>`;
   }
   if(phase==='main'){if(cc===total){showConfetti();sndFanfare();content.innerHTML=`<div class="result-icon">${challengeMode?'🌟':'🏆'}</div><div class="result-title" style="color:#2b8a3e">${challengeMode?'にがて こくふく！':'ぜんもん せいかい！'}</div><div class="result-score">${dots}</div><div class="result-message">すごい！バッチリだね！🎉</div><div class="btn-group"><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button><button class="btn btn-green" onclick="backToMenu()">もどる</button></div>`}else{content.innerHTML=`<div class="result-icon">${cc>=3?'💪':'😊'}</div><div class="result-title" style="color:var(--blue)">${cc}もん せいかい / ${total}もん</div><div class="result-score">${dots}</div><div class="result-message">${cc>=3?'いいぞ！あともうすこし！':'だいじょうぶ！れんしゅうしよう！'}</div>${reviewHtml}<div class="btn-group"><button class="btn btn-pink" onclick="startRetry()">もういちど ちょうせん！ 💪</button><button class="btn btn-purple" onclick="showMyPage()">📊 マイページ</button></div>`}}
@@ -345,6 +437,7 @@ function playRA(idx){
     case'time':animTime(area,q,btn,idx);break;
     case'length':case'volume':animUnit(area,q,btn,idx);break;
     case'shapes':animShape(area,q,btn,idx);break;
+    case'word':playWordAnim(area,q,btn,idx);break;
   }
 }
 
@@ -494,13 +587,47 @@ async function animShape(el,q,btn,idx){
   btn.disabled=false;btn.textContent='🎬 もういちど みる';
 }
 
+// WORD PROBLEM animation
+async function playWordAnim(area,q,btn,idx){
+  area.innerHTML=`<div class="anim-stage">
+    <div class="anim-msg blue" id="xm${idx}">もんだいを よく よもう！</div>
+    <div style="font-size:.85rem;line-height:1.7;text-align:left;max-width:320px;margin:8px auto;padding:10px;background:#f8f9fa;border-radius:10px">${q.text}</div>
+    <div style="margin:10px 0">
+      <div id="xws0${idx}" style="font-size:1.05rem;font-weight:900;margin:8px 0;opacity:0;transition:all .4s;color:#b45309"></div>
+      <div id="xws1${idx}" style="font-size:1rem;font-weight:700;margin:6px 0;opacity:0;transition:all .4s"></div>
+      <div id="xws2${idx}" style="font-size:1rem;font-weight:700;margin:6px 0;opacity:0;transition:all .4s"></div>
+      <div id="xws3${idx}" style="font-size:1.2rem;font-weight:900;margin:10px 0;opacity:0;transition:all .4s;color:var(--blue)"></div>
+    </div>
+    <div class="anim-result" id="xr${idx}"></div>
+  </div>`;
+  await sl(1500);
+  document.getElementById(`xm${idx}`).textContent='ことばに ちゅうもく！';document.getElementById(`xm${idx}`).className='anim-msg orange';
+  document.getElementById(`xws0${idx}`).innerHTML=`「${q.keyword}」→ ${q.reason}`;
+  document.getElementById(`xws0${idx}`).style.opacity='1';
+  sndPop(600);await sl(2000);
+  document.getElementById(`xm${idx}`).textContent='すうじを みつけよう！';document.getElementById(`xm${idx}`).className='anim-msg blue';
+  document.getElementById(`xws1${idx}`).innerHTML=`📌 さいしょの かず → <strong style="color:var(--blue)">${q.wpA}</strong>`;
+  document.getElementById(`xws1${idx}`).style.opacity='1';
+  sndPop(700);await sl(1200);
+  document.getElementById(`xws2${idx}`).innerHTML=`📌 つぎの かず → <strong style="color:var(--orange)">${q.wpB}</strong>`;
+  document.getElementById(`xws2${idx}`).style.opacity='1';
+  sndPop(800);await sl(1200);
+  document.getElementById(`xm${idx}`).textContent='しきを つくろう！';document.getElementById(`xm${idx}`).className='anim-msg green';
+  const opSym=q.wpOp==='+'?'＋':q.wpOp==='−'?'−':'×';
+  document.getElementById(`xws3${idx}`).innerHTML=`${q.wpA} <span style="color:var(--blue)">${opSym}</span> ${q.wpB} <span style="color:var(--orange)">=</span> <strong style="color:var(--green)">${q.answer}</strong>`;
+  document.getElementById(`xws3${idx}`).style.opacity='1';
+  sndOk();await sl(800);
+  document.getElementById(`xr${idx}`).textContent=`こたえは ${q.answer}${q.unit}！`;document.getElementById(`xr${idx}`).classList.add('show');
+  btn.disabled=false;btn.textContent='🎬 もういちど みる';
+}
+
 // === MY PAGE ===
 function showMyPage(){
   sndClick();hideAll();document.getElementById('myPageScreen').classList.remove('hidden');
   const axisData=CHART_AXES.map(ax=>({...ax,rate:getGroupRate(ax.ids),...getRateLevel(getGroupRate(ax.ids))}));
   const hasData=axisData.some(r=>r.rate>=0);
   const cx=160,cy=160,r=100;
-  const angles=CHART_AXES.map((_,i)=>(i*72-90)*Math.PI/180);
+  const nn=CHART_AXES.length;const angles=CHART_AXES.map((_,i)=>(i*(360/nn)-90)*Math.PI/180);
   let chartSVG=`<svg viewBox="0 0 320 320" width="280" height="280">`;
   for(let lv=0.25;lv<=1;lv+=0.25){const pts=angles.map(a=>`${cx+Math.cos(a)*r*lv},${cy+Math.sin(a)*r*lv}`).join(' ');chartSVG+=`<polygon points="${pts}" fill="none" stroke="#e0e0e0" stroke-width="1"/>`}
   angles.forEach(a=>{chartSVG+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a)*r}" y2="${cy+Math.sin(a)*r}" stroke="#e0e0e0" stroke-width="1"/>`});
