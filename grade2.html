@@ -133,6 +133,50 @@ function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a}
 const TOTAL=5;let unitType='',questions=[],currentQ=0,results=[],phase='main',retryQs=[],retryResults=[],answered=false,questionLog=[],inputVal='';
 let challengeMode=false;
 
+// === DETAILED DIAGNOSIS ===
+const DIAGNOSIS={
+  kuku:{
+    red:'九九は暗記が基本です。どの段が苦手かを確認して、その段を集中的に練習しましょう。お風呂や移動中に声に出して唱えるのも効果的です。',
+    yellow:'だいぶ覚えてきています！苦手な段を見つけて、そこだけ重点的に練習すれば完璧になります。',
+    green:'九九がしっかり身についています！すばらしい！'
+  },
+  add_h:{
+    red:'筆算のポイントは「10のまとまり」です。くりあがりの処理を一つずつ確認しながら練習しましょう。',
+    yellow:'あと少しです！くりあがりの処理でミスが出ることがあるようです。完璧になったら暗算にもチャレンジしてみましょう。',
+    green:'たし算の筆算がバッチリです！暗算でも解けるようにチャレンジしてみましょう！'
+  },
+  sub_h:{
+    red:'ひき算の筆算は「10を借りてくる」感覚が大切です。くりさがりの処理を一つずつ丁寧に練習しましょう。',
+    yellow:'もう少し！くりさがりの処理で迷うことがあるようです。完璧になったら暗算にも挑戦！',
+    green:'ひき算の筆算がバッチリです！暗算でも解けるようにチャレンジしてみましょう！'
+  },
+  time:{
+    red:'時計の読み方と「○分後」「○分前」の計算を練習しましょう。おうちの時計を使って「30分後は何時？」と日常的に聞いてあげてください。',
+    yellow:'時計の感覚はついてきています。5分刻みの計算をもう少し練習すれば完璧です！',
+    green:'時刻と時間の計算がしっかりできています！'
+  },
+  length:{
+    red:'mm・cm・mの関係を覚えましょう。定規やメジャーを使って実際にものの長さを測る体験が効果的です。',
+    yellow:'単位の感覚はついてきています。単位の変換（cm→mm など）をもう少し練習しましょう。',
+    green:'長さの単位がしっかり理解できています！'
+  },
+  volume:{
+    red:'mL・dL・Lの関係を覚えましょう。ペットボトルやコップを使って「これは何mL？」と生活の中で単位に触れる機会を作ってあげてください。',
+    yellow:'かさの感覚はついてきています。単位の変換をもう少し練習すれば完璧です！',
+    green:'かさの単位がしっかり理解できています！'
+  },
+  shapes:{
+    red:'正方形・長方形・三角形の特徴を覚えましょう。「辺の数」「角の数」「辺の長さが同じかどうか」に注目して見分ける練習をしてみてください。',
+    yellow:'形の区別はだいぶできています。似た形（正方形と長方形など）の違いをもう少し練習しましょう。',
+    green:'図形の特徴がしっかり理解できています！'
+  },
+  word_problem:{
+    red:'文章題は「使う数字はどれ？」「たし算・ひき算・かけ算のどれを使う？」の2ステップです。「もらった→たし算」「あげた→ひき算」「○個ずつ○袋→かけ算」のようにキーワードから判断する練習をしましょう。',
+    yellow:'式を作る力はついてきています。かけ算の文章題（○個ずつ○袋）の判断をもう少し練習しましょう。',
+    green:'文章から式を作る力がバッチリです！'
+  }
+};
+
 // === DATA STORAGE ===
 const GRADE='grade2';
 const UNITS=[
@@ -170,8 +214,8 @@ function shapeSVG(type,w=160,h=120){
 function drawClockSVG(hA,mA,sz){const cx=sz/2,cy=sz/2,r=sz/2-12;let s=`<svg viewBox="0 0 ${sz} ${sz}" width="${sz}" height="${sz}"><circle cx="${cx}" cy="${cy}" r="${r}" fill="#fff" stroke="#333" stroke-width="2.5"/>`;for(let i=1;i<=12;i++){const a=(i*30-90)*Math.PI/180;s+=`<line x1="${cx+Math.cos(a)*(r-4)}" y1="${cy+Math.sin(a)*(r-4)}" x2="${cx+Math.cos(a)*(r-12)}" y2="${cy+Math.sin(a)*(r-12)}" stroke="#333" stroke-width="2" stroke-linecap="round"/><text x="${cx+Math.cos(a)*(r-22)}" y="${cy+Math.sin(a)*(r-22)}" text-anchor="middle" dominant-baseline="central" font-size="${sz>150?14:11}" font-weight="900" fill="#333" font-family="Zen Maru Gothic,sans-serif">${i}</text>`}const ha=(hA-90)*Math.PI/180;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ha)*r*.4}" y2="${cy+Math.sin(ha)*r*.4}" stroke="#e74c3c" stroke-width="5" stroke-linecap="round"/>`;const ma=(mA-90)*Math.PI/180;s+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(ma)*r*.6}" y2="${cy+Math.sin(ma)*r*.6}" stroke="#2980b9" stroke-width="3" stroke-linecap="round"/><circle cx="${cx}" cy="${cy}" r="4" fill="#333"/></svg>`;return s}
 
 // Build hissan HTML (right-aligned grid)
-function hissanHTML(a,b,opChar,ansId){
-  const digits=Math.max(String(a).length,String(b).length,String(a+b).length);
+function hissanHTML(a,b,opChar,ansId,answer){
+  const digits=Math.max(String(a).length,String(b).length,String(answer).length);
   const w=digits+1;// +1 for op
   const aArr=String(a).padStart(digits,' ').split('');
   const bArr=String(b).padStart(digits,' ').split('');
@@ -294,7 +338,7 @@ function numOk(){if(answered||inputVal==='')return;answered=true;const q=(phase=
 function renderHissanQ(el,q){
   const opChar=q.op==='+'?'+':'−';
   const digits=Math.max(String(q.a).length,String(q.b).length,String(q.answer).length);
-  el.innerHTML=hissanHTML(q.a,q.b,opChar,'hq')+`<div class="numpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="numpad-btn" onclick="hIn(${n})">${n}</button>`).join('')}<button class="numpad-btn clear-btn" onclick="hCl()">けす</button><button class="numpad-btn" onclick="hIn(0)">0</button><button class="numpad-btn enter-btn" onclick="hOk()">OK</button></div>`;
+  el.innerHTML=hissanHTML(q.a,q.b,opChar,'hq',q.answer)+`<div class="numpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="numpad-btn" onclick="hIn(${n})">${n}</button>`).join('')}<button class="numpad-btn clear-btn" onclick="hCl()">けす</button><button class="numpad-btn" onclick="hIn(0)">0</button><button class="numpad-btn enter-btn" onclick="hOk()">OK</button></div>`;
   setTimeout(()=>{el.querySelectorAll('.numpad-btn').forEach(b=>b.disabled=false)},250);
 }
 function hIn(n){if(answered)return;sndClick();if(inputVal.length>=4)return;inputVal+=String(n);
@@ -643,7 +687,10 @@ function showMyPage(){
   let unitListHtml=UNITS.map(u=>{const rate=getRate(u.id);const lv=getRateLevel(rate);const barW=rate<0?0:rate;const rateText=rate<0?'—':rate+'%';const rateClass=rate<0?'':rate>=95?'rate-green':rate>=80?'rate-yellow':'rate-red';const d=loadData(u.id);const bestTime=d.bestTime?`じこベスト ${d.bestTime>=60?Math.floor(d.bestTime/60)+'ふん'+d.bestTime%60+'びょう':d.bestTime+'びょう'}`:'';return`<div class="unit-row"><div class="unit-name">${u.name}${bestTime?`<div style="font-size:.7rem;color:#b45309;margin-top:2px">🏅 ${bestTime}</div>`:''}</div><div class="unit-bar"><div class="unit-bar-fill" style="width:${barW}%;background:${lv.color}"></div></div><div class="unit-rate ${rateClass}">${rateText}</div></div>`}).join('');
   const weakAxes=axisData.filter(r=>r.rate>=0&&r.rate<80);const okAxes=axisData.filter(r=>r.rate>=80&&r.rate<95);const strongAxes=axisData.filter(r=>r.rate>=95);const noData=axisData.filter(r=>r.rate<0);
   let diagHtml='';
-  if(hasData){diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;if(strongAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongAxes.map(u=>u.label).join('・')}</strong> は バッチリ！</div>`;if(okAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okAxes.map(u=>u.label).join('・')}</strong> は もうすこし！</div>`;if(weakAxes.length>0)diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakAxes.map(u=>u.label).join('・')}</strong> が つまずきポイント！</div>`;if(noData.length>0)diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ</div>`;diagHtml+=`</div>`;if(weakAxes.length>0)diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakAxes.map(u=>u.label).join('・')} を れんしゅう</span></button>`}
+  if(hasData){diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div>`;if(strongAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟢 <strong>${strongAxes.map(u=>u.label).join('・')}</strong> は バッチリ！</div>`;if(okAxes.length>0)diagHtml+=`<div class="diagnosis-item">🟡 <strong>${okAxes.map(u=>u.label).join('・')}</strong> は もうすこし！</div>`;if(weakAxes.length>0)diagHtml+=`<div class="diagnosis-item">🔴 <strong>${weakAxes.map(u=>u.label).join('・')}</strong> が つまずきポイント！</div>`;if(noData.length>0)diagHtml+=`<div class="diagnosis-item">⚪ <strong>${noData.map(u=>u.label).join('・')}</strong> は まだ やっていないよ</div>`;diagHtml+=`</div>`;
+    const adviceUnits=UNITS.map(u=>({...u,rate:getRate(u.id)})).filter(u=>u.rate>=0);
+    if(adviceUnits.length>0){diagHtml+=`<div class="diagnosis-box" style="margin-top:12px"><div class="diagnosis-title">📖 くわしいアドバイス</div><div style="text-align:center;font-size:.8rem;color:#b45309;margin-bottom:8px">👨‍👩‍👧 おうちの ひとに みせてね！</div>`;adviceUnits.forEach(u=>{const d=DIAGNOSIS[u.id];if(!d)return;const level=u.rate>=95?'green':u.rate>=80?'yellow':'red';const icon=level==='green'?'🟢':level==='yellow'?'🟡':'🔴';diagHtml+=`<div class="diagnosis-item">${icon} <strong>${u.name}（${u.rate}%）</strong><br><span style="font-size:.85rem">${d[level]}</span></div>`});diagHtml+=`</div>`}
+    if(weakAxes.length>0)diagHtml+=`<button class="challenge-btn" onclick="startChallenge()">🎯 にがて こくふく チャレンジ！<br><span style="font-size:.8rem;font-weight:700">${weakAxes.map(u=>u.label).join('・')} を れんしゅう</span></button>`}
   else{diagHtml=`<div class="diagnosis-box"><div class="diagnosis-title">📋 しんだんレポート</div><div class="diagnosis-item">まだ データが ないよ。<br>まずは ぜんぶの たんげんを といてみよう！</div></div>`}
   document.getElementById('myPageScreen').innerHTML=`<div class="card"><button class="back-btn" onclick="backToMenu()">← もどる</button><div style="text-align:center;padding-top:24px"><span style="font-size:1.8rem">📊</span><div style="font-size:1.2rem;font-weight:900;margin-top:4px">マイページ</div></div><div class="chart-container">${chartSVG}</div><div class="unit-list">${unitListHtml}</div>${diagHtml}</div>`;
   window.scrollTo({top:0,behavior:'smooth'});
