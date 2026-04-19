@@ -424,7 +424,6 @@ function record(ok){
   if(ok){unitResults[q.unitId]++;sndOk()}else{sndNg()}
 
   // After 1st question, fill in the placeholder with adaptive 2nd question
-  const q=questions[currentQ];
   if(q._phase===1){
     const unit=q._unitRef;
     const q2=ok?unit.hard():unit.easy();
